@@ -1,0 +1,206 @@
+/* ===== HERO BANNER ===== */
+.hero-banner {
+  position: relative;
+  background: linear-gradient(150deg, var(--color-blue-dark) 0%, #2a7ab5 50%, var(--color-blue-primary) 100%);
+  padding-top: var(--nav-height);
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Decorative dots */
+.hero-banner__decorations {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero-banner__dot {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--color-yellow);
+}
+
+.hero-banner__dot--1 {
+  width: 36px;
+  height: 36px;
+  top: 25%;
+  right: 10%;
+  animation: bannerFloat 7s ease-in-out infinite;
+}
+
+.hero-banner__dot--2 {
+  width: 28px;
+  height: 28px;
+  top: 50%;
+  right: 18%;
+  animation: bannerFloat 5s ease-in-out infinite 1s;
+}
+
+.hero-banner__dot--3 {
+  width: 20px;
+  height: 20px;
+  top: 60%;
+  right: 7%;
+  animation: bannerFloat 6s ease-in-out infinite 2s;
+}
+
+.hero-banner__dot--4 {
+  width: 48px;
+  height: 48px;
+  top: 35%;
+  right: 3%;
+  animation: bannerFloat 8s ease-in-out infinite 0.5s;
+}
+
+.hero-banner__dot--5 {
+  width: 16px;
+  height: 16px;
+  top: 70%;
+  right: 22%;
+  animation: bannerFloat 5.5s ease-in-out infinite 3s;
+}
+
+.hero-banner__dot--6 {
+  width: 12px;
+  height: 12px;
+  top: 30%;
+  left: 8%;
+  opacity: 0.5;
+  animation: bannerFloat 6s ease-in-out infinite 1.5s;
+}
+
+.hero-banner__dot--7 {
+  width: 10px;
+  height: 10px;
+  top: 55%;
+  left: 14%;
+  opacity: 0.4;
+  animation: bannerFloat 7s ease-in-out infinite 2.5s;
+}
+
+/* Decorative circles (rings) */
+.hero-banner__circle {
+  position: absolute;
+  border-radius: 50%;
+  border: 2.5px solid rgba(245, 166, 35, 0.35);
+}
+
+.hero-banner__circle--1 {
+  width: 350px;
+  height: 350px;
+  bottom: -40px;
+  left: -100px;
+  animation: bannerPulse 10s ease-in-out infinite;
+}
+
+.hero-banner__circle--2 {
+  width: 180px;
+  height: 180px;
+  top: 12%;
+  right: -50px;
+  border-color: rgba(255, 255, 255, 0.08);
+  animation: bannerPulse 12s ease-in-out infinite reverse;
+}
+
+@keyframes bannerFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes bannerPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.35;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.55;
+  }
+}
+
+/* Center logo */
+.hero-banner__logo-wrapper {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-3xl) 0;
+}
+
+.hero-banner__logo-img {
+  width: 340px;
+  height: auto;
+  filter: brightness(0) invert(1) drop-shadow(0 10px 40px rgba(0, 0, 0, 0.2));
+  animation: logoAppear 1s ease-out;
+}
+
+@keyframes logoAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Curved bottom */
+.hero-banner__curve {
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.hero-banner__curve svg {
+  display: block;
+  width: 100%;
+  height: 80px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .hero-banner {
+    min-height: 450px;
+  }
+
+  .hero-banner__logo-img {
+    width: 240px;
+  }
+
+  .hero-banner__dot--1 {
+    width: 24px;
+    height: 24px;
+  }
+
+  .hero-banner__dot--4 {
+    width: 32px;
+    height: 32px;
+  }
+
+  .hero-banner__circle--1 {
+    width: 220px;
+    height: 220px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-banner {
+    min-height: 380px;
+  }
+
+  .hero-banner__logo-img {
+    width: 180px;
+  }
+}

@@ -1,0 +1,21 @@
+/* ===== APP STYLES ===== */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app main {
+  flex: 1;
+}
+
+/* Smooth section transitions */
+section {
+  position: relative;
+}
+
+/* Selection color */
+::selection {
+  background: rgba(46, 134, 193, 0.2);
+  color: var(--color-blue-dark);
+}
