@@ -93,6 +93,14 @@
   width: 60%;
 }
 
+.navbar__link--active {
+  color: var(--color-blue-primary);
+}
+
+.navbar__link--active::after {
+  width: 60%;
+}
+
 /* CTA Button */
 .navbar__cta {
   display: flex;

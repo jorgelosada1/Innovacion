@@ -1,21 +1,28 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import HeroBanner from './components/HeroBanner';
-import Hero from './components/Hero';
 import Footer from './components/Footer';
 import FloatingSocial from './components/FloatingSocial';
+import HomePage from './pages/HomePage';
+import ColaboradoresPage from './pages/ColaboradoresPage';
+import CursosPage from './pages/CursosPage';
 import './App.css';
 
 function App() {
   return (
-    <div className="app">
-      <Navbar />
-      <main>
-        <HeroBanner />
-        <Hero />
-      </main>
-      <Footer />
-      <FloatingSocial />
-    </div>
+    <Router>
+      <div className="app">
+        <Navbar />
+        <main>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/colaboradores" element={<ColaboradoresPage />} />
+            <Route path="/cursos" element={<CursosPage />} />
+          </Routes>
+        </main>
+        <Footer />
+        <FloatingSocial />
+      </div>
+    </Router>
   );
 }
 
