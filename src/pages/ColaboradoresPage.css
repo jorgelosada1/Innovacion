@@ -60,36 +60,26 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 .org__level {
   display: flex;
   justify-content: center;
+  width: 100%;
 }
 
 /* Vertical lines */
 .org__line-v {
   width: 2px;
-  background: #d1d9e4;
+  background: #cbd5e1;
   margin: 0 auto;
+  flex-shrink: 0;
 }
 
-.org__line-v--short { height: 32px; }
-.org__line-v--medium { height: 40px; }
-.org__line-v--tiny { height: 20px; }
-
-/* Horizontal connector */
-.org__connector {
-  width: 75%;
-  max-width: 850px;
-  position: relative;
-}
-
-.org__line-h {
-  width: 100%;
-  height: 2px;
-  background: #d1d9e4;
-}
+.org__line-v--short { height: 28px; }
+.org__line-v--medium { height: 32px; }
+.org__line-v--tiny { height: 16px; }
 
 /* === CEO / COO Cards === */
 .org__card--ceo,
@@ -131,6 +121,14 @@
   justify-content: center;
   color: var(--color-blue-primary);
   margin: 0 auto 8px;
+  overflow: hidden;
+}
+
+.org__avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .org__name {
@@ -146,11 +144,11 @@
   margin-top: 2px;
 }
 
-/* === AREAS LEVEL === */
+/* === AREAS LEVEL & DESKTOP CONNECTOR SYSTEM === */
 .org__level--areas {
   display: grid;
-  grid-template-columns: 0.7fr 1.2fr 1.2fr 0.9fr;
-  gap: var(--spacing-lg);
+  grid-template-columns: 1.6fr 0.65fr 0.65fr 0.65fr;
+  gap: var(--spacing-md);
   width: 100%;
   align-items: start;
 }
@@ -159,13 +157,45 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  width: 100%;
 }
 
-/* Área Comercial simple card */
+/* Perfect horizontal tree line at top of area columns (Desktop) */
+@media (min-width: 901px) {
+  .org__area-group::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    height: 2px;
+    background: #cbd5e1;
+    z-index: 1;
+  }
+
+  /* First column: line starts at 50% (center of column) and goes right (100%) */
+  .org__area-group:first-child::before {
+    left: 50%;
+    right: 0;
+  }
+
+  /* Last column: line starts at left (0) and goes to 50% (center of column) */
+  .org__area-group:last-child::before {
+    left: 0;
+    right: 50%;
+  }
+
+  /* Middle columns: line spans from 0 to 100% */
+  .org__area-group:not(:first-child):not(:last-child)::before {
+    left: 0;
+    right: 0;
+  }
+}
+
+/* Simple Area Card */
 .org__card--area {
   background: var(--color-white);
   border-radius: 14px;
-  padding: 18px 20px;
+  padding: 16px 18px;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -175,8 +205,8 @@
 }
 
 .org__area-icon {
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -196,6 +226,44 @@
   color: var(--color-blue-dark);
 }
 
+/* === SUB-GRID FOR UNIVERSITIES === */
+.org__sub-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+  width: 100%;
+  position: relative;
+}
+
+.org__sub-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+@media (min-width: 901px) {
+  .org__sub-group::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    height: 2px;
+    background: #cbd5e1;
+    z-index: 1;
+  }
+
+  .org__sub-group:first-child::before {
+    left: 50%;
+    right: 0;
+  }
+
+  .org__sub-group:last-child::before {
+    left: 0;
+    right: 50%;
+  }
+}
+
 /* === University Cards === */
 .org__card--uni {
   border-radius: 14px;
@@ -207,33 +275,29 @@
 }
 
 .org__uni-header {
-  padding: 14px 18px;
+  padding: 14px 16px;
 }
 
 .org__uni-header--blue {
   background: var(--color-blue-primary);
 }
 
-.org__uni-header--yellow {
-  background: var(--color-blue-primary);
-}
-
 .org__uni-title {
   font-family: var(--font-primary);
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: var(--color-white);
   display: inline;
 }
 
 .org__uni-sub {
-  font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.85);
   margin-left: 4px;
 }
 
 .org__uni-body {
-  padding: 14px 18px;
+  padding: 14px 16px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -246,8 +310,8 @@
 }
 
 .org__uni-icon {
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 8px;
   background: #f1f5f9;
   display: flex;
@@ -258,13 +322,13 @@
 }
 
 .org__uni-role-name {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 600;
   color: var(--color-blue-dark);
 }
 
 .org__uni-role-desc {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: #8a96a6;
 }
 
@@ -273,27 +337,17 @@
   color: var(--color-blue-primary);
 }
 
-.org__uni-check--yellow {
-  color: var(--color-blue-primary);
-}
-
-/* === Support Stack === */
-.org__support-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-}
-
+/* === Support Stack Cards === */
 .org__card--support {
   background: var(--color-white);
   border-radius: 12px;
-  padding: 12px 16px;
+  padding: 14px 16px;
   display: flex;
   align-items: center;
   gap: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
   border: 1px solid #edf1f6;
+  width: 100%;
 }
 
 .org__support-icon {
@@ -306,16 +360,8 @@
   flex-shrink: 0;
 }
 
-.org__support-icon--blue {
-  background: rgba(38, 128, 178, 0.1);
-  color: var(--color-blue-primary);
-}
-
-.org__support-icon--yellow {
-  background: rgba(38, 128, 178, 0.1);
-  color: var(--color-blue-primary);
-}
-
+.org__support-icon--blue,
+.org__support-icon--yellow,
 .org__support-icon--green {
   background: rgba(38, 128, 178, 0.1);
   color: var(--color-blue-primary);
@@ -332,52 +378,56 @@
   color: #8a96a6;
 }
 
-/* ===== RESPONSIVE ===== */
+/* ===== RESPONSIVE MOBILE ===== */
 @media (max-width: 900px) {
-  .org__level--areas {
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-xl);
-  }
-
-  .org__connector {
-    width: 50%;
+  .colaboradores__hero {
+    padding: 100px 0 30px;
   }
 
   .colaboradores__title {
     font-size: 1.8rem;
   }
-}
 
-@media (max-width: 600px) {
+  .colaboradores__container {
+    padding: 20px var(--spacing-md) 60px;
+  }
+
   .org__level--areas {
     grid-template-columns: 1fr;
-    max-width: 350px;
+    gap: var(--spacing-lg);
+    max-width: 450px;
     margin: 0 auto;
   }
 
-  .org__connector {
-    width: 0;
-  }
-
-  .org__line-h {
+  .org__area-group::before,
+  .org__sub-group::before {
     display: none;
   }
 
-  .colaboradores__hero {
-    padding: 100px 0 40px;
-  }
-
-  .colaboradores__title {
-    font-size: 1.5rem;
-  }
-
-  .colaboradores__container {
-    padding: 40px var(--spacing-md);
+  .org__sub-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
   }
 
   .org__card--ceo,
   .org__card--coo {
-    padding: 18px 28px 14px;
-    min-width: 170px;
+    padding: 16px 24px 14px;
+    min-width: 160px;
+  }
+}
+
+@media (max-width: 480px) {
+  .colaboradores__title {
+    font-size: 1.5rem;
+  }
+
+  .colaboradores__subtitle {
+    font-size: 0.9rem;
+  }
+
+  .org__card--ceo,
+  .org__card--coo {
+    width: 100%;
+    max-width: 280px;
   }
 }

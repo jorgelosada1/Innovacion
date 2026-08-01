@@ -1,73 +1,74 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getSlider, getNoticias } from '../utils/dataManager';
 import './NewsSlider.css';
-import slider1 from '../assets/images/slider-1.png';
-import slider2 from '../assets/images/slider-2.png';
-import slider3 from '../assets/images/slider-3.png';
-
-const slides = [
-  {
-    image: slider1,
-    title: 'Inscripciones Abiertas 2025-2',
-    description: 'Inicia tu camino universitario con nuestras alianzas académicas. Programas presenciales y virtuales disponibles.',
-  },
-  {
-    image: slider2,
-    title: 'Educación Virtual de Calidad',
-    description: 'Accede a programas acreditados desde cualquier lugar. Plataformas modernas y acompañamiento permanente.',
-  },
-  {
-    image: slider3,
-    title: 'Tu Futuro Comienza Aquí',
-    description: 'Miles de graduados respaldan nuestra experiencia. Formamos profesionales con impacto en la sociedad.',
-  },
-];
+import defaultImg1 from '../assets/images/1.png';
+import defaultImg2 from '../assets/images/2.png';
 
 const NewsSlider = () => {
+  const [slides, setSlides] = useState([]);
   const [current, setCurrent] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const rawSlider = getSlider();
+    const noticias = getNoticias();
+    const formatted = rawSlider.map((item) => {
+      let image = item.imagen;
+      if (image && image.includes('1.png')) {
+        image = defaultImg1;
+      } else if (image && image.includes('2.png')) {
+        image = defaultImg2;
+      }
+      const noticia = noticias.find((n) => n.id === item.noticiaId);
+      return {
+        ...item,
+        image,
+        title: noticia ? noticia.titulo : 'Noticia',
+      };
+    });
+    setSlides(formatted);
+  }, []);
 
   const goToSlide = useCallback((index) => {
-    if (isTransitioning) return;
+    if (isTransitioning || slides.length === 0) return;
     setIsTransitioning(true);
     setCurrent(index);
     setTimeout(() => setIsTransitioning(false), 600);
-  }, [isTransitioning]);
+  }, [isTransitioning, slides.length]);
 
   const nextSlide = useCallback(() => {
+    if (slides.length === 0) return;
     goToSlide((current + 1) % slides.length);
-  }, [current, goToSlide]);
+  }, [current, goToSlide, slides.length]);
 
   const prevSlide = useCallback(() => {
+    if (slides.length === 0) return;
     goToSlide(current === 0 ? slides.length - 1 : current - 1);
-  }, [current, goToSlide]);
+  }, [current, goToSlide, slides.length]);
 
   // Auto-play every 3 seconds
   useEffect(() => {
+    if (slides.length === 0) return;
     const timer = setInterval(nextSlide, 3000);
     return () => clearInterval(timer);
-  }, [nextSlide]);
+  }, [nextSlide, slides.length]);
+
+  if (slides.length === 0) return null;
 
   return (
     <section className="news-slider">
       <div className="news-slider__track">
         {slides.map((slide, index) => (
           <div
-            key={index}
+            key={slide.id || index}
             className={`news-slider__slide ${index === current ? 'news-slider__slide--active' : ''}`}
+            onClick={() => slide.noticiaId && navigate(`/noticias/${slide.noticiaId}`)}
+            style={{ cursor: 'pointer' }}
           >
+            <img src={slide.image} alt="" className="news-slider__bg" aria-hidden="true" />
             <img src={slide.image} alt={slide.title} className="news-slider__image" />
-            <div className="news-slider__overlay"></div>
-            <div className="news-slider__content">
-              <h2 className="news-slider__title">{slide.title}</h2>
-              <p className="news-slider__description">{slide.description}</p>
-              <a href="#cursos" className="news-slider__cta">
-                Conocer más
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="5" y1="12" x2="19" y2="12"/>
-                  <polyline points="12 5 19 12 12 19"/>
-                </svg>
-              </a>
-            </div>
           </div>
         ))}
       </div>

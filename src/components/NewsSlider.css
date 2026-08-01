@@ -27,11 +27,26 @@
   pointer-events: auto;
 }
 
-.news-slider__image {
+.news-slider__bg {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
+  filter: blur(30px) brightness(0.5);
+  transform: scale(1.15);
+  z-index: 0;
+}
+
+.news-slider__image {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
   display: block;
+  z-index: 1;
 }
 
 .news-slider__overlay {

@@ -65,7 +65,7 @@ const FloatingSocial = () => {
 
         {/* Instagram */}
         <a
-          href="https://instagram.com"
+          href="https://www.instagram.com/innovacionelearning/"
           target="_blank"
           rel="noopener noreferrer"
           className="floating-social__btn floating-social__btn--instagram"
@@ -80,7 +80,7 @@ const FloatingSocial = () => {
 
         {/* Facebook */}
         <a
-          href="https://facebook.com"
+          href="https://www.facebook.com/profile.php?id=61579726022138"
           target="_blank"
           rel="noopener noreferrer"
           className="floating-social__btn floating-social__btn--facebook"
@@ -93,7 +93,7 @@ const FloatingSocial = () => {
 
         {/* LinkedIn */}
         <a
-          href="https://linkedin.com"
+          href="https://www.linkedin.com/in/innovaci%C3%B3n-e-learning-a93521357/"
           target="_blank"
           rel="noopener noreferrer"
           className="floating-social__btn floating-social__btn--linkedin"
@@ -107,7 +107,7 @@ const FloatingSocial = () => {
 
       {/* WhatsApp - separate, always bottom right */}
       <a
-        href="https://wa.me/573000000000"
+        href="https://wa.link/rgw8yn"
         target="_blank"
         rel="noopener noreferrer"
         className="floating-whatsapp"

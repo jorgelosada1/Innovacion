@@ -13,7 +13,7 @@ const tabs = [
       </svg>
     ),
     title: 'Nuestra Misión',
-    text: 'Somos el puente entre personas con sueños educativos y las mejores universidades del país. Nuestra misión es hacer que el acceso a la educación superior sea simple, transparente y humano — acompañando a cada aspirante de manera personalizada, desde el primer contacto hasta su exitosa matrícula, sin costo alguno para él.',
+    text: 'Transformamos vidas a través de la educación, facilitando el acceso a programas de educación superior de calidad mediante alianzas estratégicas con instituciones educativas y modelos de formación virtual que permiten llegar a más personas, regiones y comunidades, generando impacto social y desarrollo para el país.',
   },
   {
     key: 'vision',
@@ -25,7 +25,7 @@ const tabs = [
       </svg>
     ),
     title: 'Nuestra Visión',
-    text: 'Ser reconocidos a nivel nacional como el principal aliado comercial en el sector educativo, liderando la innovación en procesos de captación y acompañamiento estudiantil, con presencia en todas las regiones de Colombia y un modelo replicable de impacto social.',
+    text: 'Para el año 2030, seremos reconocidos como el aliado estratégico más confiable para las instituciones de educación superior en Colombia, liderando la expansión del acceso a la educación de calidad mediante modelos innovadores y virtuales que generen transformación social sostenible en todo el país.',
   },
   {
     key: 'valores',
@@ -38,12 +38,12 @@ const tabs = [
     title: 'Nuestros Valores',
     text: null,
     values: [
-      'Compromiso con la educación',
-      'Transparencia y ética profesional',
-      'Innovación constante',
-      'Trabajo en equipo',
-      'Responsabilidad social',
-      'Servicio al cliente excepcional',
+      'Confianza',
+      'Aprendizaje',
+      'Sostenibilidad e impacto social',
+      'Responsabilidad',
+      'Colaboración',
+      'Inclusión',
     ],
   },
 ];

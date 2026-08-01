@@ -5,6 +5,9 @@ import FloatingSocial from './components/FloatingSocial';
 import HomePage from './pages/HomePage';
 import ColaboradoresPage from './pages/ColaboradoresPage';
 import CursosPage from './pages/CursosPage';
+import LoginPage from './pages/LoginPage';
+import AdminPanel from './pages/AdminPanel';
+import NoticiasPage from './pages/NoticiasPage';
 import './App.css';
 
 function App() {
@@ -17,6 +20,10 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/colaboradores" element={<ColaboradoresPage />} />
             <Route path="/cursos" element={<CursosPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/admin" element={<AdminPanel />} />
+            <Route path="/noticias" element={<NoticiasPage />} />
+            <Route path="/noticias/:id" element={<NoticiasPage />} />
           </Routes>
         </main>
         <Footer />
