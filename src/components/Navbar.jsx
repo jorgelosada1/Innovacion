@@ -26,6 +26,7 @@ const Navbar = () => {
     { name: 'Noticias', href: '/noticias', type: 'route' },
     { name: 'Colaboradores', href: '/colaboradores', type: 'route' },
     { name: 'Cursos', href: '/cursos', type: 'route' },
+    { name: 'Test Vocacional', href: 'https://test-vocacional-gold.vercel.app/', type: 'external' },
   ];
 
   const toggleMobileMenu = () => {
@@ -66,7 +67,16 @@ const Navbar = () => {
         <ul className="navbar__links">
           {navLinks.map((link) => (
             <li key={link.name} className="navbar__link-item">
-              {link.type === 'route' ? (
+              {link.type === 'external' ? (
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="navbar__link"
+                >
+                  {link.name}
+                </a>
+              ) : link.type === 'route' ? (
                 <Link
                   to={link.href}
                   className={`navbar__link ${isActive(link) ? 'navbar__link--active' : ''}`}
@@ -113,7 +123,17 @@ const Navbar = () => {
         <ul className="navbar__mobile-links">
           {navLinks.map((link) => (
             <li key={link.name}>
-              {link.type === 'route' ? (
+              {link.type === 'external' ? (
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="navbar__mobile-link"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {link.name}
+                </a>
+              ) : link.type === 'route' ? (
                 <Link
                   to={link.href}
                   className={`navbar__mobile-link ${isActive(link) ? 'navbar__mobile-link--active' : ''}`}
