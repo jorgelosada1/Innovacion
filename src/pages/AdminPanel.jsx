@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   isAuthenticated, logout, 
   getNoticias, addNoticia, updateNoticia, deleteNoticia,
   getSlider, addSlide, deleteSlide,
-  getCursos, addCurso, deleteCurso 
+  getCursos, addCurso, deleteCurso,
+  getFaqs, addFaq, updateFaq, deleteFaq
 } from '../utils/dataManager';
 import './AdminPanel.css';
 
@@ -16,11 +17,13 @@ const AdminPanel = () => {
   const [noticias, setNoticias] = useState([]);
   const [slider, setSlider] = useState([]);
   const [cursos, setCursos] = useState([]);
+  const [faqs, setFaqs] = useState([]);
 
   // Form States
   const [noticiaForm, setNoticiaForm] = useState({ id: null, titulo: '', resumen: '', contenido: '', imagen: '' });
   const [sliderForm, setSliderForm] = useState({ imagen: '', noticiaId: '' });
   const [cursoForm, setCursoForm] = useState({ titulo: '', descripcion: '', videoId: '', duracion: '', nivel: 'Básico', temas: '', evaluacion: false });
+  const [faqForm, setFaqForm] = useState({ id: null, question: '', answer: '' });
 
   useEffect(() => {
     if (!isAuthenticated()) {
@@ -34,6 +37,7 @@ const AdminPanel = () => {
     setNoticias(getNoticias());
     setSlider(getSlider());
     setCursos(getCursos());
+    setFaqs(getFaqs());
   };
 
   const handleLogout = () => {
@@ -92,6 +96,27 @@ const AdminPanel = () => {
     loadData();
   };
 
+  // FAQ HANDLERS
+  const handleFaqSubmit = (e) => {
+    e.preventDefault();
+    if (faqForm.id) {
+      updateFaq(faqForm.id, faqForm);
+    } else {
+      addFaq(faqForm);
+    }
+    setFaqForm({ id: null, question: '', answer: '' });
+    loadData();
+  };
+
+  const handleEditFaq = (faq) => {
+    setFaqForm(faq);
+  };
+
+  const handleDeleteFaq = (id) => {
+    deleteFaq(id);
+    loadData();
+  };
+
   // SVG Icons
   const TrashIcon = () => (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -119,7 +144,7 @@ const AdminPanel = () => {
       </header>
 
       <div className="admin-tabs">
-        {['Noticias', 'Slider', 'Cursos'].map(tab => (
+        {['Noticias', 'Slider', 'Cursos', 'Preguntas'].map(tab => (
           <button 
             key={tab} 
             className={`tab-btn ${activeTab === tab ? 'active' : ''}`}
@@ -211,10 +236,6 @@ const AdminPanel = () => {
                     <option value="Intermedio">Intermedio</option>
                     <option value="Avanzado">Avanzado</option>
                   </select>
-                  <label className="checkbox-label">
-                    <input type="checkbox" checked={cursoForm.evaluacion} onChange={e => setCursoForm({...cursoForm, evaluacion: e.target.checked})} />
-                    Incluye Evaluación
-                  </label>
                 </div>
                 <input type="text" placeholder="Temas (separados por coma)" value={cursoForm.temas} onChange={e => setCursoForm({...cursoForm, temas: e.target.value})} required />
                 <button type="submit" className="btn-submit"><PlusIcon /> Añadir Curso</button>
@@ -230,6 +251,35 @@ const AdminPanel = () => {
                   </div>
                   <div className="item-actions">
                     <button className="btn-delete" onClick={() => handleDeleteCurso(c.id)} title="Eliminar"><TrashIcon /></button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'Preguntas' && (
+          <div className="tab-section">
+            <div className="form-card">
+              <h2>{faqForm.id ? 'Editar Pregunta' : 'Añadir Pregunta Frecuente'}</h2>
+              <form onSubmit={handleFaqSubmit}>
+                <input type="text" placeholder="Pregunta" value={faqForm.question} onChange={e => setFaqForm({...faqForm, question: e.target.value})} required />
+                <textarea placeholder="Respuesta" value={faqForm.answer} onChange={e => setFaqForm({...faqForm, answer: e.target.value})} required rows="4" />
+                <button type="submit" className="btn-submit"><PlusIcon /> {faqForm.id ? 'Actualizar' : 'Guardar'} Pregunta</button>
+                {faqForm.id && <button type="button" className="btn-cancel" onClick={() => setFaqForm({ id: null, question: '', answer: '' })}>Cancelar</button>}
+              </form>
+            </div>
+
+            <div className="list-container">
+              {faqs.map(f => (
+                <div key={f.id} className="list-item">
+                  <div className="item-info">
+                    <h3>{f.question}</h3>
+                    <p>{f.answer.substring(0, 60)}...</p>
+                  </div>
+                  <div className="item-actions">
+                    <button className="btn-edit" onClick={() => handleEditFaq(f)} title="Editar"><EditIcon /></button>
+                    <button className="btn-delete" onClick={() => handleDeleteFaq(f.id)} title="Eliminar"><TrashIcon /></button>
                   </div>
                 </div>
               ))}

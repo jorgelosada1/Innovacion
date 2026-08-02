@@ -1,44 +1,26 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { getFaqs } from '../utils/dataManager';
 import './FaqSection.css';
 
 const FaqSection = () => {
   const [openIdx, setOpenIdx] = useState(null);
-
-  const faqs = [
-    {
-      question: '¿Los títulos emitidos por las universidades son oficiales y acreditados?',
-      answer: 'Sí, 100% oficiales. Emitidos directamente por la Fundación Universitaria del Área Andina y la Corporación Universitaria Iberoamericana con su respectivo registro SNIES.'
-    },
-    {
-      question: '¿Cómo funciona el acompañamiento de Innovación E-Learning?',
-      answer: 'Te asignamos un asesor personal que te orienta en el proceso de inscripción, recolección de documentos, opciones de financiación y primer ingreso a las plataformas virtuales.'
-    },
-    {
-      question: '¿Tienen costo las asesorías de Innovación E-Learning?',
-      answer: 'No, nuestras asesorías y acompañamiento son 100% gratuitos para el estudiante, ya que somos aliados oficiales autorizados.'
-    },
-    {
-      question: '¿Cuáles son los requisitos para inscribirme?',
-      answer: 'Para pregrado requieres acta y diploma de bachiller, resultado de pruebas ICFES/Saber 11 y documento de identidad. Para posgrado, título profesional.'
-    },
-    {
-      question: '¿Puedo financiar el valor de la matrícula?',
-      answer: 'Sí, contamos con alianzas con entidades financieras, Icetex y opciones de crédito directo con las universidades.'
-    }
-  ];
+  const faqs = getFaqs();
 
   const toggleOpen = (index) => {
     setOpenIdx(openIdx === index ? null : index);
   };
 
+  if (!faqs || faqs.length === 0) return null;
+
   return (
     <section className="faq-section" id="faq">
       <div className="faq-container">
+        <span className="faq-badge">Resolvemos tus dudas</span>
         <h2 className="faq-title">Preguntas Frecuentes</h2>
         <div className="faq-list">
           {faqs.map((faq, index) => (
             <div 
-              key={index} 
+              key={faq.id || index} 
               className={`faq-item ${openIdx === index ? 'active' : ''}`}
               onClick={() => toggleOpen(index)}
             >

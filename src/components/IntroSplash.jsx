@@ -1,71 +1,104 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './IntroSplash.css';
 import logoImg from '../assets/images/LogoSolo.png';
 
 const IntroSplash = () => {
-  const [visible, setVisible] = useState(true);
-  const [shouldRender, setShouldRender] = useState(true);
+  const [phase, setPhase] = useState('loading'); // 'loading' | 'fadeout' | 'done'
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const hasSeenIntro = sessionStorage.getItem('intro_seen');
-    if (hasSeenIntro) {
-      setVisible(false);
-      setShouldRender(false);
+    const seen = sessionStorage.getItem('intro_seen');
+    if (seen) {
+      setPhase('done');
       return;
     }
 
-    const duration = 1800; // 1.8 seconds
-    const interval = 30;
-    const step = (100 / (duration / interval));
+    // Lock scroll during intro
+    document.body.style.overflow = 'hidden';
 
-    const progressTimer = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(progressTimer);
+    const duration = 2200;
+    const tick = 20;
+    const step = 100 / (duration / tick);
+
+    const timer = setInterval(() => {
+      setProgress(prev => {
+        const next = prev + step;
+        if (next >= 100) {
+          clearInterval(timer);
           return 100;
         }
-        return prev + step;
+        return next;
       });
-    }, interval);
+    }, tick);
 
-    const hideTimer = setTimeout(() => {
-      handleComplete();
-    }, duration + 500);
+    const fadeTimer = setTimeout(() => {
+      setPhase('fadeout');
+      document.body.style.overflow = '';
+      sessionStorage.setItem('intro_seen', 'true');
+    }, duration + 400);
+
+    const doneTimer = setTimeout(() => {
+      setPhase('done');
+    }, duration + 1100);
 
     return () => {
-      clearInterval(progressTimer);
-      clearTimeout(hideTimer);
+      clearInterval(timer);
+      clearTimeout(fadeTimer);
+      clearTimeout(doneTimer);
+      document.body.style.overflow = '';
     };
   }, []);
 
-  const handleComplete = () => {
-    setVisible(false);
-    sessionStorage.setItem('intro_seen', 'true');
-    setTimeout(() => setShouldRender(false), 600); // match CSS transition duration
-  };
-
   const handleSkip = () => {
-    handleComplete();
+    setPhase('fadeout');
+    document.body.style.overflow = '';
+    sessionStorage.setItem('intro_seen', 'true');
+    setTimeout(() => setPhase('done'), 600);
   };
 
-  if (!shouldRender) return null;
+  if (phase === 'done') return null;
 
   return (
-    <div className={`intro-splash-overlay ${!visible ? 'splash-hidden' : ''}`}>
-      <button className="skip-btn" onClick={handleSkip}>
-        Saltar intro
+    <div className={`intro-splash ${phase === 'fadeout' ? 'intro-splash--hidden' : ''}`}>
+      {/* Skip button */}
+      <button className="intro-splash__skip" onClick={handleSkip}>
+        Saltar intro →
       </button>
-      <div className="intro-card">
-        <div className="logo-container">
-          <div className="glow-rings"></div>
-          <img src={logoImg} alt="Logo" className="splash-logo" />
+
+      {/* Particles */}
+      <div className="intro-splash__particles">
+        {[...Array(6)].map((_, i) => (
+          <div key={i} className={`intro-splash__particle intro-splash__particle--${i + 1}`} />
+        ))}
+      </div>
+
+      {/* Center card */}
+      <div className="intro-splash__card">
+        {/* Logo with glow rings */}
+        <div className="intro-splash__logo-wrap">
+          <div className="intro-splash__ring intro-splash__ring--1" />
+          <div className="intro-splash__ring intro-splash__ring--2" />
+          <div className="intro-splash__ring intro-splash__ring--3" />
+          <img src={logoImg} alt="Innovación E-Learning" className="intro-splash__logo" />
         </div>
-        <h1 className="splash-title">INNOVACIÓN E-LEARNING S.A.S.</h1>
-        <h2 className="splash-subtitle">Educación Superior de Calidad</h2>
-        <div className="progress-container">
-          <div className="progress-bar" style={{ width: `${progress}%` }}></div>
+
+        {/* Title */}
+        <h1 className="intro-splash__title">
+          INNOVACIÓN <span className="intro-splash__title--accent">E-LEARNING</span> S.A.S.
+        </h1>
+
+        {/* Subtitle */}
+        <p className="intro-splash__subtitle">Educación Superior de Calidad</p>
+
+        {/* Progress bar */}
+        <div className="intro-splash__progress">
+          <div
+            className="intro-splash__progress-fill"
+            style={{ width: `${Math.min(progress, 100)}%` }}
+          />
         </div>
+
+        <p className="intro-splash__loading-text">Cargando experiencia...</p>
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import './Hero.css';
 import heroImage from '../assets/images/hero-student.png';
 
@@ -23,14 +22,16 @@ const Hero = () => {
           </p>
 
           <div className="hero__buttons">
-            <Link to="/areandina" className="hero__btn hero__btn--areandina">
+            <a href="https://wa.link/rgw8yn" target="_blank" rel="noopener noreferrer" className="hero__btn hero__btn--areandina">
               <span className="hero__btn-dot hero__btn-dot--yellow"></span>
-              Areandina
-            </Link>
-            <Link to="/iberoamericana" className="hero__btn hero__btn--ibero">
-              <span className="hero__btn-dot hero__btn-dot--yellow"></span>
-              Iberoamericana
-            </Link>
+              Solicitar Asesoría
+            </a>
+            <a href="https://test-vocacional-gold.vercel.app/" target="_blank" rel="noopener noreferrer" className="hero__btn hero__btn--ibero">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight: '4px'}}>
+                <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+              </svg>
+              Test Vocacional
+            </a>
           </div>
         </div>
 
@@ -45,8 +46,8 @@ const Hero = () => {
           </div>
           {/* Floating Card */}
           <div className="hero__floating-card">
-            <span className="hero__floating-card-title">Aliados</span>
-            <span className="hero__floating-card-text">Areandina &amp; Iberoamericana</span>
+            <span className="hero__floating-card-title">+1,000</span>
+            <span className="hero__floating-card-text">Estudiantes Asesorados</span>
           </div>
         </div>
       </div>

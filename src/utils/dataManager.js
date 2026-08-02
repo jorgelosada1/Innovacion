@@ -5,6 +5,7 @@ const KEYS = {
   NOTICIAS: 'innovacion_noticias',
   SLIDER: 'innovacion_slider',
   CURSOS: 'innovacion_cursos',
+  FAQS: 'innovacion_faqs',
   AUTH: 'innovacion_auth',
 };
 
@@ -160,3 +161,57 @@ export const deleteCurso = (id) => {
   const cursos = getCursos().filter(c => c.id !== id);
   setData(KEYS.CURSOS, cursos);
 };
+
+// ===== FAQ =====
+const defaultFaqs = [
+  {
+    id: 'f1',
+    question: '¿Los títulos emitidos por las universidades son oficiales y acreditados?',
+    answer: 'Sí, 100% oficiales. Emitidos directamente por la Fundación Universitaria del Área Andina y la Corporación Universitaria Iberoamericana con su respectivo registro SNIES.'
+  },
+  {
+    id: 'f2',
+    question: '¿Cómo funciona el acompañamiento de Innovación E-Learning?',
+    answer: 'Te asignamos un asesor personal que te orienta en el proceso de inscripción, recolección de documentos, opciones de financiación y primer ingreso a las plataformas virtuales.'
+  },
+  {
+    id: 'f3',
+    question: '¿Tienen costo las asesorías de Innovación E-Learning?',
+    answer: 'No, nuestras asesorías y acompañamiento son 100% gratuitos para el estudiante, ya que somos aliados oficiales autorizados.'
+  },
+  {
+    id: 'f4',
+    question: '¿Cuáles son los requisitos para inscribirme?',
+    answer: 'Para pregrado requieres acta y diploma de bachiller, resultado de pruebas ICFES/Saber 11 y documento de identidad. Para posgrado, título profesional.'
+  },
+  {
+    id: 'f5',
+    question: '¿Puedo financiar el valor de la matrícula?',
+    answer: 'Sí, contamos con alianzas con entidades financieras, Icetex y opciones de crédito directo con las universidades.'
+  }
+];
+
+export const getFaqs = () => getData(KEYS.FAQS, defaultFaqs);
+
+export const addFaq = (faq) => {
+  const faqs = getFaqs();
+  const nuevo = { ...faq, id: generateId() };
+  faqs.push(nuevo);
+  setData(KEYS.FAQS, faqs);
+  return nuevo;
+};
+
+export const updateFaq = (id, updates) => {
+  const faqs = getFaqs();
+  const idx = faqs.findIndex(f => f.id === id);
+  if (idx !== -1) {
+    faqs[idx] = { ...faqs[idx], ...updates };
+    setData(KEYS.FAQS, faqs);
+  }
+};
+
+export const deleteFaq = (id) => {
+  const faqs = getFaqs().filter(f => f.id !== id);
+  setData(KEYS.FAQS, faqs);
+};
+

@@ -44,7 +44,7 @@ const Ventajas = () => {
 
         <div className="ventajas-stats">
           <div className="stat-item">
-            <h4>+5,000</h4>
+            <h4>+1,000</h4>
             <p>Estudiantes Asesorados</p>
           </div>
           <div className="stat-item">
@@ -56,7 +56,7 @@ const Ventajas = () => {
             <p>Satisfacción Alumnos</p>
           </div>
           <div className="stat-item">
-            <h4>10+</h4>
+            <h4>7</h4>
             <p>Años de Experiencia</p>
           </div>
         </div>
