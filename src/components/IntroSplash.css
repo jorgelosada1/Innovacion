@@ -1,0 +1,127 @@
+.intro-splash-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: linear-gradient(135deg, #0d1f33 0%, #152a42 50%, #1a4a72 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s ease;
+  opacity: 1;
+}
+
+.intro-splash-overlay.splash-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.skip-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.3s ease;
+}
+
+.skip-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.intro-card {
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo-container {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.glow-rings {
+  position: absolute;
+  inset: -20px;
+  border-radius: 50%;
+}
+
+.glow-rings::before,
+.glow-rings::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 215, 0, 0.3);
+  animation: pulseRings 2s infinite ease-out;
+}
+
+.glow-rings::after {
+  animation-delay: 1s;
+}
+
+.splash-logo {
+  position: relative;
+  width: 100%;
+  height: auto;
+  z-index: 2;
+  animation: logoPop 1.2s ease-out;
+}
+
+.splash-title {
+  color: #ffffff;
+  font-size: 2rem;
+  margin: 0;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  font-weight: bold;
+}
+
+.splash-subtitle {
+  color: #b0c4de;
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
+  letter-spacing: 2px;
+  margin-bottom: 2.5rem;
+  font-weight: normal;
+}
+
+.progress-container {
+  width: 100%;
+  max-width: 300px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #ffcc00, #fffaaa);
+  box-shadow: 0 0 10px rgba(255, 204, 0, 0.8);
+  border-radius: 10px;
+  transition: width 0.1s linear;
+}
+
+@keyframes logoPop {
+  0% { transform: scale(0.5); opacity: 0; }
+  60% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pulseRings {
+  0% { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
