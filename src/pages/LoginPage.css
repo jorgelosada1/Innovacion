@@ -22,8 +22,9 @@
 }
 
 .login-page__logo {
-  height: 60px;
-  margin-bottom: var(--spacing-md, 16px);
+  height: 65px;
+  display: block;
+  margin: 0 auto var(--spacing-md, 16px) auto;
   object-fit: contain;
 }
 

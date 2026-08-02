@@ -26,7 +26,7 @@ const Navbar = () => {
     { name: 'Noticias', href: '/noticias', type: 'route' },
     { name: 'Colaboradores', href: '/colaboradores', type: 'route' },
     { name: 'Cursos', href: '/cursos', type: 'route' },
-    { name: 'Test Vocacional', href: 'https://test-vocacional-gold.vercel.app/', type: 'external' },
+    { name: 'Test Vocacional', href: 'https://test-vocacional-eight.vercel.app/', type: 'external' },
   ];
 
   const toggleMobileMenu = () => {

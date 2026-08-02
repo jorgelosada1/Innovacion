@@ -26,7 +26,7 @@ const Hero = () => {
               <span className="hero__btn-dot hero__btn-dot--yellow"></span>
               Solicitar Asesoría
             </a>
-            <a href="https://test-vocacional-gold.vercel.app/" target="_blank" rel="noopener noreferrer" className="hero__btn hero__btn--ibero">
+            <a href="https://test-vocacional-eight.vercel.app/" target="_blank" rel="noopener noreferrer" className="hero__btn hero__btn--ibero">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight: '4px'}}>
                 <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
               </svg>
