@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './Hero.css';
 import heroImage from '../assets/images/hero-student.png';
 
@@ -22,16 +23,16 @@ const Hero = () => {
           </p>
 
           <div className="hero__buttons">
-            <a href="https://wa.link/rgw8yn" target="_blank" rel="noopener noreferrer" className="hero__btn hero__btn--areandina">
+            <Link to="/universidades/areandina" className="hero__btn hero__btn--areandina">
               <span className="hero__btn-dot hero__btn-dot--yellow"></span>
-              Solicitar Asesoría
-            </a>
-            <a href="https://test-vocacional-eight.vercel.app/" target="_blank" rel="noopener noreferrer" className="hero__btn hero__btn--ibero">
+              Areandina
+            </Link>
+            <Link to="/universidades/iberoamericana" className="hero__btn hero__btn--ibero">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight: '4px'}}>
-                <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
               </svg>
-              Test Vocacional
-            </a>
+              Iberoamericana
+            </Link>
           </div>
         </div>
 

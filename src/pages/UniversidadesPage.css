@@ -1,0 +1,321 @@
+/* ===== UNIVERSIDADES PAGE ===== */
+.universidades-page {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  color: var(--color-blue-dark);
+}
+
+.universidades-hero {
+  background: linear-gradient(135deg, #0d1f33 0%, #17365d 100%);
+  color: var(--color-white);
+  padding: 130px 20px 60px;
+  text-align: center;
+  position: relative;
+}
+
+.universidades-hero__content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.universidades-hero__badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--color-yellow);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  margin-bottom: 16px;
+  border: 1px solid rgba(245, 166, 35, 0.3);
+}
+
+.universidades-hero__title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.universidades-hero__title-accent {
+  color: var(--color-yellow);
+  font-style: normal;
+}
+
+.universidades-hero__subtitle {
+  font-size: 1.1rem;
+  color: #cbd5e1;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+/* Tabs */
+.universidades-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.universidades-tab {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--color-white);
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all var(--transition-normal);
+}
+
+.universidades-tab:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.universidades-tab--active {
+  background: var(--color-white);
+  color: var(--color-blue-dark);
+  border-color: var(--color-white);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.universidades-tab__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.universidades-tab__dot--areandina {
+  background: #10b981;
+}
+
+.universidades-tab__dot--ibero {
+  background: #3b82f6;
+}
+
+/* Container */
+.universidades-container {
+  max-width: 1000px;
+  margin: 40px auto 80px;
+  padding: 0 20px;
+}
+
+.uni-detail-card {
+  background: var(--color-white);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.06);
+  border: 1px solid #edf1f6;
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.uni-detail-header {
+  margin-bottom: 36px;
+  border-bottom: 2px solid #f1f5f9;
+  padding-bottom: 24px;
+}
+
+.uni-badge-tag {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+
+.uni-badge-tag--areandina {
+  background: rgba(16, 185, 129, 0.1);
+  color: #059669;
+}
+
+.uni-badge-tag--ibero {
+  background: rgba(59, 130, 246, 0.1);
+  color: #2563eb;
+}
+
+.uni-detail-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--color-blue-dark);
+  margin-bottom: 8px;
+}
+
+.uni-detail-tagline {
+  font-size: 1.05rem;
+  color: #64748b;
+}
+
+/* Grid */
+.uni-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  margin-bottom: 36px;
+}
+
+.uni-info-box {
+  background: #f8fafc;
+  border-radius: 14px;
+  padding: 24px;
+  border: 1px solid #edf1f6;
+  transition: all 0.3s ease;
+}
+
+.uni-info-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+}
+
+.uni-info-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-blue-primary);
+  margin-bottom: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.uni-info-box h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-blue-dark);
+  margin-bottom: 8px;
+}
+
+.uni-info-box p {
+  font-size: 0.9rem;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+/* Features List */
+.uni-features-list {
+  background: #f1f5f9;
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 36px;
+}
+
+.uni-features-list h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-blue-dark);
+  margin-bottom: 16px;
+}
+
+.uni-features-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.uni-features-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.95rem;
+  color: #334155;
+  line-height: 1.5;
+}
+
+.uni-features-list li svg {
+  color: #10b981;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Actions */
+.uni-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.uni-btn {
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-normal);
+}
+
+.uni-btn--primary {
+  background: #059669;
+  color: var(--color-white);
+}
+
+.uni-btn--primary:hover {
+  background: #047857;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(5, 150, 105, 0.3);
+}
+
+.uni-btn--ibero-primary {
+  background: #2563eb;
+  color: var(--color-white);
+}
+
+.uni-btn--ibero-primary:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
+}
+
+.uni-btn--whatsapp {
+  background: #25d366;
+  color: var(--color-white);
+}
+
+.uni-btn--whatsapp:hover {
+  background: #1ebc57;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .universidades-hero {
+    padding: 100px 16px 40px;
+  }
+
+  .universidades-hero__title {
+    font-size: 1.8rem;
+  }
+
+  .uni-detail-card {
+    padding: 24px;
+  }
+
+  .uni-actions {
+    flex-direction: column;
+  }
+
+  .uni-btn {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}

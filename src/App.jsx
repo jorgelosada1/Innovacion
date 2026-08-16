@@ -8,6 +8,7 @@ import CursosPage from './pages/CursosPage';
 import LoginPage from './pages/LoginPage';
 import AdminPanel from './pages/AdminPanel';
 import NoticiasPage from './pages/NoticiasPage';
+import UniversidadesPage from './pages/UniversidadesPage';
 import './App.css';
 
 function App() {
@@ -24,6 +25,8 @@ function App() {
             <Route path="/admin" element={<AdminPanel />} />
             <Route path="/noticias" element={<NoticiasPage />} />
             <Route path="/noticias/:id" element={<NoticiasPage />} />
+            <Route path="/universidades" element={<UniversidadesPage />} />
+            <Route path="/universidades/:uni" element={<UniversidadesPage />} />
           </Routes>
         </main>
         <Footer />
