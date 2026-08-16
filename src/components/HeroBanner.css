@@ -22,64 +22,72 @@
   position: absolute;
   border-radius: 50%;
   background: var(--color-yellow, #F5A623);
-  box-shadow: 0 0 16px rgba(245, 166, 35, 0.4);
+  box-shadow: 0 0 20px rgba(245, 166, 35, 0.45);
 }
 
+/* Round halo arrangement gently around the central logo */
 .hero-banner__dot--1 {
-  width: 16px;
-  height: 16px;
-  top: 48%;
-  left: 30%;
+  width: 14px;
+  height: 14px;
+  top: 36%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.9;
   animation: bannerFloat 5s ease-in-out infinite;
 }
 
 .hero-banner__dot--2 {
-  width: 24px;
-  height: 24px;
-  top: 32%;
-  left: 38%;
+  width: 18px;
+  height: 18px;
+  top: 40%;
+  right: 44%;
+  opacity: 0.85;
   animation: bannerFloat 6s ease-in-out infinite 0.8s;
 }
 
 .hero-banner__dot--3 {
-  width: 32px;
-  height: 32px;
-  top: 22%;
-  left: 50%;
-  transform: translateX(-50%);
+  width: 22px;
+  height: 22px;
+  top: 30%;
+  right: 25%;
+  opacity: 0.6;
   animation: bannerFloat 7s ease-in-out infinite 1.5s;
 }
 
 .hero-banner__dot--4 {
-  width: 24px;
-  height: 24px;
-  top: 32%;
-  right: 38%;
-  animation: bannerFloat 6s ease-in-out infinite 0.8s;
+  width: 14px;
+  height: 14px;
+  top: 62%;
+  right: 43%;
+  opacity: 0.8;
+  animation: bannerFloat 6s ease-in-out infinite 2s;
 }
 
 .hero-banner__dot--5 {
-  width: 16px;
-  height: 16px;
-  top: 48%;
-  right: 30%;
-  animation: bannerFloat 5s ease-in-out infinite 2s;
+  width: 20px;
+  height: 20px;
+  top: 62%;
+  left: 43%;
+  opacity: 0.85;
+  animation: bannerFloat 5.5s ease-in-out infinite 1s;
 }
 
 .hero-banner__dot--6 {
-  width: 12px;
-  height: 12px;
-  top: 60%;
-  right: 24%;
-  animation: bannerFloat 6.5s ease-in-out infinite 1.2s;
+  width: 14px;
+  height: 14px;
+  top: 40%;
+  left: 44%;
+  opacity: 0.8;
+  animation: bannerFloat 6.5s ease-in-out infinite 1.8s;
 }
 
 .hero-banner__dot--7 {
-  width: 12px;
-  height: 12px;
-  top: 60%;
-  left: 24%;
-  animation: bannerFloat 6.5s ease-in-out infinite 2.4s;
+  width: 16px;
+  height: 16px;
+  top: 65%;
+  left: 25%;
+  opacity: 0.5;
+  animation: bannerFloat 7s ease-in-out infinite 2.5s;
 }
 
 /* Decorative circles (rings) */

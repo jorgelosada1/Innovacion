@@ -82,13 +82,54 @@
 .org__line-v--tiny { height: 16px; }
 
 /* === CEO & Executive Cards === */
-.org__level--top {
+.org__level--ceo {
   display: flex;
-  gap: var(--spacing-lg);
   justify-content: center;
-  align-items: stretch;
-  flex-wrap: wrap;
   width: 100%;
+}
+
+.org__level--execs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-lg);
+  width: 100%;
+  max-width: 850px;
+  position: relative;
+  align-items: start;
+}
+
+.org__exec-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+@media (min-width: 901px) {
+  .org__exec-group::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    height: 2px;
+    background: #cbd5e1;
+    z-index: 1;
+  }
+
+  .org__exec-group:first-child::before {
+    left: 50%;
+    right: 0;
+  }
+
+  .org__exec-group:last-child::before {
+    left: 0;
+    right: 50%;
+  }
+
+  .org__exec-group:not(:first-child):not(:last-child)::before {
+    left: 0;
+    right: 0;
+  }
 }
 
 .org__card--exec,
@@ -96,12 +137,12 @@
 .org__card--coo {
   background: var(--color-white);
   border-radius: 16px;
-  padding: 20px 32px 18px;
+  padding: 20px 24px 18px;
   text-align: center;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
   border: 1px solid #edf1f6;
   position: relative;
-  min-width: 190px;
+  width: 100%;
 }
 
 .org__avatar--placeholder {
@@ -424,7 +465,8 @@
     padding: 20px var(--spacing-md) 60px;
   }
 
-  .org__level--areas {
+  .org__level--areas,
+  .org__level--execs {
     grid-template-columns: 1fr;
     gap: var(--spacing-lg);
     max-width: 450px;
@@ -432,7 +474,8 @@
   }
 
   .org__area-group::before,
-  .org__sub-group::before {
+  .org__sub-group::before,
+  .org__exec-group::before {
     display: none;
   }
 

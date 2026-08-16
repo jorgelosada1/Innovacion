@@ -9,6 +9,8 @@ const NewsSlider = () => {
   const [slides, setSlides] = useState([]);
   const [current, setCurrent] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -48,17 +50,27 @@ const NewsSlider = () => {
     goToSlide(current === 0 ? slides.length - 1 : current - 1);
   }, [current, goToSlide, slides.length]);
 
-  // Auto-play every 3 seconds
+  // Auto-play every 6 seconds (slower), pauses on hover or manual pause toggle
   useEffect(() => {
-    if (slides.length === 0) return;
-    const timer = setInterval(nextSlide, 3000);
+    if (slides.length === 0 || isPaused || isHovered) return;
+    const timer = setInterval(nextSlide, 6000);
     return () => clearInterval(timer);
-  }, [nextSlide, slides.length]);
+  }, [nextSlide, slides.length, isPaused, isHovered]);
+
+  const togglePause = () => {
+    setIsPaused((prev) => !prev);
+  };
 
   if (slides.length === 0) return null;
 
+  const isAutoPlaying = !isPaused && !isHovered;
+
   return (
-    <section className="news-slider">
+    <section 
+      className="news-slider"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <div className="news-slider__track">
         {slides.map((slide, index) => (
           <div
@@ -85,22 +97,46 @@ const NewsSlider = () => {
         </svg>
       </button>
 
-      {/* Dots */}
-      <div className="news-slider__dots">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            className={`news-slider__dot ${index === current ? 'news-slider__dot--active' : ''}`}
-            onClick={() => goToSlide(index)}
-            aria-label={`Ir a slide ${index + 1}`}
-          />
-        ))}
+      {/* Controls bar (Pause/Play + Dots) */}
+      <div className="news-slider__controls">
+        <button 
+          className={`news-slider__pause-btn ${isPaused ? 'news-slider__pause-btn--paused' : ''}`} 
+          onClick={togglePause}
+          title={isPaused ? 'Reanudar diapositivas' : 'Pausar diapositivas'}
+          aria-label={isPaused ? 'Reanudar diapositivas' : 'Pausar diapositivas'}
+        >
+          {isPaused ? (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+          ) : (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <rect x="6" y="4" width="4" height="16" rx="1"/>
+              <rect x="14" y="4" width="4" height="16" rx="1"/>
+            </svg>
+          )}
+        </button>
+
+        <div className="news-slider__dots">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              className={`news-slider__dot ${index === current ? 'news-slider__dot--active' : ''}`}
+              onClick={() => goToSlide(index)}
+              aria-label={`Ir a slide ${index + 1}`}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Progress bar */}
       <div className="news-slider__progress">
         <div
           className="news-slider__progress-bar"
+          style={{
+            animationDuration: '6000ms',
+            animationPlayState: isAutoPlaying ? 'running' : 'paused'
+          }}
           key={current}
         />
       </div>
