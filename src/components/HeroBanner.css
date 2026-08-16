@@ -10,84 +10,12 @@
   overflow: hidden;
 }
 
-/* Decorative dots */
+/* Decorative background elements */
 .hero-banner__decorations {
   position: absolute;
   inset: 0;
   pointer-events: none;
   overflow: hidden;
-}
-
-.hero-banner__dot {
-  position: absolute;
-  border-radius: 50%;
-  background: var(--color-yellow, #F5A623);
-  box-shadow: 0 0 20px rgba(245, 166, 35, 0.45);
-}
-
-/* Round halo arrangement gently around the central logo */
-.hero-banner__dot--1 {
-  width: 14px;
-  height: 14px;
-  top: 36%;
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0.9;
-  animation: bannerFloat 5s ease-in-out infinite;
-}
-
-.hero-banner__dot--2 {
-  width: 18px;
-  height: 18px;
-  top: 40%;
-  right: 44%;
-  opacity: 0.85;
-  animation: bannerFloat 6s ease-in-out infinite 0.8s;
-}
-
-.hero-banner__dot--3 {
-  width: 22px;
-  height: 22px;
-  top: 30%;
-  right: 25%;
-  opacity: 0.6;
-  animation: bannerFloat 7s ease-in-out infinite 1.5s;
-}
-
-.hero-banner__dot--4 {
-  width: 14px;
-  height: 14px;
-  top: 62%;
-  right: 43%;
-  opacity: 0.8;
-  animation: bannerFloat 6s ease-in-out infinite 2s;
-}
-
-.hero-banner__dot--5 {
-  width: 20px;
-  height: 20px;
-  top: 62%;
-  left: 43%;
-  opacity: 0.85;
-  animation: bannerFloat 5.5s ease-in-out infinite 1s;
-}
-
-.hero-banner__dot--6 {
-  width: 14px;
-  height: 14px;
-  top: 40%;
-  left: 44%;
-  opacity: 0.8;
-  animation: bannerFloat 6.5s ease-in-out infinite 1.8s;
-}
-
-.hero-banner__dot--7 {
-  width: 16px;
-  height: 16px;
-  top: 65%;
-  left: 25%;
-  opacity: 0.5;
-  animation: bannerFloat 7s ease-in-out infinite 2.5s;
 }
 
 /* Decorative circles (rings) */
@@ -114,15 +42,6 @@
   animation: bannerPulse 12s ease-in-out infinite reverse;
 }
 
-@keyframes bannerFloat {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-15px);
-  }
-}
-
 @keyframes bannerPulse {
   0%, 100% {
     transform: scale(1);
@@ -134,7 +53,7 @@
   }
 }
 
-/* Center logo */
+/* Center logo wrapper */
 .hero-banner__logo-wrapper {
   position: relative;
   z-index: 2;
@@ -162,6 +81,75 @@
   }
 }
 
+/* Organized ascending dots on the right side of the logo emblem (Small at bottom -> Large at top) */
+.hero-banner__arc-dots {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero-banner__arc-dot {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--color-yellow, #F5A623);
+  box-shadow: 0 0 16px rgba(245, 166, 35, 0.55);
+  animation: arcDotFloat 4s ease-in-out infinite alternate;
+}
+
+/* 1. Bottom Right (smallest) */
+.hero-banner__arc-dot--1 {
+  width: 14px;
+  height: 14px;
+  right: -25px;
+  bottom: 25px;
+  animation-delay: 0s;
+}
+
+/* 2. Lower-Mid Right */
+.hero-banner__arc-dot--2 {
+  width: 22px;
+  height: 22px;
+  right: -55px;
+  bottom: 95px;
+  animation-delay: 0.4s;
+}
+
+/* 3. Mid Right */
+.hero-banner__arc-dot--3 {
+  width: 30px;
+  height: 30px;
+  right: -75px;
+  bottom: 175px;
+  animation-delay: 0.8s;
+}
+
+/* 4. Upper-Mid Right */
+.hero-banner__arc-dot--4 {
+  width: 40px;
+  height: 40px;
+  right: -78px;
+  bottom: 260px;
+  animation-delay: 1.2s;
+}
+
+/* 5. Top Right (largest) */
+.hero-banner__arc-dot--5 {
+  width: 52px;
+  height: 52px;
+  right: -60px;
+  bottom: 345px;
+  animation-delay: 1.6s;
+}
+
+@keyframes arcDotFloat {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    transform: translateY(-8px) scale(1.06);
+  }
+}
+
 /* Curved bottom */
 .hero-banner__curve {
   position: absolute;
@@ -184,18 +172,14 @@
   }
 
   .hero-banner__logo-img {
-    width: 240px;
+    width: 230px;
   }
 
-  .hero-banner__dot--1 {
-    width: 24px;
-    height: 24px;
-  }
-
-  .hero-banner__dot--4 {
-    width: 32px;
-    height: 32px;
-  }
+  .hero-banner__arc-dot--1 { width: 10px; height: 10px; right: -15px; bottom: 15px; }
+  .hero-banner__arc-dot--2 { width: 15px; height: 15px; right: -35px; bottom: 65px; }
+  .hero-banner__arc-dot--3 { width: 20px; height: 20px; right: -50px; bottom: 120px; }
+  .hero-banner__arc-dot--4 { width: 28px; height: 28px; right: -52px; bottom: 175px; }
+  .hero-banner__arc-dot--5 { width: 36px; height: 36px; right: -40px; bottom: 230px; }
 
   .hero-banner__circle--1 {
     width: 220px;
@@ -209,6 +193,12 @@
   }
 
   .hero-banner__logo-img {
-    width: 180px;
+    width: 170px;
   }
+
+  .hero-banner__arc-dot--1 { width: 8px; height: 8px; right: -10px; bottom: 10px; }
+  .hero-banner__arc-dot--2 { width: 12px; height: 12px; right: -25px; bottom: 48px; }
+  .hero-banner__arc-dot--3 { width: 16px; height: 16px; right: -36px; bottom: 90px; }
+  .hero-banner__arc-dot--4 { width: 22px; height: 22px; right: -38px; bottom: 130px; }
+  .hero-banner__arc-dot--5 { width: 28px; height: 28px; right: -30px; bottom: 170px; }
 }

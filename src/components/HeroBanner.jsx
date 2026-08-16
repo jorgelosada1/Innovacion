@@ -4,26 +4,28 @@ import logoSolo from '../assets/images/LogoSolo.png';
 const HeroBanner = () => {
   return (
     <section className="hero-banner" id="inicio">
-      {/* Decorative elements */}
+      {/* Decorative background rings */}
       <div className="hero-banner__decorations">
-        <div className="hero-banner__dot hero-banner__dot--1"></div>
-        <div className="hero-banner__dot hero-banner__dot--2"></div>
-        <div className="hero-banner__dot hero-banner__dot--3"></div>
-        <div className="hero-banner__dot hero-banner__dot--4"></div>
-        <div className="hero-banner__dot hero-banner__dot--5"></div>
-        <div className="hero-banner__dot hero-banner__dot--6"></div>
-        <div className="hero-banner__dot hero-banner__dot--7"></div>
         <div className="hero-banner__circle hero-banner__circle--1"></div>
         <div className="hero-banner__circle hero-banner__circle--2"></div>
       </div>
 
-      {/* Center logo icon */}
+      {/* Center logo icon with organized arc dots */}
       <div className="hero-banner__logo-wrapper">
         <img
           src={logoSolo}
           alt="Innovación e-Learning"
           className="hero-banner__logo-img"
         />
+
+        {/* 5 dots on the right side, ascending in size from bottom (small) to top (large) */}
+        <div className="hero-banner__arc-dots" aria-hidden="true">
+          <span className="hero-banner__arc-dot hero-banner__arc-dot--1"></span>
+          <span className="hero-banner__arc-dot hero-banner__arc-dot--2"></span>
+          <span className="hero-banner__arc-dot hero-banner__arc-dot--3"></span>
+          <span className="hero-banner__arc-dot hero-banner__arc-dot--4"></span>
+          <span className="hero-banner__arc-dot hero-banner__arc-dot--5"></span>
+        </div>
       </div>
 
       {/* Curved bottom */}
