@@ -53,57 +53,57 @@
   }
 }
 
-/* === Arc dots: Pronounced circular round arc sweeping out from logo then up to top-right === */
+/* === Arc dots: Sweeping curve along the bottom-right zone rising toward the right edge === */
 .hero-banner__arc-dot {
   position: absolute;
   border-radius: 50%;
   background: var(--color-yellow, #F5A623);
-  box-shadow: 0 0 20px rgba(245, 166, 35, 0.6);
+  box-shadow: 0 0 22px rgba(245, 166, 35, 0.65);
   animation: arcDotFloat 4s ease-in-out infinite alternate;
 }
 
-/* 1. Smallest - starting at center-right side of logo */
+/* 1. Smallest - bottom right near center */
 .hero-banner__arc-dot--1 {
-  width: 12px;
-  height: 12px;
-  right: 38%;
-  top: 54%;
+  width: 16px;
+  height: 16px;
+  right: 32%;
+  top: 80%;
   animation-delay: 0s;
 }
 
-/* 2. Sweeping out horizontally to form the rounded base of the arc */
+/* 2. Sweeping up & right */
 .hero-banner__arc-dot--2 {
-  width: 18px;
-  height: 18px;
-  right: 27%;
-  top: 48%;
+  width: 26px;
+  height: 26px;
+  right: 24%;
+  top: 68%;
   animation-delay: 0.3s;
 }
 
-/* 3. Curving upward and outwards */
+/* 3. Mid-curve rising */
 .hero-banner__arc-dot--3 {
-  width: 26px;
-  height: 26px;
-  right: 18%;
-  top: 36%;
+  width: 38px;
+  height: 38px;
+  right: 16%;
+  top: 56%;
   animation-delay: 0.6s;
 }
 
-/* 4. Arching steeply towards top corner */
+/* 4. Approaching right border */
 .hero-banner__arc-dot--4 {
-  width: 36px;
-  height: 36px;
-  right: 11%;
-  top: 21%;
+  width: 50px;
+  height: 50px;
+  right: 9%;
+  top: 46%;
   animation-delay: 0.9s;
 }
 
-/* 5. Largest - near top-right corner */
+/* 5. Largest - near lower-right edge */
 .hero-banner__arc-dot--5 {
-  width: 48px;
-  height: 48px;
-  right: 6%;
-  top: 7%;
+  width: 62px;
+  height: 62px;
+  right: 2%;
+  top: 42%;
   animation-delay: 1.2s;
 }
 
@@ -169,11 +169,11 @@
     width: 230px;
   }
 
-  .hero-banner__arc-dot--1 { width: 10px; height: 10px; right: 36%; top: 54%; }
-  .hero-banner__arc-dot--2 { width: 14px; height: 14px; right: 26%; top: 48%; }
-  .hero-banner__arc-dot--3 { width: 20px; height: 20px; right: 17%; top: 36%; }
-  .hero-banner__arc-dot--4 { width: 28px; height: 28px; right: 10%; top: 21%; }
-  .hero-banner__arc-dot--5 { width: 36px; height: 36px; right: 5%; top: 8%; }
+  .hero-banner__arc-dot--1 { width: 12px; height: 12px; right: 30%; top: 78%; }
+  .hero-banner__arc-dot--2 { width: 18px; height: 18px; right: 22%; top: 66%; }
+  .hero-banner__arc-dot--3 { width: 26px; height: 26px; right: 14%; top: 54%; }
+  .hero-banner__arc-dot--4 { width: 34px; height: 34px; right: 7%; top: 44%; }
+  .hero-banner__arc-dot--5 { width: 44px; height: 44px; right: 1%; top: 40%; }
 
   .hero-banner__circle--1 {
     width: 220px;
@@ -190,9 +190,9 @@
     width: 170px;
   }
 
-  .hero-banner__arc-dot--1 { width: 8px; height: 8px; right: 34%; top: 54%; }
-  .hero-banner__arc-dot--2 { width: 12px; height: 12px; right: 24%; top: 48%; }
-  .hero-banner__arc-dot--3 { width: 16px; height: 16px; right: 16%; top: 36%; }
-  .hero-banner__arc-dot--4 { width: 22px; height: 22px; right: 9%; top: 21%; }
-  .hero-banner__arc-dot--5 { width: 28px; height: 28px; right: 4%; top: 8%; }
+  .hero-banner__arc-dot--1 { width: 10px; height: 10px; right: 28%; top: 76%; }
+  .hero-banner__arc-dot--2 { width: 14px; height: 14px; right: 20%; top: 64%; }
+  .hero-banner__arc-dot--3 { width: 20px; height: 20px; right: 12%; top: 52%; }
+  .hero-banner__arc-dot--4 { width: 26px; height: 26px; right: 6%; top: 42%; }
+  .hero-banner__arc-dot--5 { width: 32px; height: 32px; right: 1%; top: 38%; }
 }
