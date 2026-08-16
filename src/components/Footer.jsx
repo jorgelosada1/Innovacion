@@ -4,8 +4,8 @@ import logoSolo from '../assets/images/LogoSolo.png';
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
-  const googleMapsUrl = 'https://www.google.com/maps/search/Cl+5ta+%2363+-+35+Oficina+407';
-  const googleMapsEmbed = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.5!2d-76.53!3d3.43!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM8KwMjUnNDguMCJOIDc2wrAzMScxMi4wIlc!5e0!3m2!1ses!2sco!4v1';
+  const googleMapsUrl = 'https://www.google.com/maps/place/Innovaci%C3%B3n+Elearning/@4.6265022,-74.1212668,1017m/data=!3m2!1e3!4b1!4m6!3m5!1s0x8e3f996a06acf7b3:0x2bf9f9c73c7d195b!8m2!3d4.6264969!4d-74.1186919!16s%2Fg%2F11zdcsb_kg';
+  const googleMapsEmbed = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.8123985796245!2d-74.1186919!3d4.6264969!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f996a06acf7b3%3A0x2bf9f9c73c7d195b!2sInnovaci%C3%B3n%20Elearning!5e0!3m2!1ses!2sco!4v1722618000000!5m2!1ses!2sco';
 
   const csuAreandina = [
     'Galán',
@@ -28,7 +28,7 @@ const Footer = () => {
 
   return (
     <footer id="contacto" className="footer">
-      {/* Top section - dark */}
+      {/* Top section - Map & Address */}
       <div className="footer__top">
         <div className="footer__top-container">
           <div className="footer__map-area">
@@ -60,6 +60,7 @@ const Footer = () => {
               </div>
             </a>
           </div>
+
           <div className="footer__address-card">
             <div className="footer__address-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-yellow)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -68,16 +69,16 @@ const Footer = () => {
               </svg>
             </div>
             <div className="footer__address-text">
-              <span className="footer__address-line">Cl 5ta #63 - 35</span>
-              <span className="footer__address-line">Oficina 407</span>
+              <span className="footer__address-line">Innovación Elearning</span>
+              <span className="footer__address-line">Bogotá, Colombia</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Main footer - blue */}
+      {/* Main footer */}
       <div className="footer__main">
-        {/* Logo overlapping 50% into dark section */}
+        {/* Logo overlapping section */}
         <div className="footer__logo-overlap">
           <div className="footer__logo-circle">
             <img src={logoSolo} alt="Innovación e-Learning S.A.S" className="footer__logo-img" />
@@ -88,28 +89,20 @@ const Footer = () => {
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
                 <circle cx="12" cy="10" r="3"/>
               </svg>
-              Cl 5ta #63 - 35, Oficina 407
+              Innovación Elearning, Bogotá
             </a>
-            <a href="mailto:info@innovacionelearning.org" className="footer__contact-link">
+            <a href="mailto:talentohumano@csu.com.co" className="footer__contact-link">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="2" y="4" width="20" height="16" rx="2"/>
                 <path d="M22 7l-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/>
               </svg>
-              @innovacionelearning
+              talentohumano@csu.com.co
             </a>
-            <a href="https://innovacionelearning.org" target="_blank" rel="noopener noreferrer" className="footer__contact-link">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="10"/>
-                <line x1="2" y1="12" x2="22" y2="12"/>
-                <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
-              </svg>
-              innovacionelearning.org
-            </a>
-            <a href="tel:+573000000000" className="footer__contact-link">
+            <a href="https://wa.link/rgw8yn" target="_blank" rel="noopener noreferrer" className="footer__contact-link">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
               </svg>
-              (+57) 300 000 0000
+              Asesoría por WhatsApp
             </a>
           </div>
         </div>

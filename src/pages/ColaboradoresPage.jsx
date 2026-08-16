@@ -1,5 +1,6 @@
 import './ColaboradoresPage.css';
 import fernanImg from '../assets/images/Fernan.png';
+import wilsonImg from '../assets/images/wilson.png';
 import johannaImg from '../assets/images/Johanna.JPG';
 
 const ColaboradoresPage = () => {
@@ -19,15 +20,36 @@ const ColaboradoresPage = () => {
 
       <div className="colaboradores__container">
         <div className="org">
-          {/* === NIVEL 1: CEO === */}
-          <div className="org__level org__level--ceo">
-            <div className="org__card org__card--ceo">
+          {/* === NIVEL 1: DIRECCIÓN Y EJECUTIVOS === */}
+          <div className="org__level org__level--top">
+            <div className="org__card org__card--exec">
               <span className="org__badge org__badge--blue">CEO</span>
               <div className="org__avatar">
                 <img src={fernanImg} alt="Fernan" className="org__avatar-img" />
               </div>
               <h3 className="org__name">Fernan</h3>
               <p className="org__role">Dirección General</p>
+            </div>
+
+            <div className="org__card org__card--exec">
+              <span className="org__badge org__badge--blue">Gestión Humana</span>
+              <div className="org__avatar">
+                <img src={wilsonImg} alt="Wilson" className="org__avatar-img" />
+              </div>
+              <h3 className="org__name">Wilson</h3>
+              <p className="org__role">Gestión Humana</p>
+            </div>
+
+            <div className="org__card org__card--exec">
+              <span className="org__badge org__badge--blue">Nuevos Proyectos</span>
+              <div className="org__avatar org__avatar--placeholder">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+              </div>
+              <h3 className="org__name">María del Socorro</h3>
+              <p className="org__role">Nuevos Proyectos</p>
             </div>
           </div>
 

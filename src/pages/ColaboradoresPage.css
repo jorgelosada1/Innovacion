@@ -81,17 +81,32 @@
 .org__line-v--medium { height: 32px; }
 .org__line-v--tiny { height: 16px; }
 
-/* === CEO / COO Cards === */
+/* === CEO & Executive Cards === */
+.org__level--top {
+  display: flex;
+  gap: var(--spacing-lg);
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.org__card--exec,
 .org__card--ceo,
 .org__card--coo {
   background: var(--color-white);
   border-radius: 16px;
-  padding: 20px 40px 18px;
+  padding: 20px 32px 18px;
   text-align: center;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
   border: 1px solid #edf1f6;
   position: relative;
-  min-width: 200px;
+  min-width: 190px;
+}
+
+.org__avatar--placeholder {
+  color: #8a96a6;
+  background: #f1f5f9;
 }
 
 .org__badge {
