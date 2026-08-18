@@ -25,13 +25,13 @@ const Hero = () => {
           <div className="hero__buttons">
             <Link to="/universidades/areandina" className="hero__btn hero__btn--areandina">
               <span className="hero__btn-dot hero__btn-dot--yellow"></span>
-              Areandina
+              Conoce Areandina →
             </Link>
             <Link to="/universidades/iberoamericana" className="hero__btn hero__btn--ibero">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight: '4px'}}>
                 <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
               </svg>
-              Iberoamericana
+              Conoce IBERO →
             </Link>
           </div>
         </div>

@@ -1,225 +1,381 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import './UniversidadesPage.css';
+import andinaBanner from '../assets/images/andina.png';
+import iberoBanner from '../assets/images/ibero.png';
+import AsesoriaModal from '../components/AsesoriaModal';
+
+/* ── SVG Icons (matching site's stroke style) ── */
+const CheckShield = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/>
+  </svg>
+);
+const Globe = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z"/>
+  </svg>
+);
+const Monitor = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+  </svg>
+);
+const Users = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+  </svg>
+);
+const MapPin = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+  </svg>
+);
+const Cap = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
+  </svg>
+);
+const Book = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+  </svg>
+);
+const ChevronRight = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="9 18 15 12 9 6"/>
+  </svg>
+);
+const Search = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+  </svg>
+);
+const Headphones = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+  </svg>
+);
+const FileCheck = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15l2 2 4-4"/>
+  </svg>
+);
 
 const UniversidadesPage = () => {
   const { uni } = useParams();
   const [activeTab, setActiveTab] = useState(uni === 'iberoamericana' ? 'iberoamericana' : 'areandina');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    if (uni === 'iberoamericana' || uni === 'areandina') {
-      setActiveTab(uni);
-    }
+    if (uni === 'iberoamericana' || uni === 'areandina') setActiveTab(uni);
   }, [uni]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [activeTab]);
 
-  return (
-    <div className="universidades-page">
-      <section className="universidades-hero">
-        <div className="universidades-hero__content">
-          <span className="universidades-hero__badge">Alianzas de Excelencia</span>
-          <h1 className="universidades-hero__title">
-            Nuestras <em className="universidades-hero__title-accent">Universidades Aliadas</em>
-          </h1>
-          <p className="universidades-hero__subtitle">
-            Conoce en detalle la oferta institucional, calidad acreditada y beneficios de estudiar en nuestras universidades asociadas.
-          </p>
+  const isAreandina = activeTab === 'areandina';
 
-          <div className="universidades-tabs">
+  return (
+    <div className="upage">
+      {/* ─── HERO BANNER (same style as landing HeroBanner) ─── */}
+      <section className="upage__hero">
+        <div className="upage__hero-deco">
+          <div className="upage__hero-circle upage__hero-circle--1"></div>
+          <div className="upage__hero-circle upage__hero-circle--2"></div>
+        </div>
+        <div className="upage__hero-inner">
+          <div className="upage__hero-badge">
+            <span className="upage__hero-badge-dot"></span>
+            UNIVERSIDADES ALIADAS
+          </div>
+          <h1 className="upage__hero-title">
+            Nuestras{' '}
+            <span className="upage__hero-accent">Universidades Aliadas</span>
+          </h1>
+          <p className="upage__hero-subtitle">
+            Conoce en detalle la oferta institucional, calidad acreditada y beneficios
+            de estudiar en nuestras universidades asociadas.
+          </p>
+          <div className="upage__tabs">
             <button
-              className={`universidades-tab ${activeTab === 'areandina' ? 'universidades-tab--active' : ''}`}
+              className={`upage__tab ${isAreandina ? 'upage__tab--active' : ''}`}
               onClick={() => setActiveTab('areandina')}
             >
-              <span className="universidades-tab__dot universidades-tab__dot--areandina"></span>
-              Fundación Universitaria del Área Andina
+              <span className="upage__tab-dot upage__tab-dot--green"></span>
+              Conoce Areandina →
             </button>
             <button
-              className={`universidades-tab ${activeTab === 'iberoamericana' ? 'universidades-tab--active' : ''}`}
+              className={`upage__tab ${!isAreandina ? 'upage__tab--active' : ''}`}
               onClick={() => setActiveTab('iberoamericana')}
             >
-              <span className="universidades-tab__dot universidades-tab__dot--ibero"></span>
-              Corporación Universitaria Iberoamericana
+              <span className="upage__tab-dot upage__tab-dot--blue"></span>
+              Conoce IBERO →
             </button>
           </div>
         </div>
+        {/* Curved bottom just like HeroBanner */}
+        <div className="upage__hero-curve">
+          <svg viewBox="0 0 1440 140" fill="none" preserveAspectRatio="none">
+            <path d="M0 140V100C240 20 480 0 720 20C960 40 1200 80 1440 100V140H0Z" fill="#f8f9fa"/>
+          </svg>
+        </div>
       </section>
 
-      <div className="universidades-container">
-        {activeTab === 'areandina' && (
-          <div className="uni-detail-card uni-detail-card--areandina">
-            <div className="uni-detail-header">
-              <div className="uni-badge-tag uni-badge-tag--areandina">Acreditada en Alta Calidad</div>
-              <h2 className="uni-detail-title">Fundación Universitaria del Área Andina</h2>
-              <p className="uni-detail-tagline">
-                Educación superior inclusiva, moderna y con presencia en todo el territorio colombiano.
+      {/* ─── CONTENT ─── */}
+      <div className="upage__container">
+        {/* ========= AREANDINA ========= */}
+        {isAreandina && (
+          <div className="upage__content" key="areandina">
+            {/* Banner image — full, no crop */}
+            <div className="upage__banner">
+              <img src={andinaBanner} alt="Fundación Universitaria del Área Andina" />
+            </div>
+
+            {/* Quién es */}
+            <section className="upage__section">
+              <span className="upage__badge">Institución Aliada</span>
+              <h2 className="upage__title">¿Quién es Areandina?</h2>
+              <p className="upage__lead">Educación de calidad que llega a las regiones</p>
+              <p className="upage__text">
+                La Fundación Universitaria del Área Andina es una institución de educación superior con acreditación en alta calidad multicampus y más de 38 años de trayectoria. Su propuesta combina formación académica, inclusión, internacionalización y presencia regional.
               </p>
-            </div>
+            </section>
 
-            <div className="uni-detail-grid">
-              <div className="uni-info-box">
-                <div className="uni-info-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                  </svg>
+            {/* Por qué estudiar */}
+            <section className="upage__section">
+              <span className="upage__badge">Ventajas</span>
+              <h2 className="upage__title">¿Por qué estudiar en Areandina?</h2>
+              <div className="upage__grid-3">
+                <div className="upage__info-box">
+                  <div className="upage__info-icon"><CheckShield /></div>
+                  <h3>Alta Calidad</h3>
+                  <p>Institución con acreditación en alta calidad multicampus.</p>
                 </div>
-                <h3>Modalidades de Estudio</h3>
-                <p>Virtual y Presencial con flexibilidad de horarios para estudiantes y trabajadores.</p>
-              </div>
-
-              <div className="uni-info-box">
-                <div className="uni-info-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <circle cx="12" cy="12" r="10"/>
-                    <path d="M12 6v6l4 2"/>
-                  </svg>
+                <div className="upage__info-box">
+                  <div className="upage__info-icon"><Globe /></div>
+                  <h3>Proyección Internacional</h3>
+                  <p>Oportunidades de intercambio y relacionamiento con universidades del exterior.</p>
                 </div>
-                <h3>Acompañamiento 1 a 1</h3>
-                <p>Tutoría personalizada, seguimiento constante y apoyo en tu proceso de adaptación.</p>
-              </div>
-
-              <div className="uni-info-box">
-                <div className="uni-info-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
-                    <polyline points="22 4 12 14.01 9 11.01"/>
-                  </svg>
+                <div className="upage__info-box">
+                  <div className="upage__info-icon"><Monitor /></div>
+                  <h3>Educación Flexible</h3>
+                  <p>Oferta académica virtual que permite estudiar desde diferentes lugares y compatibilizar la formación con otras responsabilidades.</p>
                 </div>
-                <h3>Acreditación y Prestigio</h3>
-                <p>Reacreditación Institucional de Alta Calidad otorgada por el Ministerio de Educación Nacional.</p>
               </div>
+            </section>
 
-              <div className="uni-info-box">
-                <div className="uni-info-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                    <circle cx="12" cy="10" r="3"/>
-                  </svg>
+            {/* Programas */}
+            <section className="upage__section">
+              <span className="upage__badge">Oferta Académica</span>
+              <h2 className="upage__title">Programas Destacados</h2>
+              <div className="upage__programs">
+                <div className="upage__prog-card">
+                  <div className="upage__prog-head upage__prog-head--areandina">
+                    <Cap /> PREGRADOS
+                  </div>
+                  <div className="upage__prog-body">
+                    Administración en Salud, Administración Pública, Licenciatura en Educación Infantil, Ingeniería de Sistemas, Ingeniería Industrial y Economía, entre otros.
+                  </div>
                 </div>
-                <h3>Centros CSU</h3>
-                <p>Sedes y Centros de Servicio Universitario en Galán, Aguachica, Buenaventura, Leticia, Sangil y más.</p>
+                <div className="upage__prog-card">
+                  <div className="upage__prog-head upage__prog-head--areandina">
+                    <Book /> POSGRADOS
+                  </div>
+                  <div className="upage__prog-body">
+                    Pedagogía y Docencia, Auditoría en Salud, Alta Gerencia, Gerencia Financiera, Epidemiología e Innovación.
+                  </div>
+                </div>
               </div>
-            </div>
+            </section>
 
-            <div className="uni-features-list">
-              <h3>Principales Beneficios</h3>
-              <ul>
-                <li>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                  Plataformas tecnológicas de última generación para clases en vivo y grabadas.
-                </li>
-                <li>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                  Amplia oferta en carreras profesionales, tecnológicas y posgrados en diversas áreas.
-                </li>
-                <li>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                  Múltiples opciones de becas, homologación y facilidades de pago directo.
-                </li>
-              </ul>
-            </div>
+            {/* Acompañamiento */}
+            <section className="upage__section">
+              <span className="upage__badge">Proceso</span>
+              <h2 className="upage__title">¿Cómo te acompañamos?</h2>
+              <p className="upage__lead">Tu proceso puede ser más sencillo</p>
+              <div className="upage__steps">
+                <div className="upage__step">
+                  <div className="upage__step-icon"><Search /></div>
+                  <span className="upage__step-num">01</span>
+                  <h4>Encuentra tu programa</h4>
+                  <p>Explora las opciones disponibles según tus intereses profesionales.</p>
+                </div>
+                <div className="upage__step">
+                  <div className="upage__step-icon"><Headphones /></div>
+                  <span className="upage__step-num">02</span>
+                  <h4>Recibe asesoría personalizada</h4>
+                  <p>Nuestro equipo te orienta sobre el programa, modalidad y proceso de ingreso.</p>
+                </div>
+                <div className="upage__step">
+                  <div className="upage__step-icon"><FileCheck /></div>
+                  <span className="upage__step-num">03</span>
+                  <h4>Inicia tu proceso</h4>
+                  <p>Te acompañamos durante la inscripción y matrícula.</p>
+                </div>
+              </div>
+              <div className="upage__center">
+                <button className="upage__btn upage__btn--areandina" onClick={() => setIsModalOpen(true)}>
+                  Quiero recibir asesoría <ChevronRight />
+                </button>
+              </div>
+            </section>
 
-            <div className="uni-actions">
-              <Link to="/cursos" className="uni-btn uni-btn--primary">
-                Ver Programas de Areandina
-              </Link>
-              <a href="https://wa.link/rgw8yn" target="_blank" rel="noopener noreferrer" className="uni-btn uni-btn--whatsapp">
-                Solicitar Asesoría Personalizada
-              </a>
-            </div>
+            {/* Centros */}
+            <section className="upage__section">
+              <span className="upage__badge">Cobertura</span>
+              <h2 className="upage__title">Centros de Servicio Universitario</h2>
+              <p className="upage__lead">Estamos más cerca de ti</p>
+              <div className="upage__pills">
+                {['Bogotá', 'Aguachica', 'Buenaventura', 'Leticia', 'San Gil'].map(c => (
+                  <span key={c} className="upage__pill"><MapPin /> {c}</span>
+                ))}
+              </div>
+            </section>
+
+            {/* CTA Final */}
+            <section className="upage__cta">
+              <h2>¿Listo para dar el siguiente paso?</h2>
+              <p>Conoce la oferta académica de Areandina, encuentra el programa que se adapta a tus objetivos y comienza tu proceso.</p>
+              <div className="upage__cta-btns">
+                <a href="https://wa.link/rgw8yn" target="_blank" rel="noopener noreferrer" className="upage__cta-btn upage__cta-btn--primary">
+                  Hablar con un asesor
+                </a>
+              </div>
+            </section>
           </div>
         )}
 
-        {activeTab === 'iberoamericana' && (
-          <div className="uni-detail-card uni-detail-card--ibero">
-            <div className="uni-detail-header">
-              <div className="uni-badge-tag uni-badge-tag--ibero">Más de 40 Años de Excelencia</div>
-              <h2 className="uni-detail-title">Corporación Universitaria Iberoamericana</h2>
-              <p className="uni-detail-tagline">
-                Innovación educativa, inclusión social y alta flexibilidad para formar los líderes del futuro.
+        {/* ========= IBERO ========= */}
+        {!isAreandina && (
+          <div className="upage__content" key="ibero">
+            {/* Banner image — full, no crop */}
+            <div className="upage__banner">
+              <img src={iberoBanner} alt="Corporación Universitaria Iberoamericana" />
+            </div>
+
+            {/* Quién es */}
+            <section className="upage__section">
+              <span className="upage__badge upage__badge--ibero">Institución Aliada</span>
+              <h2 className="upage__title">¿Quién es Iberoamericana?</h2>
+              <p className="upage__lead">50 años transformando vidas a través de la educación</p>
+              <p className="upage__text">
+                La Corporación Universitaria Iberoamericana – IBERO es una institución de educación superior con Acreditación Institucional en Alta Calidad, otorgada por el Ministerio de Educación Nacional por seis años. Forma parte de Planeta Formación y Universidades, red internacional de educación superior de Grupo Planeta.
               </p>
-            </div>
+            </section>
 
-            <div className="uni-detail-grid">
-              <div className="uni-info-box">
-                <div className="uni-info-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <rect width="20" height="14" x="2" y="3" rx="2"/>
-                    <line x1="8" x2="16" y1="21" y2="21"/>
-                    <line x1="12" x2="12" y1="17" y2="21"/>
-                  </svg>
+            {/* Por qué estudiar */}
+            <section className="upage__section">
+              <span className="upage__badge upage__badge--ibero">Pilares</span>
+              <h2 className="upage__title">¿Por qué estudiar en IBERO?</h2>
+              <div className="upage__grid-4">
+                <div className="upage__info-box upage__info-box--ibero">
+                  <div className="upage__info-icon upage__info-icon--ibero"><CheckShield /></div>
+                  <h3>Alta Calidad</h3>
+                  <p>Institución acreditada en Alta Calidad por el Ministerio de Educación Nacional.</p>
                 </div>
-                <h3>Educación 100% Virtual</h3>
-                <p>Plataforma intuitiva diseñada para estudiar a tu ritmo desde cualquier lugar del país.</p>
-              </div>
-
-              <div className="uni-info-box">
-                <div className="uni-info-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                    <circle cx="9" cy="7" r="4"/>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                  </svg>
+                <div className="upage__info-box upage__info-box--ibero">
+                  <div className="upage__info-icon upage__info-icon--ibero"><Monitor /></div>
+                  <h3>Virtualidad</h3>
+                  <p>Programas que permiten acceder a educación superior desde diferentes regiones del país.</p>
                 </div>
-                <h3>Líderes en Inclusión</h3>
-                <p>Especialistas en pedagogía, psicología, educación especial y programas empresariales de alto impacto.</p>
-              </div>
-
-              <div className="uni-info-box">
-                <div className="uni-info-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <rect width="20" height="14" x="2" y="5" rx="2"/>
-                    <line x1="2" x2="22" y1="10" y2="10"/>
-                  </svg>
+                <div className="upage__info-box upage__info-box--ibero">
+                  <div className="upage__info-icon upage__info-icon--ibero"><Globe /></div>
+                  <h3>Internacionalización</h3>
+                  <p>IBERO forma parte de Planeta Formación y Universidades, una red internacional de educación superior.</p>
                 </div>
-                <h3>Facilidades de Financiación</h3>
-                <p>Opciones de pago accesibles, convenios y valores de matrícula altamente competitivos.</p>
-              </div>
-
-              <div className="uni-info-box">
-                <div className="uni-info-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                    <circle cx="12" cy="10" r="3"/>
-                  </svg>
+                <div className="upage__info-box upage__info-box--ibero">
+                  <div className="upage__info-icon upage__info-icon--ibero"><Users /></div>
+                  <h3>Inclusión</h3>
+                  <p>La institución identifica inclusión, virtualidad e internacionalización como pilares de su modelo institucional.</p>
                 </div>
-                <h3>Centros CEI</h3>
-                <p>Presencia con Centros de Educación Iberoamericana en Bogotá y Boyacá.</p>
               </div>
-            </div>
+            </section>
 
-            <div className="uni-features-list">
-              <h3>Principales Beneficios</h3>
-              <ul>
-                <li>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                  Modelo pedagógico centrado en el desarrollo humano, habilidades prácticas y la empleabilidad.
-                </li>
-                <li>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                  Planta docente calificada con amplia experiencia laboral y académica.
-                </li>
-                <li>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                  Acompañamiento personalizado desde la asesoría vocacional hasta la homologación.
-                </li>
-              </ul>
-            </div>
+            {/* Programas */}
+            <section className="upage__section">
+              <span className="upage__badge upage__badge--ibero">Oferta Académica</span>
+              <h2 className="upage__title">Programas Destacados</h2>
+              <div className="upage__programs">
+                <div className="upage__prog-card">
+                  <div className="upage__prog-head upage__prog-head--ibero">
+                    <Cap /> PREGRADOS
+                  </div>
+                  <div className="upage__prog-body">
+                    Administración de empresas, Administración Financiera, Licenciaturas, Ingenierías, Economía, entre otros.
+                  </div>
+                </div>
+                <div className="upage__prog-card">
+                  <div className="upage__prog-head upage__prog-head--ibero">
+                    <Book /> POSGRADOS
+                  </div>
+                  <div className="upage__prog-body">
+                    Pedagogía y Docencia, Auditoría en Salud, Alta Gerencia, Gerencia Financiera, Epidemiología e Innovación.
+                  </div>
+                </div>
+              </div>
+            </section>
 
-            <div className="uni-actions">
-              <Link to="/cursos" className="uni-btn uni-btn--ibero-primary">
-                Ver Programas de Iberoamericana
-              </Link>
-              <a href="https://wa.link/rgw8yn" target="_blank" rel="noopener noreferrer" className="uni-btn uni-btn--whatsapp">
-                Solicitar Asesoría Personalizada
-              </a>
-            </div>
+            {/* Acompañamiento */}
+            <section className="upage__section">
+              <span className="upage__badge upage__badge--ibero">Proceso</span>
+              <h2 className="upage__title">¿Cómo te acompañamos?</h2>
+              <p className="upage__lead">Tu proceso puede ser más sencillo</p>
+              <div className="upage__steps">
+                <div className="upage__step upage__step--ibero">
+                  <div className="upage__step-icon upage__step-icon--ibero"><Search /></div>
+                  <span className="upage__step-num upage__step-num--ibero">01</span>
+                  <h4>Encuentra tu programa</h4>
+                  <p>Explora las opciones disponibles según tus intereses profesionales.</p>
+                </div>
+                <div className="upage__step upage__step--ibero">
+                  <div className="upage__step-icon upage__step-icon--ibero"><Headphones /></div>
+                  <span className="upage__step-num upage__step-num--ibero">02</span>
+                  <h4>Recibe asesoría personalizada</h4>
+                  <p>Nuestro equipo te orienta sobre el programa, modalidad y proceso de ingreso.</p>
+                </div>
+                <div className="upage__step upage__step--ibero">
+                  <div className="upage__step-icon upage__step-icon--ibero"><FileCheck /></div>
+                  <span className="upage__step-num upage__step-num--ibero">03</span>
+                  <h4>Inicia tu proceso</h4>
+                  <p>Te acompañamos durante la inscripción y matrícula.</p>
+                </div>
+              </div>
+              <div className="upage__center">
+                <button className="upage__btn upage__btn--ibero" onClick={() => setIsModalOpen(true)}>
+                  Quiero recibir asesoría <ChevronRight />
+                </button>
+              </div>
+            </section>
+
+            {/* Centros */}
+            <section className="upage__section">
+              <span className="upage__badge upage__badge--ibero">Cobertura</span>
+              <h2 className="upage__title">Centros de Experiencia Ibero</h2>
+              <p className="upage__lead">Estamos más cerca de ti</p>
+              <div className="upage__pills">
+                {['Boyacá', 'Manizales'].map(c => (
+                  <span key={c} className="upage__pill upage__pill--ibero"><MapPin /> {c}</span>
+                ))}
+              </div>
+            </section>
+
+            {/* CTA Final */}
+            <section className="upage__cta upage__cta--ibero">
+              <h2>¿Listo para dar el siguiente paso?</h2>
+              <p>Conoce la oferta académica de la Iberoamericana, encuentra el programa que se adapta a tus objetivos y comienza tu proceso.</p>
+              <div className="upage__cta-btns">
+                <a href="https://wa.link/rgw8yn" target="_blank" rel="noopener noreferrer" className="upage__cta-btn upage__cta-btn--primary-ibero">
+                  Hablar con un asesor
+                </a>
+              </div>
+            </section>
           </div>
         )}
       </div>
+
+      <AsesoriaModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 };
