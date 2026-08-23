@@ -283,40 +283,54 @@ const ColaboradoresPage = () => {
                 </div>
               </div>
 
-              {/* === COMENTARIOS DE EMPLEADOS EN EL ESPACIO VACÍO === */}
-              <div className="emp-comments emp-comments--in-org">
-                <div className="emp-comments__header">
-                  <span className="colaboradores__badge">Lo que dicen nuestros colaboradores</span>
-                  <h3 className="emp-comments__title">Voces de Nuestro Equipo</h3>
+              {/* === SLEEK EMPLOYEE COMMENTS CARD IN ORGANIGRAMA EMPTY SPACE === */}
+              <div className="emp-comments-card">
+                <div className="emp-comments-card__header">
+                  <div className="emp-comments-card__badge">
+                    <span className="emp-comments-card__dot"></span>
+                    Nuestra Cultura
+                  </div>
+                  <h3 className="emp-comments-card__title">Voces del Equipo</h3>
                 </div>
-                <div className="emp-comments__slider">
-                  <div className="emp-comments__track" style={{ transform: `translateX(-${commentIndex * 100}%)` }}>
-                    {comments.map((comment, i) => (
-                      <div key={i} className="emp-comments__card">
-                        <div className="emp-comments__quote">
-                          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" opacity="0.12">
-                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609L9.978 5.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H0z"/>
+
+                <div className="emp-comments-card__slider">
+                  {comments.map((comment, i) => (
+                    <div
+                      key={i}
+                      className={`emp-comments-card__slide ${i === commentIndex ? 'emp-comments-card__slide--active' : ''}`}
+                    >
+                      <div className="emp-comments-card__user">
+                        <div className="emp-comments-card__avatar">
+                          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
                           </svg>
-                          <p>{comment.text}</p>
                         </div>
-                        <div className="emp-comments__author">
-                          <div className="emp-comments__avatar emp-comments__avatar--placeholder">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                              <circle cx="12" cy="7" r="4"/>
-                            </svg>
-                          </div>
-                          <div>
-                            <p className="emp-comments__name">{comment.name}</p>
-                            <p className="emp-comments__role">{comment.role}</p>
-                          </div>
+                        <div className="emp-comments-card__info">
+                          <h4 className="emp-comments-card__name">{comment.name}</h4>
+                          <span className="emp-comments-card__role">{comment.role}</span>
                         </div>
                       </div>
-                    ))}
-                  </div>
-                  <div className="emp-comments__dots">
+
+                      <div className="emp-comments-card__body">
+                        <svg className="emp-comments-card__quote-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609L9.978 5.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H0z"/>
+                        </svg>
+                        <p className="emp-comments-card__text">{comment.text}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="emp-comments-card__footer">
+                  <div className="emp-comments-card__dots">
                     {comments.map((_, i) => (
-                      <button key={i} className={`emp-comments__dot ${i === commentIndex ? 'emp-comments__dot--active' : ''}`} onClick={() => setCommentIndex(i)} />
+                      <button
+                        key={i}
+                        className={`emp-comments-card__dot ${i === commentIndex ? 'emp-comments-card__dot--active' : ''}`}
+                        onClick={() => setCommentIndex(i)}
+                        aria-label={`Ver comentario ${i + 1}`}
+                      />
                     ))}
                   </div>
                 </div>
