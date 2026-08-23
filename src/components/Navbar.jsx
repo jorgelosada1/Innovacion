@@ -2,10 +2,13 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
 import logoImg from '../assets/images/Logo.png';
+import PasswordModal from './PasswordModal';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [showPwModal, setShowPwModal] = useState(false);
+  const [pendingUrl, setPendingUrl] = useState('');
   const location = useLocation();
 
   useEffect(() => {
@@ -25,12 +28,18 @@ const Navbar = () => {
     { name: 'Inicio', href: '/', type: 'route' },
     { name: 'Noticias', href: '/noticias', type: 'route' },
     { name: 'Colaboradores', href: '/colaboradores', type: 'route' },
-    { name: 'Cursos', href: '/cursos', type: 'route' },
-    { name: 'Test Vocacional', href: 'https://test-vocacional-eight.vercel.app/', type: 'external' },
+    { name: 'Aprende Aquí', href: '/cursos', type: 'route' },
+    { name: 'Brújula Vocacional', href: 'https://test-vocacional-eight.vercel.app/', type: 'password-protected' },
   ];
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handlePasswordLink = (href) => {
+    setIsMobileMenuOpen(false);
+    setPendingUrl(href);
+    setShowPwModal(true);
   };
 
   const handleNavClick = (link) => {
@@ -76,6 +85,14 @@ const Navbar = () => {
                 >
                   {link.name}
                 </a>
+              ) : link.type === 'password-protected' ? (
+                <button
+                  className="navbar__link"
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: 'inherit' }}
+                  onClick={() => handlePasswordLink(link.href)}
+                >
+                  {link.name}
+                </button>
               ) : link.type === 'route' ? (
                 <Link
                   to={link.href}
@@ -133,6 +150,14 @@ const Navbar = () => {
                 >
                   {link.name}
                 </a>
+              ) : link.type === 'password-protected' ? (
+                <button
+                  className="navbar__mobile-link"
+                  style={{ background: 'none', border: 'none', width: '100%', textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit', fontSize: 'inherit' }}
+                  onClick={() => handlePasswordLink(link.href)}
+                >
+                  {link.name}
+                </button>
               ) : link.type === 'route' ? (
                 <Link
                   to={link.href}
@@ -157,6 +182,18 @@ const Navbar = () => {
           Ingresar
         </Link>
       </div>
+
+      {/* Password Modal */}
+      <PasswordModal
+        isOpen={showPwModal}
+        onClose={() => setShowPwModal(false)}
+        onSuccess={() => {
+          setShowPwModal(false);
+          window.open(pendingUrl, '_blank');
+        }}
+        title="Brújula Vocacional"
+        message="Ingresa la contraseña para acceder"
+      />
     </nav>
   );
 };

@@ -63,21 +63,115 @@
   padding: var(--spacing-3xl) 0;
 }
 
+/* Dots assembly container */
+.hero-banner__dots-assembly {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+.hero-banner__dot-p {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-yellow, #F5A623);
+  box-shadow: 0 0 16px rgba(245, 166, 35, 0.8);
+  transition: opacity 0.6s ease-out;
+}
+
+/* 6 dots converging from different outer angles toward the center logo */
+.hero-banner__dot-p--1 {
+  animation: dotAssemble1 1.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.hero-banner__dot-p--2 {
+  animation: dotAssemble2 1.6s cubic-bezier(0.25, 1, 0.5, 1) 0.1s forwards;
+}
+
+.hero-banner__dot-p--3 {
+  animation: dotAssemble3 1.6s cubic-bezier(0.25, 1, 0.5, 1) 0.2s forwards;
+}
+
+.hero-banner__dot-p--4 {
+  animation: dotAssemble4 1.6s cubic-bezier(0.25, 1, 0.5, 1) 0.3s forwards;
+}
+
+.hero-banner__dot-p--5 {
+  animation: dotAssemble5 1.6s cubic-bezier(0.25, 1, 0.5, 1) 0.4s forwards;
+}
+
+.hero-banner__dot-p--6 {
+  animation: dotAssemble6 1.6s cubic-bezier(0.25, 1, 0.5, 1) 0.5s forwards;
+}
+
+@keyframes dotAssemble1 {
+  0% { transform: translate(-300px, -200px) scale(0.4); opacity: 0; }
+  60% { opacity: 1; }
+  100% { transform: translate(-70px, -70px) scale(1); opacity: 0.8; }
+}
+
+@keyframes dotAssemble2 {
+  0% { transform: translate(300px, -180px) scale(0.4); opacity: 0; }
+  60% { opacity: 1; }
+  100% { transform: translate(70px, -70px) scale(1); opacity: 0.8; }
+}
+
+@keyframes dotAssemble3 {
+  0% { transform: translate(-350px, 50px) scale(0.4); opacity: 0; }
+  60% { opacity: 1; }
+  100% { transform: translate(-100px, -10px) scale(1.1); opacity: 0.9; }
+}
+
+@keyframes dotAssemble4 {
+  0% { transform: translate(350px, 60px) scale(0.4); opacity: 0; }
+  60% { opacity: 1; }
+  100% { transform: translate(100px, -10px) scale(1.1); opacity: 0.9; }
+}
+
+@keyframes dotAssemble5 {
+  0% { transform: translate(-250px, 220px) scale(0.4); opacity: 0; }
+  60% { opacity: 1; }
+  100% { transform: translate(-50px, 65px) scale(0.9); opacity: 0.8; }
+}
+
+@keyframes dotAssemble6 {
+  0% { transform: translate(250px, 220px) scale(0.4); opacity: 0; }
+  60% { opacity: 1; }
+  100% { transform: translate(50px, 65px) scale(0.9); opacity: 0.8; }
+}
+
+.hero-banner__logo-wrapper--assembled .hero-banner__dot-p {
+  opacity: 0;
+}
+
+/* Logo image animation */
 .hero-banner__logo-img {
   width: 340px;
   height: auto;
   filter: brightness(0) invert(1) drop-shadow(0 10px 40px rgba(0, 0, 0, 0.2));
-  animation: logoAppear 1s ease-out;
+  opacity: 0;
+  animation: logoAssembleForm 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
 }
 
-@keyframes logoAppear {
-  from {
+@keyframes logoAssembleForm {
+  0% {
     opacity: 0;
-    transform: scale(0.85);
+    transform: scale(0.65);
+    filter: brightness(0) invert(1) blur(10px) drop-shadow(0 0 0 transparent);
   }
-  to {
+  60% {
+    opacity: 0.7;
+    filter: brightness(0) invert(1) blur(3px);
+  }
+  100% {
     opacity: 1;
     transform: scale(1);
+    filter: brightness(0) invert(1) drop-shadow(0 10px 40px rgba(0, 0, 0, 0.2));
   }
 }
 

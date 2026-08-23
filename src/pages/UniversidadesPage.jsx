@@ -188,6 +188,12 @@ const UniversidadesPage = () => {
                   </div>
                 </div>
               </div>
+              <div className="upage__more-programs">
+                <p>¿Te interesa conocer más programas? No son los únicos con los que contamos.</p>
+                <a href="https://wa.link/rgw8yn" target="_blank" rel="noopener noreferrer" className="upage__btn upage__btn--areandina">
+                  Escríbenos por WhatsApp <ChevronRight />
+                </a>
+              </div>
             </section>
 
             {/* Acompañamiento */}
@@ -232,6 +238,11 @@ const UniversidadesPage = () => {
                   <span key={c} className="upage__pill"><MapPin /> {c}</span>
                 ))}
               </div>
+              <div className="upage__center" style={{marginTop: '16px'}}>
+                <a href="https://csu.com.co" target="_blank" rel="noopener noreferrer" className="upage__btn upage__btn--areandina">
+                  Visitar CSU.com.co <ChevronRight />
+                </a>
+              </div>
             </section>
 
             {/* CTA Final */}
@@ -241,6 +252,9 @@ const UniversidadesPage = () => {
               <div className="upage__cta-btns">
                 <a href="https://wa.link/rgw8yn" target="_blank" rel="noopener noreferrer" className="upage__cta-btn upage__cta-btn--primary">
                   Hablar con un asesor
+                </a>
+                <a href="https://csu.com.co" target="_blank" rel="noopener noreferrer" className="upage__cta-btn upage__cta-btn--wa">
+                  Visitar sitio web CSU
                 </a>
               </div>
             </section>
@@ -315,6 +329,12 @@ const UniversidadesPage = () => {
                   </div>
                 </div>
               </div>
+              <div className="upage__more-programs">
+                <p>¿Te interesa conocer más programas? No son los únicos con los que contamos.</p>
+                <a href="https://wa.link/rgw8yn" target="_blank" rel="noopener noreferrer" className="upage__btn upage__btn--ibero">
+                  Escríbenos por WhatsApp <ChevronRight />
+                </a>
+              </div>
             </section>
 
             {/* Acompañamiento */}
@@ -355,9 +375,21 @@ const UniversidadesPage = () => {
               <h2 className="upage__title">Centros de Experiencia Ibero</h2>
               <p className="upage__lead">Estamos más cerca de ti</p>
               <div className="upage__pills">
-                {['Boyacá', 'Manizales'].map(c => (
+                {['Boyacá'].map(c => (
                   <span key={c} className="upage__pill upage__pill--ibero"><MapPin /> {c}</span>
                 ))}
+              </div>
+              <div className="upage__map-container">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3169.0!2d-73.3623!3d5.5353!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNcKwMzInMDcuMSJOIDczwrAyMSc0NC4zIlc!5e0!3m2!1ses!2sco"
+                  width="100%"
+                  height="300"
+                  style={{ border: 0, borderRadius: '16px', marginTop: '20px' }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Centro Ibero Boyacá - Carrera 10 #14-66"
+                />
               </div>
             </section>
 

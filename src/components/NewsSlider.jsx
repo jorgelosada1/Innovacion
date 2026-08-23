@@ -10,7 +10,6 @@ const NewsSlider = () => {
   const [current, setCurrent] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -50,12 +49,12 @@ const NewsSlider = () => {
     goToSlide(current === 0 ? slides.length - 1 : current - 1);
   }, [current, goToSlide, slides.length]);
 
-  // Auto-play every 6 seconds (slower), pauses on hover or manual pause toggle
+  // Auto-play every 6 seconds (slower), pauses on manual pause toggle
   useEffect(() => {
-    if (slides.length === 0 || isPaused || isHovered) return;
+    if (slides.length === 0 || isPaused) return;
     const timer = setInterval(nextSlide, 6000);
     return () => clearInterval(timer);
-  }, [nextSlide, slides.length, isPaused, isHovered]);
+  }, [nextSlide, slides.length, isPaused]);
 
   const togglePause = () => {
     setIsPaused((prev) => !prev);
@@ -63,13 +62,11 @@ const NewsSlider = () => {
 
   if (slides.length === 0) return null;
 
-  const isAutoPlaying = !isPaused && !isHovered;
+  const isAutoPlaying = !isPaused;
 
   return (
     <section 
       className="news-slider"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
       <div className="news-slider__track">
         {slides.map((slide, index) => (

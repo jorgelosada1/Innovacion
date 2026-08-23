@@ -1,9 +1,46 @@
+import { useState, useEffect } from 'react';
 import './ColaboradoresPage.css';
 import fernanImg from '../assets/images/Fernan.png';
 import wilsonImg from '../assets/images/wilson.png';
 import johannaImg from '../assets/images/Johanna.JPG';
+import PasswordModal from '../components/PasswordModal';
 
 const ColaboradoresPage = () => {
+  const [commentIndex, setCommentIndex] = useState(0);
+
+  const comments = [
+    { text: 'Trabajar en Innovación e-Learning me ha permitido crecer profesionalmente en un ambiente de constante aprendizaje y colaboración.', name: 'Colaborador', role: 'Equipo Comercial' },
+    { text: 'Me encanta la cultura de equipo que tenemos. Cada día es una oportunidad para innovar y aportar al cambio educativo en Colombia.', name: 'Colaboradora', role: 'Área de Gestión' },
+    { text: 'Aquí valoran nuestras ideas y nos dan las herramientas para hacer la diferencia en la educación superior del país.', name: 'Colaborador', role: 'Liderazgo Comercial' },
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCommentIndex((prev) => (prev + 1) % comments.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [comments.length]);
+
+  const [showDocModal, setShowDocModal] = useState(false);
+  const [pendingDoc, setPendingDoc] = useState(null);
+
+  const documents = [
+    { id: 1, name: 'Reglamento Interno', icon: 'file' },
+    { id: 2, name: 'Manual de Convivencia', icon: 'file' },
+    { id: 3, name: 'Políticas de Empresa', icon: 'file' },
+    { id: 4, name: 'Código de Ética', icon: 'file' },
+  ];
+
+  const handleDocClick = (doc) => {
+    setPendingDoc(doc);
+    setShowDocModal(true);
+  };
+
+  const handleDocAccess = () => {
+    // For now, show an alert since PDFs are empty placeholders
+    alert(`Documento "${pendingDoc?.name}" - Próximamente disponible`);
+    setShowDocModal(false);
+  };
   return (
     <section className="colaboradores">
       <div className="colaboradores__hero">
@@ -23,12 +60,12 @@ const ColaboradoresPage = () => {
           {/* === NIVEL 1: CEO (CENTRO) === */}
           <div className="org__level org__level--ceo">
             <div className="org__card org__card--ceo">
-              <span className="org__badge org__badge--blue">CEO</span>
+              <span className="org__badge org__badge--blue">Gerente General</span>
               <div className="org__avatar">
                 <img src={fernanImg} alt="Fernan" className="org__avatar-img" />
               </div>
               <h3 className="org__name">Fernan</h3>
-              <p className="org__role">Dirección General</p>
+              <p className="org__role">Gerente General</p>
             </div>
           </div>
 
@@ -53,12 +90,12 @@ const ColaboradoresPage = () => {
             <div className="org__exec-group">
               <div className="org__line-v org__line-v--tiny"></div>
               <div className="org__card org__card--coo">
-                <span className="org__badge org__badge--blue">COO</span>
+                <span className="org__badge org__badge--blue">Gerente Comercial</span>
                 <div className="org__avatar">
                   <img src={johannaImg} alt="Johanna" className="org__avatar-img" />
                 </div>
                 <h3 className="org__name">Johanna</h3>
-                <p className="org__role">Dirección Operativa</p>
+                <p className="org__role">Gerente Comercial</p>
               </div>
             </div>
 
@@ -133,6 +170,15 @@ const ColaboradoresPage = () => {
                           <p className="org__uni-role-desc">Asesores y ejecutivos</p>
                         </div>
                       </div>
+                      <div className="org__uni-row">
+                        <div className="org__uni-icon">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        </div>
+                        <div>
+                          <p className="org__uni-role-name">Depuradoras</p>
+                          <p className="org__uni-role-desc">Verificación y calidad de datos</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -174,6 +220,15 @@ const ColaboradoresPage = () => {
                         <div>
                           <p className="org__uni-role-name">Equipo Comercial</p>
                           <p className="org__uni-role-desc">Asesores y ejecutivos</p>
+                        </div>
+                      </div>
+                      <div className="org__uni-row">
+                        <div className="org__uni-icon">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        </div>
+                        <div>
+                          <p className="org__uni-role-name">Depuradoras</p>
+                          <p className="org__uni-role-desc">Verificación y calidad de datos</p>
                         </div>
                       </div>
                     </div>
@@ -226,6 +281,83 @@ const ColaboradoresPage = () => {
 
           </div>
         </div>
+
+        {/* === COMENTARIOS DE EMPLEADOS === */}
+        <div className="emp-comments">
+          <div className="emp-comments__header">
+            <span className="colaboradores__badge">Lo que dicen nuestros colaboradores</span>
+            <h2 className="colaboradores__section-title">Voces de Nuestro Equipo</h2>
+          </div>
+          <div className="emp-comments__slider">
+            <div className="emp-comments__track" style={{ transform: `translateX(-${commentIndex * 100}%)` }}>
+              {comments.map((comment, i) => (
+                <div key={i} className="emp-comments__card">
+                  <div className="emp-comments__quote">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" opacity="0.15">
+                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609L9.978 5.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H0z"/>
+                    </svg>
+                    <p>{comment.text}</p>
+                  </div>
+                  <div className="emp-comments__author">
+                    <div className="emp-comments__avatar">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="emp-comments__name">{comment.name}</p>
+                      <p className="emp-comments__role">{comment.role}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="emp-comments__dots">
+              {comments.map((_, i) => (
+                <button key={i} className={`emp-comments__dot ${i === commentIndex ? 'emp-comments__dot--active' : ''}`} onClick={() => setCommentIndex(i)} />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* === DOCUMENTOS IMPORTANTES === */}
+        <div className="docs-section">
+          <div className="docs-section__header">
+            <span className="colaboradores__badge">Recursos Internos</span>
+            <h2 className="colaboradores__section-title">Documentos Importantes</h2>
+            <p className="docs-section__desc">Accede a los documentos corporativos de la organización.</p>
+          </div>
+          <div className="docs-section__grid">
+            {documents.map((doc) => (
+              <button key={doc.id} className="docs-section__card" onClick={() => handleDocClick(doc)}>
+                <div className="docs-section__card-icon">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/>
+                    <polyline points="10 9 9 9 8 9"/>
+                  </svg>
+                </div>
+                <span className="docs-section__card-name">{doc.name}</span>
+                <span className="docs-section__card-lock">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  </svg>
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <PasswordModal
+          isOpen={showDocModal}
+          onClose={() => setShowDocModal(false)}
+          onSuccess={handleDocAccess}
+          title="Documentos Importantes"
+          message="Ingresa la contraseña para acceder a los documentos"
+        />
       </div>
     </section>
   );
