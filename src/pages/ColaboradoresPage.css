@@ -203,8 +203,8 @@
 /* === AREAS LEVEL & DESKTOP CONNECTOR SYSTEM === */
 .org__level--areas {
   display: grid;
-  grid-template-columns: 1.6fr 0.65fr 0.65fr 0.65fr;
-  gap: var(--spacing-md);
+  grid-template-columns: 1.1fr 1.3fr;
+  gap: var(--spacing-xl);
   width: 100%;
   align-items: start;
 }
@@ -215,6 +215,70 @@
   align-items: center;
   position: relative;
   width: 100%;
+}
+
+.org__support-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  width: 100%;
+}
+
+.org__support-cards-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--spacing-md);
+  width: 100%;
+}
+
+/* Comments embedded in the empty organigrama space */
+.emp-comments--in-org {
+  margin-top: 0;
+  padding: var(--spacing-lg);
+  background: var(--color-white);
+  border-radius: 18px;
+  border: 1px solid #edf1f6;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.emp-comments--in-org .emp-comments__header {
+  margin-bottom: var(--spacing-md);
+  text-align: left;
+}
+
+.emp-comments--in-org .emp-comments__title {
+  font-family: var(--font-primary);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-blue-dark);
+  margin-top: 4px;
+}
+
+.emp-comments--in-org .emp-comments__quote {
+  padding: var(--spacing-md) var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+  box-shadow: none;
+  background: #f8fafc;
+  border: 1px solid #edf1f6;
+  border-radius: 14px;
+}
+
+.emp-comments--in-org .emp-comments__quote p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.emp-comments--in-org .emp-comments__avatar--placeholder {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(46, 134, 193, 0.1);
+  color: var(--color-blue-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-white);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 /* Perfect horizontal tree line at top of area columns (Desktop) */
@@ -228,19 +292,16 @@
     z-index: 1;
   }
 
-  /* First column: line starts at 50% (center of column) and goes right (100%) */
   .org__area-group:first-child::before {
     left: 50%;
     right: 0;
   }
 
-  /* Last column: line starts at left (0) and goes to 50% (center of column) */
   .org__area-group:last-child::before {
     left: 0;
     right: 50%;
   }
 
-  /* Middle columns: line spans from 0 to 100% */
   .org__area-group:not(:first-child):not(:last-child)::before {
     left: 0;
     right: 0;

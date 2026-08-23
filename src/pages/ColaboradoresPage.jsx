@@ -37,10 +37,10 @@ const ColaboradoresPage = () => {
   };
 
   const handleDocAccess = () => {
-    // For now, show an alert since PDFs are empty placeholders
     alert(`Documento "${pendingDoc?.name}" - Próximamente disponible`);
     setShowDocModal(false);
   };
+
   return (
     <section className="colaboradores">
       <div className="colaboradores__hero">
@@ -86,7 +86,7 @@ const ColaboradoresPage = () => {
               </div>
             </div>
 
-            {/* Johanna - COO */}
+            {/* Johanna */}
             <div className="org__exec-group">
               <div className="org__line-v org__line-v--tiny"></div>
               <div className="org__card org__card--coo">
@@ -118,7 +118,7 @@ const ColaboradoresPage = () => {
 
           <div className="org__line-v org__line-v--medium"></div>
 
-          {/* === NIVEL 3: Areas === */}
+          {/* === NIVEL 3: Areas & Comentarios === */}
           <div className="org__level org__level--areas">
             {/* 1. Área Comercial Branch */}
             <div className="org__area-group org__area-group--comercial">
@@ -237,86 +237,92 @@ const ColaboradoresPage = () => {
               </div>
             </div>
 
-            {/* 2. Talento Humano */}
-            <div className="org__area-group">
-              <div className="org__line-v org__line-v--tiny"></div>
-              <div className="org__card org__card--support">
-                <div className="org__support-icon org__support-icon--blue">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-                </div>
-                <div>
-                  <p className="org__support-name">Talento Humano</p>
-                  <p className="org__support-desc">Área de soporte</p>
-                </div>
-              </div>
-            </div>
-
-            {/* 3. Mercadeo */}
-            <div className="org__area-group">
-              <div className="org__line-v org__line-v--tiny"></div>
-              <div className="org__card org__card--support">
-                <div className="org__support-icon org__support-icon--yellow">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-                </div>
-                <div>
-                  <p className="org__support-name">Mercadeo</p>
-                  <p className="org__support-desc">Área de soporte</p>
-                </div>
-              </div>
-            </div>
-
-            {/* 4. Contabilidad */}
-            <div className="org__area-group">
-              <div className="org__line-v org__line-v--tiny"></div>
-              <div className="org__card org__card--support">
-                <div className="org__support-icon org__support-icon--green">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-                </div>
-                <div>
-                  <p className="org__support-name">Contabilidad</p>
-                  <p className="org__support-desc">Área de soporte</p>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        {/* === COMENTARIOS DE EMPLEADOS === */}
-        <div className="emp-comments">
-          <div className="emp-comments__header">
-            <span className="colaboradores__badge">Lo que dicen nuestros colaboradores</span>
-            <h2 className="colaboradores__section-title">Voces de Nuestro Equipo</h2>
-          </div>
-          <div className="emp-comments__slider">
-            <div className="emp-comments__track" style={{ transform: `translateX(-${commentIndex * 100}%)` }}>
-              {comments.map((comment, i) => (
-                <div key={i} className="emp-comments__card">
-                  <div className="emp-comments__quote">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" opacity="0.15">
-                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609L9.978 5.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H0z"/>
-                    </svg>
-                    <p>{comment.text}</p>
-                  </div>
-                  <div className="emp-comments__author">
-                    <div className="emp-comments__avatar">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-                      </svg>
+            {/* 2. Support Container (Support Cards Row + Employee Comments in Empty Space) */}
+            <div className="org__support-container">
+              <div className="org__support-cards-row">
+                {/* Talento Humano */}
+                <div className="org__area-group">
+                  <div className="org__line-v org__line-v--tiny"></div>
+                  <div className="org__card org__card--support">
+                    <div className="org__support-icon org__support-icon--blue">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
                     </div>
                     <div>
-                      <p className="emp-comments__name">{comment.name}</p>
-                      <p className="emp-comments__role">{comment.role}</p>
+                      <p className="org__support-name">Talento Humano</p>
+                      <p className="org__support-desc">Área de soporte</p>
                     </div>
                   </div>
                 </div>
-              ))}
+
+                {/* Mercadeo */}
+                <div className="org__area-group">
+                  <div className="org__line-v org__line-v--tiny"></div>
+                  <div className="org__card org__card--support">
+                    <div className="org__support-icon org__support-icon--yellow">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    </div>
+                    <div>
+                      <p className="org__support-name">Mercadeo</p>
+                      <p className="org__support-desc">Área de soporte</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Contabilidad */}
+                <div className="org__area-group">
+                  <div className="org__line-v org__line-v--tiny"></div>
+                  <div className="org__card org__card--support">
+                    <div className="org__support-icon org__support-icon--green">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                    </div>
+                    <div>
+                      <p className="org__support-name">Contabilidad</p>
+                      <p className="org__support-desc">Área de soporte</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* === COMENTARIOS DE EMPLEADOS EN EL ESPACIO VACÍO === */}
+              <div className="emp-comments emp-comments--in-org">
+                <div className="emp-comments__header">
+                  <span className="colaboradores__badge">Lo que dicen nuestros colaboradores</span>
+                  <h3 className="emp-comments__title">Voces de Nuestro Equipo</h3>
+                </div>
+                <div className="emp-comments__slider">
+                  <div className="emp-comments__track" style={{ transform: `translateX(-${commentIndex * 100}%)` }}>
+                    {comments.map((comment, i) => (
+                      <div key={i} className="emp-comments__card">
+                        <div className="emp-comments__quote">
+                          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" opacity="0.12">
+                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609L9.978 5.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H0z"/>
+                          </svg>
+                          <p>{comment.text}</p>
+                        </div>
+                        <div className="emp-comments__author">
+                          <div className="emp-comments__avatar emp-comments__avatar--placeholder">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                              <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                          </div>
+                          <div>
+                            <p className="emp-comments__name">{comment.name}</p>
+                            <p className="emp-comments__role">{comment.role}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="emp-comments__dots">
+                    {comments.map((_, i) => (
+                      <button key={i} className={`emp-comments__dot ${i === commentIndex ? 'emp-comments__dot--active' : ''}`} onClick={() => setCommentIndex(i)} />
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="emp-comments__dots">
-              {comments.map((_, i) => (
-                <button key={i} className={`emp-comments__dot ${i === commentIndex ? 'emp-comments__dot--active' : ''}`} onClick={() => setCommentIndex(i)} />
-              ))}
-            </div>
+
           </div>
         </div>
 

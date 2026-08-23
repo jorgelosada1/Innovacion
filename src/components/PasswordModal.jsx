@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import './PasswordModal.css';
 
 const PasswordModal = ({ isOpen, onClose, onSuccess, title = 'Acceso Restringido', message = 'Ingresa la contraseña para continuar' }) => {
@@ -32,7 +33,7 @@ const PasswordModal = ({ isOpen, onClose, onSuccess, title = 'Acceso Restringido
 
   if (!isOpen) return null;
 
-  return (
+  return createPortal(
     <div className="pw-modal-overlay" onClick={onClose}>
       <div className={`pw-modal ${isShaking ? 'pw-modal--shake' : ''}`} onClick={(e) => e.stopPropagation()}>
         <button className="pw-modal__close" onClick={onClose} aria-label="Cerrar">
@@ -69,7 +70,8 @@ const PasswordModal = ({ isOpen, onClose, onSuccess, title = 'Acceso Restringido
           </button>
         </form>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

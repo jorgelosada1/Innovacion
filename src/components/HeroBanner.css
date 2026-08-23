@@ -63,8 +63,8 @@
   padding: var(--spacing-3xl) 0;
 }
 
-/* Dots assembly container */
-.hero-banner__dots-assembly {
+/* Logo's own 5 white dots assembly */
+.hero-banner__logo-parts {
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -74,103 +74,92 @@
   z-index: 3;
 }
 
-.hero-banner__dot-p {
+.logo-part {
   position: absolute;
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: var(--color-yellow, #F5A623);
-  box-shadow: 0 0 16px rgba(245, 166, 35, 0.8);
-  transition: opacity 0.6s ease-out;
+  background: #FFFFFF;
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.9);
+  transition: opacity 0.4s ease-out;
 }
 
-/* 6 dots converging from different outer angles toward the center logo */
-.hero-banner__dot-p--1 {
-  animation: dotAssemble1 1.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+/* 5 White dots coming from sides/top to assemble the logo's crown */
+.logo-part--dot-1 {
+  animation: dotFlyLeft 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.hero-banner__dot-p--2 {
-  animation: dotAssemble2 1.6s cubic-bezier(0.25, 1, 0.5, 1) 0.1s forwards;
+.logo-part--dot-2 {
+  animation: dotFlyTopLeft 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.08s forwards;
 }
 
-.hero-banner__dot-p--3 {
-  animation: dotAssemble3 1.6s cubic-bezier(0.25, 1, 0.5, 1) 0.2s forwards;
+.logo-part--dot-3 {
+  animation: dotFlyTop 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.16s forwards;
 }
 
-.hero-banner__dot-p--4 {
-  animation: dotAssemble4 1.6s cubic-bezier(0.25, 1, 0.5, 1) 0.3s forwards;
+.logo-part--dot-4 {
+  animation: dotFlyTopRight 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.24s forwards;
 }
 
-.hero-banner__dot-p--5 {
-  animation: dotAssemble5 1.6s cubic-bezier(0.25, 1, 0.5, 1) 0.4s forwards;
+.logo-part--dot-5 {
+  animation: dotFlyRight 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.32s forwards;
 }
 
-.hero-banner__dot-p--6 {
-  animation: dotAssemble6 1.6s cubic-bezier(0.25, 1, 0.5, 1) 0.5s forwards;
+@keyframes dotFlyLeft {
+  0% { transform: translate(-300px, -70px) scale(0.5); opacity: 0; }
+  40% { opacity: 1; }
+  100% { transform: translate(-72px, -70px) scale(1); opacity: 1; }
 }
 
-@keyframes dotAssemble1 {
-  0% { transform: translate(-300px, -200px) scale(0.4); opacity: 0; }
-  60% { opacity: 1; }
-  100% { transform: translate(-70px, -70px) scale(1); opacity: 0.8; }
+@keyframes dotFlyTopLeft {
+  0% { transform: translate(-200px, -240px) scale(0.5); opacity: 0; }
+  40% { opacity: 1; }
+  100% { transform: translate(-38px, -98px) scale(1); opacity: 1; }
 }
 
-@keyframes dotAssemble2 {
-  0% { transform: translate(300px, -180px) scale(0.4); opacity: 0; }
-  60% { opacity: 1; }
-  100% { transform: translate(70px, -70px) scale(1); opacity: 0.8; }
+@keyframes dotFlyTop {
+  0% { transform: translate(0px, -260px) scale(0.5); opacity: 0; }
+  40% { opacity: 1; }
+  100% { transform: translate(0px, -108px) scale(1); opacity: 1; }
 }
 
-@keyframes dotAssemble3 {
-  0% { transform: translate(-350px, 50px) scale(0.4); opacity: 0; }
-  60% { opacity: 1; }
-  100% { transform: translate(-100px, -10px) scale(1.1); opacity: 0.9; }
+@keyframes dotFlyTopRight {
+  0% { transform: translate(200px, -240px) scale(0.5); opacity: 0; }
+  40% { opacity: 1; }
+  100% { transform: translate(38px, -98px) scale(1); opacity: 1; }
 }
 
-@keyframes dotAssemble4 {
-  0% { transform: translate(350px, 60px) scale(0.4); opacity: 0; }
-  60% { opacity: 1; }
-  100% { transform: translate(100px, -10px) scale(1.1); opacity: 0.9; }
+@keyframes dotFlyRight {
+  0% { transform: translate(300px, -70px) scale(0.5); opacity: 0; }
+  40% { opacity: 1; }
+  100% { transform: translate(72px, -70px) scale(1); opacity: 1; }
 }
 
-@keyframes dotAssemble5 {
-  0% { transform: translate(-250px, 220px) scale(0.4); opacity: 0; }
-  60% { opacity: 1; }
-  100% { transform: translate(-50px, 65px) scale(0.9); opacity: 0.8; }
-}
-
-@keyframes dotAssemble6 {
-  0% { transform: translate(250px, 220px) scale(0.4); opacity: 0; }
-  60% { opacity: 1; }
-  100% { transform: translate(50px, 65px) scale(0.9); opacity: 0.8; }
-}
-
-.hero-banner__logo-wrapper--assembled .hero-banner__dot-p {
+/* Once assembled, hide individual animated dots so logo image is seamlessly displayed */
+.hero-banner__logo-wrapper--assembled .logo-part {
   opacity: 0;
 }
 
-/* Logo image animation */
+/* Central emblem & lines fly in from bottom to assemble with dots */
 .hero-banner__logo-img {
   width: 340px;
   height: auto;
   filter: brightness(0) invert(1) drop-shadow(0 10px 40px rgba(0, 0, 0, 0.2));
-  opacity: 0;
-  animation: logoAssembleForm 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+  animation: logoFlyBottom 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-@keyframes logoAssembleForm {
+@keyframes logoFlyBottom {
   0% {
     opacity: 0;
-    transform: scale(0.65);
-    filter: brightness(0) invert(1) blur(10px) drop-shadow(0 0 0 transparent);
+    transform: translateY(180px) scale(0.65);
+    filter: brightness(0) invert(1) blur(8px);
   }
-  60% {
-    opacity: 0.7;
-    filter: brightness(0) invert(1) blur(3px);
+  50% {
+    opacity: 0.6;
   }
   100% {
     opacity: 1;
-    transform: scale(1);
+    transform: translateY(0) scale(1);
     filter: brightness(0) invert(1) drop-shadow(0 10px 40px rgba(0, 0, 0, 0.2));
   }
 }
@@ -199,6 +188,12 @@
   .hero-banner__logo-img {
     width: 230px;
   }
+
+  .logo-part--dot-1 { transform: translate(-48px, -46px); }
+  .logo-part--dot-2 { transform: translate(-25px, -65px); }
+  .logo-part--dot-3 { transform: translate(0px, -72px); }
+  .logo-part--dot-4 { transform: translate(25px, -65px); }
+  .logo-part--dot-5 { transform: translate(48px, -46px); }
 
   .hero-banner__circle--1 {
     width: 220px;

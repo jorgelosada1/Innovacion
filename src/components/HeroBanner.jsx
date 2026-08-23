@@ -20,16 +20,15 @@ const HeroBanner = () => {
         <div className="hero-banner__circle hero-banner__circle--2"></div>
       </div>
 
-      {/* Center logo icon with assembly dots animation */}
+      {/* Center logo icon with its own dots & lines assembly animation */}
       <div className={`hero-banner__logo-wrapper ${isAssembled ? 'hero-banner__logo-wrapper--assembled' : ''}`}>
-        {/* Converging dots animation */}
-        <div className="hero-banner__dots-assembly">
-          <span className="hero-banner__dot-p hero-banner__dot-p--1"></span>
-          <span className="hero-banner__dot-p hero-banner__dot-p--2"></span>
-          <span className="hero-banner__dot-p hero-banner__dot-p--3"></span>
-          <span className="hero-banner__dot-p hero-banner__dot-p--4"></span>
-          <span className="hero-banner__dot-p hero-banner__dot-p--5"></span>
-          <span className="hero-banner__dot-p hero-banner__dot-p--6"></span>
+        {/* The logo's own 5 dots flying in from sides to assemble */}
+        <div className="hero-banner__logo-parts">
+          <span className="logo-part logo-part--dot-1"></span>
+          <span className="logo-part logo-part--dot-2"></span>
+          <span className="logo-part logo-part--dot-3"></span>
+          <span className="logo-part logo-part--dot-4"></span>
+          <span className="logo-part logo-part--dot-5"></span>
         </div>
 
         <img
