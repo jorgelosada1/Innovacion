@@ -3,12 +3,13 @@ import './HeroBanner.css';
 import logoSolo from '../assets/images/LogoSolo.png';
 
 const HeroBanner = () => {
-  const [isAssembled, setIsAssembled] = useState(false);
+  const [isAnimationFinished, setIsAnimationFinished] = useState(false);
 
   useEffect(() => {
+    // Total animation sequence duration: ~3.8 seconds
     const timer = setTimeout(() => {
-      setIsAssembled(true);
-    }, 1800);
+      setIsAnimationFinished(true);
+    }, 3800);
     return () => clearTimeout(timer);
   }, []);
 
@@ -20,21 +21,45 @@ const HeroBanner = () => {
         <div className="hero-banner__circle hero-banner__circle--2"></div>
       </div>
 
-      {/* Center logo icon with its own dots & lines assembly animation */}
-      <div className={`hero-banner__logo-wrapper ${isAssembled ? 'hero-banner__logo-wrapper--assembled' : ''}`}>
-        {/* The logo's own 5 dots flying in from sides to assemble */}
-        <div className="hero-banner__logo-parts">
-          <span className="logo-part logo-part--dot-1"></span>
-          <span className="logo-part logo-part--dot-2"></span>
-          <span className="logo-part logo-part--dot-3"></span>
-          <span className="logo-part logo-part--dot-4"></span>
-          <span className="logo-part logo-part--dot-5"></span>
-        </div>
+      {/* Center logo container */}
+      <div className={`hero-banner__logo-wrapper ${isAnimationFinished ? 'hero-banner__logo-wrapper--finished' : ''}`}>
+        {/* Animated Vector SVG Logo (Construction phase) */}
+        {!isAnimationFinished && (
+          <svg className="hero-banner__svg-anim" viewBox="0 0 240 240" width="340" height="340">
+            {/* 1. Central "E" Icon */}
+            <path
+              className="logo-seq logo-seq--e"
+              d="M 148 112 C 148 82, 92 82, 92 115 C 92 144, 142 144, 142 128 L 94 128"
+              fill="none"
+              stroke="#FFFFFF"
+              strokeWidth="14"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
 
+            {/* 2. Lower Arc / Line */}
+            <path
+              className="logo-seq logo-seq--arc"
+              d="M 48 132 A 72 72 0 0 0 192 132"
+              fill="none"
+              stroke="#FFFFFF"
+              strokeWidth="15"
+              strokeLinecap="round"
+            />
+
+            {/* 3. The 4 Original Dots (Sequenced 1 by 1) */}
+            <circle cx="48" cy="94" r="9" fill="#FFFFFF" className="logo-seq logo-seq--dot1" />
+            <circle cx="82" cy="56" r="9" fill="#FFFFFF" className="logo-seq logo-seq--dot2" />
+            <circle cx="158" cy="56" r="9" fill="#FFFFFF" className="logo-seq logo-seq--dot3" />
+            <circle cx="192" cy="94" r="9" fill="#FFFFFF" className="logo-seq logo-seq--dot4" />
+          </svg>
+        )}
+
+        {/* Final complete logo image */}
         <img
           src={logoSolo}
           alt="Innovación e-Learning"
-          className="hero-banner__logo-img"
+          className={`hero-banner__logo-img ${isAnimationFinished ? 'hero-banner__logo-img--show' : ''}`}
         />
       </div>
 
