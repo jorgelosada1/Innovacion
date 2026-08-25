@@ -1,7 +1,30 @@
+import { useRef, useState, useEffect } from 'react';
 import './HeroBanner.css';
-import logoSolo from '../assets/images/LogoSolo.png';
+import logoVideo from '../assets/Animacion_Logo.mp4';
 
 const HeroBanner = () => {
+  const videoRef = useRef(null);
+  const [hasEnded, setHasEnded] = useState(false);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((err) => {
+          console.warn('Autoplay prevented or interrupted:', err);
+        });
+      }
+    }
+  }, []);
+
+  const handleEnded = () => {
+    setHasEnded(true);
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
+  };
+
   return (
     <section className="hero-banner" id="inicio">
       {/* Decorative background rings */}
@@ -10,12 +33,20 @@ const HeroBanner = () => {
         <div className="hero-banner__circle hero-banner__circle--2"></div>
       </div>
 
-      {/* Center logo icon */}
+      {/* Center logo animation wrapper */}
       <div className="hero-banner__logo-wrapper">
-        <img
-          src={logoSolo}
-          alt="Innovación e-Learning"
-          className="hero-banner__logo-img"
+        <video
+          ref={videoRef}
+          src={logoVideo}
+          className={`hero-banner__logo-video ${hasEnded ? 'hero-banner__logo-video--ended' : ''}`}
+          autoPlay
+          muted
+          playsInline
+          preload="auto"
+          disablePictureInPicture
+          disableRemotePlayback
+          onEnded={handleEnded}
+          aria-label="Animación de logo Innovación e-Learning"
         />
       </div>
 

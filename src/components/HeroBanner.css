@@ -63,6 +63,20 @@
   padding: var(--spacing-3xl) 0;
 }
 
+/* Animated Logo Video Element */
+.hero-banner__logo-video {
+  width: 340px;
+  max-width: 90vw;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  background: transparent;
+  pointer-events: none;
+  outline: none;
+  border: none;
+  filter: drop-shadow(0 10px 40px rgba(0, 0, 0, 0.2));
+}
+
 .hero-banner__logo-img {
   width: 340px;
   height: auto;
@@ -91,6 +105,7 @@
     min-height: 450px;
   }
 
+  .hero-banner__logo-video,
   .hero-banner__logo-img {
     width: 230px;
   }
@@ -106,6 +121,7 @@
     min-height: 380px;
   }
 
+  .hero-banner__logo-video,
   .hero-banner__logo-img {
     width: 170px;
   }
