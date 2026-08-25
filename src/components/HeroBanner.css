@@ -1,16 +1,12 @@
-/* ===== HERO BANNER ===== */
+/* ===== HERO BANNER (PORTAL DE MARCA & ANIMACIÓN) ===== */
 .hero-banner {
   position: relative;
   background-color: #ffffff;
-  padding-top: var(--spacing-2xl);
-  min-height: 460px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 40px 20px 80px;
   overflow: hidden;
 }
 
-/* Decorative background elements on white */
+/* Background grid & subtle accents */
 .hero-banner__decorations {
   position: absolute;
   inset: 0;
@@ -18,79 +14,284 @@
   overflow: hidden;
 }
 
-/* Decorative rings with soft brand colors on white canvas */
+.hero-banner__grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(rgba(46, 134, 193, 0.08) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.6;
+}
+
+/* Decorative rings */
 .hero-banner__circle {
   position: absolute;
   border-radius: 50%;
 }
 
 .hero-banner__circle--1 {
-  width: 380px;
-  height: 380px;
-  bottom: -20px;
-  left: -80px;
-  border: 2px solid rgba(46, 134, 193, 0.12);
-  animation: bannerPulse 10s ease-in-out infinite;
+  width: 440px;
+  height: 440px;
+  top: -50px;
+  left: -120px;
+  border: 1.5px solid rgba(46, 134, 193, 0.1);
+  animation: bannerPulse 12s ease-in-out infinite;
 }
 
 .hero-banner__circle--2 {
-  width: 220px;
-  height: 220px;
-  top: 8%;
-  right: -40px;
-  border: 2px solid rgba(245, 166, 35, 0.2);
-  animation: bannerPulse 12s ease-in-out infinite reverse;
+  width: 320px;
+  height: 320px;
+  bottom: 10px;
+  right: -80px;
+  border: 1.5px solid rgba(245, 166, 35, 0.15);
+  animation: bannerPulse 14s ease-in-out infinite reverse;
 }
 
 .hero-banner__circle--3 {
-  width: 140px;
-  height: 140px;
-  top: 16%;
-  left: 14%;
-  border: 1.5px dashed rgba(46, 134, 193, 0.1);
-  animation: bannerPulse 14s ease-in-out infinite;
+  width: 180px;
+  height: 180px;
+  top: 20%;
+  right: 18%;
+  border: 1px dashed rgba(46, 134, 193, 0.12);
+  animation: bannerPulse 16s ease-in-out infinite;
 }
 
 @keyframes bannerPulse {
   0%, 100% {
-    transform: scale(1);
-    opacity: 0.6;
+    transform: scale(1) rotate(0deg);
+    opacity: 0.5;
   }
   50% {
-    transform: scale(1.06);
-    opacity: 1;
+    transform: scale(1.08) rotate(45deg);
+    opacity: 0.9;
   }
 }
 
-/* Center logo wrapper */
-.hero-banner__logo-wrapper {
+/* Container */
+.hero-banner__container {
+  max-width: 1200px;
+  margin: 0 auto;
   position: relative;
   z-index: 2;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: var(--spacing-2xl) 0 var(--spacing-4xl);
-  background-color: #ffffff;
 }
 
-/* Animated Logo Video Element seamlessly integrated on white background */
+/* Header Tag */
+.hero-banner__header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.hero-banner__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-family: var(--font-secondary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--color-blue-primary);
+  background: rgba(46, 134, 193, 0.08);
+  padding: 0.45rem 1.2rem;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(46, 134, 193, 0.18);
+  margin-bottom: 10px;
+}
+
+.hero-banner__badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-yellow);
+  animation: pulseDot 2s ease-in-out infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+.hero-banner__title {
+  font-family: var(--font-primary);
+  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+  font-weight: 800;
+  color: var(--color-blue-dark);
+  margin: 0;
+}
+
+.hero-banner__title-highlight {
+  color: var(--color-yellow);
+}
+
+/* Main Stage with Logo & Floating Cards */
+.hero-banner__main-stage {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  width: 100%;
+  margin: 15px 0 25px;
+}
+
+/* Side Cards Column */
+.hero-banner__side-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hero-banner__side-cards--left {
+  align-items: flex-end;
+}
+
+.hero-banner__side-cards--right {
+  align-items: flex-start;
+}
+
+/* Individual Feature Cards */
+.hero-banner__feature-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px 20px;
+  border: 1px solid #edf1f6;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: 280px;
+  width: 100%;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-banner__feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(46, 134, 193, 0.1);
+  border-color: rgba(46, 134, 193, 0.3);
+}
+
+.hero-banner__feature-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.hero-banner__feature-icon--blue {
+  background: rgba(46, 134, 193, 0.1);
+  color: var(--color-blue-primary);
+}
+
+.hero-banner__feature-icon--yellow {
+  background: rgba(245, 166, 35, 0.12);
+  color: #d97706;
+}
+
+.hero-banner__feature-icon--green {
+  background: rgba(16, 185, 129, 0.1);
+  color: #059669;
+}
+
+.hero-banner__feature-icon--blue-dark {
+  background: rgba(27, 58, 92, 0.08);
+  color: var(--color-blue-dark);
+}
+
+.hero-banner__feature-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-banner__feature-title {
+  font-family: var(--font-primary);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-blue-dark);
+  margin: 0 0 2px 0;
+}
+
+.hero-banner__feature-text {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.35;
+}
+
+/* Center Logo Video Wrapper */
+.hero-banner__logo-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.hero-banner__logo-glow {
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(46, 134, 193, 0.1) 0%, rgba(245, 166, 35, 0.06) 50%, transparent 70%);
+  filter: blur(20px);
+  pointer-events: none;
+  z-index: 0;
+}
+
 .hero-banner__logo-video {
-  width: 360px;
-  max-width: 90vw;
+  width: 320px;
+  max-width: 85vw;
   height: auto;
   display: block;
   object-fit: contain;
-  background-color: #ffffff;
+  background-color: transparent;
   pointer-events: none;
   outline: none;
   border: none;
   box-shadow: none;
+  position: relative;
+  z-index: 1;
 }
 
-.hero-banner__logo-img {
-  width: 360px;
-  height: auto;
-  display: block;
+/* Floating Pills */
+.hero-banner__pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.hero-banner__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 30px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  font-family: var(--font-secondary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-blue-dark);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s ease;
+}
+
+.hero-banner__pill svg {
+  color: #10b981;
+}
+
+.hero-banner__pill:hover {
+  background: #ffffff;
+  border-color: var(--color-blue-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(46, 134, 193, 0.1);
 }
 
 /* Curved bottom */
@@ -106,35 +307,55 @@
 .hero-banner__curve svg {
   display: block;
   width: 100%;
-  height: 70px;
+  height: 60px;
 }
 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-  .hero-banner {
-    min-height: 380px;
-    padding-top: var(--spacing-xl);
+@media (max-width: 1024px) {
+  .hero-banner__main-stage {
+    grid-template-columns: 1fr;
+    gap: 24px;
   }
 
-  .hero-banner__logo-video,
-  .hero-banner__logo-img {
-    width: 250px;
+  .hero-banner__side-cards {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
   }
 
-  .hero-banner__circle--1 {
-    width: 240px;
-    height: 240px;
+  .hero-banner__side-cards--left,
+  .hero-banner__side-cards--right {
+    align-items: center;
+  }
+
+  .hero-banner__feature-card {
+    max-width: 250px;
+  }
+
+  .hero-banner__logo-wrapper {
+    order: -1;
+  }
+
+  .hero-banner__logo-video {
+    width: 270px;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 640px) {
   .hero-banner {
-    min-height: 300px;
-    padding-top: var(--spacing-md);
+    padding: 30px 15px 60px;
   }
 
-  .hero-banner__logo-video,
-  .hero-banner__logo-img {
-    width: 190px;
+  .hero-banner__feature-card {
+    max-width: 100%;
+  }
+
+  .hero-banner__logo-video {
+    width: 220px;
+  }
+
+  .hero-banner__pill {
+    font-size: 0.76rem;
+    padding: 6px 14px;
   }
 }
