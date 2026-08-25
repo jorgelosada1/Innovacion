@@ -1,11 +1,13 @@
 import { useRef, useState, useEffect } from 'react';
 import './HeroBanner.css';
 import logoVideo from '../assets/Animacion_Logo.mp4';
+import logoColor from '../assets/images/Logo.png';
 
 const HeroBanner = () => {
   const logoContainerRef = useRef(null);
   const videoRef = useRef(null);
   const [hasPlayed, setHasPlayed] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [hasEnded, setHasEnded] = useState(false);
 
   useEffect(() => {
@@ -13,31 +15,31 @@ const HeroBanner = () => {
     const target = logoContainerRef.current;
     if (!target || !video) return;
 
-    // Asegurar que el video inicie pausado y en el primer frame
-    video.pause();
-    try {
-      video.currentTime = 0;
-    } catch (e) {
-      // Ignorar si el video aún no ha cargado metadatos
-    }
+    video.muted = true;
+    video.playsInline = true;
 
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries;
-        // Se reproduce ÚNICAMENTE cuando el usuario baja y el logo entra de lleno al viewport
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.35 && !hasPlayed) {
+        // Se reproduce cuando el usuario hace scroll y entra a la sección
+        if (entry.isIntersecting && !hasPlayed) {
           setHasPlayed(true);
           video.currentTime = 0;
           const playPromise = video.play();
           if (playPromise !== undefined) {
-            playPromise.catch((err) => {
-              console.warn('Scroll autoplay prevented:', err);
-            });
+            playPromise
+              .then(() => {
+                setIsPlaying(true);
+              })
+              .catch((err) => {
+                console.warn('Scroll play error:', err);
+                setIsPlaying(true);
+              });
           }
         }
       },
       {
-        threshold: [0.2, 0.35, 0.5, 0.7],
+        threshold: 0.15,
       }
     );
 
@@ -114,15 +116,27 @@ const HeroBanner = () => {
           {/* Center Logo Video Wrapper */}
           <div className="hero-banner__logo-wrapper" ref={logoContainerRef}>
             <div className="hero-banner__logo-glow"></div>
+            
+            {/* Fallback de logo estático mientras el usuario llega para que NUNCA se vea un recuadro negro */}
+            {!isPlaying && !hasPlayed && (
+              <img
+                src={logoColor}
+                alt="Innovación e-Learning"
+                className="hero-banner__logo-placeholder"
+              />
+            )}
+
             <video
               ref={videoRef}
               src={logoVideo}
-              className={`hero-banner__logo-video ${hasEnded ? 'hero-banner__logo-video--ended' : ''}`}
+              className={`hero-banner__logo-video ${isPlaying || hasEnded ? 'hero-banner__logo-video--visible' : ''}`}
               muted
               playsInline
               preload="auto"
               disablePictureInPicture
               disableRemotePlayback
+              onPlay={() => setIsPlaying(true)}
+              onPlaying={() => setIsPlaying(true)}
               onEnded={handleEnded}
               aria-label="Animación de logo Innovación e-Learning"
             />

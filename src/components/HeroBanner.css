@@ -229,7 +229,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  min-height: 220px;
+  width: 320px;
+  max-width: 85vw;
+  background-color: transparent;
 }
 
 .hero-banner__logo-glow {
@@ -241,6 +244,16 @@
   filter: blur(20px);
   pointer-events: none;
   z-index: 0;
+}
+
+.hero-banner__logo-placeholder {
+  position: absolute;
+  width: 260px;
+  height: auto;
+  object-fit: contain;
+  z-index: 1;
+  opacity: 1;
+  transition: opacity 0.3s ease;
 }
 
 .hero-banner__logo-video {
@@ -255,7 +268,13 @@
   border: none;
   box-shadow: none;
   position: relative;
-  z-index: 1;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.hero-banner__logo-video--visible {
+  opacity: 1;
 }
 
 /* Floating Pills */
