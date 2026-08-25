@@ -1,16 +1,16 @@
 /* ===== HERO BANNER ===== */
 .hero-banner {
   position: relative;
-  background: linear-gradient(150deg, var(--color-blue-dark) 0%, #2a7ab5 50%, var(--color-blue-primary) 100%);
-  padding-top: var(--nav-height);
-  min-height: 600px;
+  background-color: #ffffff;
+  padding-top: var(--spacing-2xl);
+  min-height: 460px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 }
 
-/* Decorative background elements */
+/* Decorative background elements on white */
 .hero-banner__decorations {
   position: absolute;
   inset: 0;
@@ -18,38 +18,47 @@
   overflow: hidden;
 }
 
-/* Decorative circles (rings) */
+/* Decorative rings with soft brand colors on white canvas */
 .hero-banner__circle {
   position: absolute;
   border-radius: 50%;
-  border: 2.5px solid rgba(245, 166, 35, 0.35);
 }
 
 .hero-banner__circle--1 {
-  width: 350px;
-  height: 350px;
-  bottom: -40px;
-  left: -100px;
+  width: 380px;
+  height: 380px;
+  bottom: -20px;
+  left: -80px;
+  border: 2px solid rgba(46, 134, 193, 0.12);
   animation: bannerPulse 10s ease-in-out infinite;
 }
 
 .hero-banner__circle--2 {
-  width: 180px;
-  height: 180px;
-  top: 12%;
-  right: -50px;
-  border-color: rgba(255, 255, 255, 0.08);
+  width: 220px;
+  height: 220px;
+  top: 8%;
+  right: -40px;
+  border: 2px solid rgba(245, 166, 35, 0.2);
   animation: bannerPulse 12s ease-in-out infinite reverse;
+}
+
+.hero-banner__circle--3 {
+  width: 140px;
+  height: 140px;
+  top: 16%;
+  left: 14%;
+  border: 1.5px dashed rgba(46, 134, 193, 0.1);
+  animation: bannerPulse 14s ease-in-out infinite;
 }
 
 @keyframes bannerPulse {
   0%, 100% {
     transform: scale(1);
-    opacity: 0.35;
+    opacity: 0.6;
   }
   50% {
-    transform: scale(1.08);
-    opacity: 0.55;
+    transform: scale(1.06);
+    opacity: 1;
   }
 }
 
@@ -60,27 +69,27 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-3xl) 0;
+  padding: var(--spacing-2xl) 0 var(--spacing-4xl);
+  background-color: #ffffff;
 }
 
-/* Animated Logo Video Element */
+/* Animated Logo Video Element seamlessly integrated on white background */
 .hero-banner__logo-video {
-  width: 340px;
+  width: 360px;
   max-width: 90vw;
   height: auto;
   display: block;
   object-fit: contain;
-  background: transparent;
+  background-color: #ffffff;
   pointer-events: none;
   outline: none;
   border: none;
-  filter: drop-shadow(0 10px 40px rgba(0, 0, 0, 0.2));
+  box-shadow: none;
 }
 
 .hero-banner__logo-img {
-  width: 340px;
+  width: 360px;
   height: auto;
-  filter: brightness(0) invert(1) drop-shadow(0 10px 40px rgba(0, 0, 0, 0.2));
   display: block;
 }
 
@@ -91,38 +100,41 @@
   left: 0;
   right: 0;
   z-index: 1;
+  pointer-events: none;
 }
 
 .hero-banner__curve svg {
   display: block;
   width: 100%;
-  height: 80px;
+  height: 70px;
 }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .hero-banner {
-    min-height: 450px;
+    min-height: 380px;
+    padding-top: var(--spacing-xl);
   }
 
   .hero-banner__logo-video,
   .hero-banner__logo-img {
-    width: 230px;
+    width: 250px;
   }
 
   .hero-banner__circle--1 {
-    width: 220px;
-    height: 220px;
+    width: 240px;
+    height: 240px;
   }
 }
 
 @media (max-width: 480px) {
   .hero-banner {
-    min-height: 380px;
+    min-height: 300px;
+    padding-top: var(--spacing-md);
   }
 
   .hero-banner__logo-video,
   .hero-banner__logo-img {
-    width: 170px;
+    width: 190px;
   }
 }
