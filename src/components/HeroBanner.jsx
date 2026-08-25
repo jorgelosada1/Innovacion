@@ -18,24 +18,38 @@ const HeroBanner = () => {
     video.muted = true;
     video.playsInline = true;
 
+    let timer = null;
+
+    const startPlayback = () => {
+      setHasPlayed(true);
+      video.currentTime = 0;
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            setIsPlaying(true);
+          })
+          .catch((err) => {
+            console.warn('Playback error:', err);
+            setIsPlaying(true);
+          });
+      }
+    };
+
+    // Opción 1: Se reproduce automáticamente 5 segundos después de cargar la página
+    timer = setTimeout(() => {
+      if (!hasPlayed) {
+        startPlayback();
+      }
+    }, 5000);
+
+    // Opción 2: O se reproduce inmediatamente cuando el usuario baja con el scroll a esa sección
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries;
-        // Se reproduce cuando el usuario hace scroll y entra a la sección
         if (entry.isIntersecting && !hasPlayed) {
-          setHasPlayed(true);
-          video.currentTime = 0;
-          const playPromise = video.play();
-          if (playPromise !== undefined) {
-            playPromise
-              .then(() => {
-                setIsPlaying(true);
-              })
-              .catch((err) => {
-                console.warn('Scroll play error:', err);
-                setIsPlaying(true);
-              });
-          }
+          if (timer) clearTimeout(timer);
+          startPlayback();
         }
       },
       {
@@ -46,6 +60,7 @@ const HeroBanner = () => {
     observer.observe(target);
 
     return () => {
+      if (timer) clearTimeout(timer);
       observer.disconnect();
     };
   }, [hasPlayed]);
@@ -117,7 +132,7 @@ const HeroBanner = () => {
           <div className="hero-banner__logo-wrapper" ref={logoContainerRef}>
             <div className="hero-banner__logo-glow"></div>
             
-            {/* Fallback de logo estático mientras el usuario llega para que NUNCA se vea un recuadro negro */}
+            {/* Fallback de logo estático mientras no se reproduce */}
             {!isPlaying && !hasPlayed && (
               <img
                 src={logoColor}
