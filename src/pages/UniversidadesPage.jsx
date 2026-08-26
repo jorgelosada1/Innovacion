@@ -366,14 +366,14 @@ const IberoContent = ({ onOpenModal }) => {
           </div>
           <div className="upage__map-box">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15845.04741048649!2d-73.37012751055789!3d5.546972899999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e6a1701c99ca003%3A0x79c0c0e21c3d8131!2sTunja%2C%20Boyac%C3%A1!5e0!3m2!1ses!2sco!4v1692000000000"
+              src="https://maps.google.com/maps?q=5.531811,-73.3645106&hl=es&z=18&output=embed"
               width="100%"
               height="280"
               style={{ border: 0 }}
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Tunja Boyacá - Centro IBERO"
+              title="Centro IBERO Boyacá"
             />
           </div>
         </div>
