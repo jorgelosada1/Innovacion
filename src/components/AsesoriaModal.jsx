@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './AsesoriaModal.css';
 
-const AsesoriaModal = ({ isOpen, onClose }) => {
+const AsesoriaModal = ({ isOpen, onClose, whatsappPhone }) => {
   const [formData, setFormData] = useState({
     nombre: '',
     telefono: '',
@@ -17,7 +17,9 @@ const AsesoriaModal = ({ isOpen, onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    window.open('https://wa.link/rgw8yn', '_blank');
+    const phoneNum = (whatsappPhone || '573144377691').replace(/[^0-9]/g, '');
+    const text = encodeURIComponent(`Hola, mi nombre es ${formData.nombre}. Estoy interesado/a en: ${formData.interes}. Mi teléfono es: ${formData.telefono}. Quisiera recibir asesoría.`);
+    window.open(`https://wa.me/${phoneNum}?text=${text}`, '_blank');
     onClose();
   };
 

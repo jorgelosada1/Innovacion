@@ -5,7 +5,7 @@ import andinaBanner from '../assets/images/andina.png';
 import iberoBanner from '../assets/images/ibero.png';
 import AsesoriaModal from '../components/AsesoriaModal';
 
-/* ── SVG Icons (matching site's stroke style) ── */
+/* ── SVG Icons ── */
 const CheckShield = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/>
@@ -61,6 +61,11 @@ const FileCheck = () => (
     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15l2 2 4-4"/>
   </svg>
 );
+const PlayIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <polygon points="5 3 19 12 5 21 5 3"/>
+  </svg>
+);
 
 const UniversidadesPage = () => {
   const { uni } = useParams();
@@ -76,10 +81,12 @@ const UniversidadesPage = () => {
   }, [activeTab]);
 
   const isAreandina = activeTab === 'areandina';
+  const areandinaWA = "https://wa.me/573144377691?text=Hola,%20quisiera%20recibir%20asesor%C3%ADa%20sobre%20Areandina";
+  const iberoWA = "https://wa.me/573150686423?text=Hola,%20quisiera%20recibir%20asesor%C3%ADa%20sobre%20la%20Iberoamericana";
 
   return (
     <div className="upage">
-      {/* ─── HERO BANNER (same style as landing HeroBanner) ─── */}
+      {/* ─── HERO BANNER ─── */}
       <section className="upage__hero">
         <div className="upage__hero-deco">
           <div className="upage__hero-circle upage__hero-circle--1"></div>
@@ -115,7 +122,6 @@ const UniversidadesPage = () => {
             </button>
           </div>
         </div>
-        {/* Curved bottom just like HeroBanner */}
         <div className="upage__hero-curve">
           <svg viewBox="0 0 1440 140" fill="none" preserveAspectRatio="none">
             <path d="M0 140V100C240 20 480 0 720 20C960 40 1200 80 1440 100V140H0Z" fill="#f8f9fa"/>
@@ -128,7 +134,7 @@ const UniversidadesPage = () => {
         {/* ========= AREANDINA ========= */}
         {isAreandina && (
           <div className="upage__content" key="areandina">
-            {/* Banner image — full, no crop */}
+            {/* Banner image */}
             <div className="upage__banner">
               <img src={andinaBanner} alt="Fundación Universitaria del Área Andina" />
             </div>
@@ -190,7 +196,7 @@ const UniversidadesPage = () => {
               </div>
               <div className="upage__more-programs">
                 <p>¿Te interesa conocer más programas? No son los únicos con los que contamos.</p>
-                <a href="https://wa.link/rgw8yn" target="_blank" rel="noopener noreferrer" className="upage__btn upage__btn--areandina">
+                <a href={areandinaWA} target="_blank" rel="noopener noreferrer" className="upage__btn upage__btn--areandina">
                   Escríbenos por WhatsApp <ChevronRight />
                 </a>
               </div>
@@ -250,8 +256,8 @@ const UniversidadesPage = () => {
               <h2>¿Listo para dar el siguiente paso?</h2>
               <p>Conoce la oferta académica de Areandina, encuentra el programa que se adapta a tus objetivos y comienza tu proceso.</p>
               <div className="upage__cta-btns">
-                <a href="https://wa.link/rgw8yn" target="_blank" rel="noopener noreferrer" className="upage__cta-btn upage__cta-btn--primary">
-                  Hablar con un asesor
+                <a href={areandinaWA} target="_blank" rel="noopener noreferrer" className="upage__cta-btn upage__cta-btn--primary">
+                  Hablar con un asesor (+57 314 4377691)
                 </a>
                 <a href="https://csu.com.co" target="_blank" rel="noopener noreferrer" className="upage__cta-btn upage__cta-btn--wa">
                   Visitar sitio web CSU
@@ -264,10 +270,25 @@ const UniversidadesPage = () => {
         {/* ========= IBERO ========= */}
         {!isAreandina && (
           <div className="upage__content" key="ibero">
-            {/* Banner image — full, no crop */}
+            {/* Banner image */}
             <div className="upage__banner">
               <img src={iberoBanner} alt="Corporación Universitaria Iberoamericana" />
             </div>
+
+            {/* Video inicial Ibero */}
+            <section className="upage__video-section">
+              <span className="upage__badge upage__badge--ibero">Video Destacado</span>
+              <h2 className="upage__title">Conoce la Iberoamericana</h2>
+              <p className="upage__lead">Descubre la experiencia educativa de IBERO</p>
+              <div className="upage__video-wrapper">
+                <iframe
+                  src="https://www.youtube.com/embed/4-onqfpfk2Q"
+                  title="Conoce IBERO - Corporación Universitaria Iberoamericana"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </section>
 
             {/* Quién es */}
             <section className="upage__section">
@@ -331,7 +352,7 @@ const UniversidadesPage = () => {
               </div>
               <div className="upage__more-programs">
                 <p>¿Te interesa conocer más programas? No son los únicos con los que contamos.</p>
-                <a href="https://wa.link/rgw8yn" target="_blank" rel="noopener noreferrer" className="upage__btn upage__btn--ibero">
+                <a href={iberoWA} target="_blank" rel="noopener noreferrer" className="upage__btn upage__btn--ibero">
                   Escríbenos por WhatsApp <ChevronRight />
                 </a>
               </div>
@@ -398,8 +419,8 @@ const UniversidadesPage = () => {
               <h2>¿Listo para dar el siguiente paso?</h2>
               <p>Conoce la oferta académica de la Iberoamericana, encuentra el programa que se adapta a tus objetivos y comienza tu proceso.</p>
               <div className="upage__cta-btns">
-                <a href="https://wa.link/rgw8yn" target="_blank" rel="noopener noreferrer" className="upage__cta-btn upage__cta-btn--primary-ibero">
-                  Hablar con un asesor
+                <a href={iberoWA} target="_blank" rel="noopener noreferrer" className="upage__cta-btn upage__cta-btn--primary-ibero">
+                  Hablar con un asesor (+57 315 0686423)
                 </a>
               </div>
             </section>
@@ -407,7 +428,11 @@ const UniversidadesPage = () => {
         )}
       </div>
 
-      <AsesoriaModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <AsesoriaModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        whatsappPhone={isAreandina ? '573144377691' : '573150686423'}
+      />
     </div>
   );
 };
