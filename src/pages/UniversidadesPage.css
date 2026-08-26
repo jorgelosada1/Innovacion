@@ -162,34 +162,14 @@
 .upage__accent--ibero  { color: var(--color-blue-light); }
 
 /* ─────────────────────────────────────
-   AREANDINA — HERO IMAGE WITH STATS
+/* ─────────────────────────────────────
+   SPLIT SECTION (AREANDINA)
 ───────────────────────────────────── */
-.upage__uni-hero {
-  position: relative;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
-  margin-bottom: 3.5rem;
-}
-.upage__uni-hero-img { width: 100%; height: auto; display: block; }
-.upage__uni-hero-stats {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  display: flex;
-  background: linear-gradient(to top, rgba(27,58,92,0.95), rgba(27,58,92,0));
-  padding: 2rem 2rem 1.5rem;
-  gap: 2rem;
-}
-.upage__uni-stat { display: flex; flex-direction: column; color: #fff; }
-.upage__uni-stat-num { font-family: var(--font-primary); font-size: 1.8rem; font-weight: 800; color: var(--color-yellow); line-height: 1; }
-.upage__uni-stat-label { font-family: var(--font-secondary); font-size: 0.75rem; color: rgba(255,255,255,0.75); margin-top: 3px; }
-
-/* ─── SPLIT SECTION ─── */
 .upage__split {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  align-items: start;
+  gap: 3.5rem;
+  align-items: center;
   margin-bottom: 4rem;
 }
 
@@ -244,41 +224,57 @@
 .upage__cta-inline--ibero:hover { background: var(--color-blue-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(46,109,164,0.3); }
 .upage__cta-inline svg { flex-shrink: 0; }
 
-/* Feature badges — vertical centered cards */
+/* Feature badges — clean, vertically centered cards */
 .upage__split-badges {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.1rem;
+  justify-content: center;
 }
 .upage__feature-badge {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.5rem;
+  align-items: center;
+  gap: 1.25rem;
   background: #fff;
-  border-radius: 14px;
-  padding: 1.2rem 1.4rem;
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
   box-shadow: var(--shadow-sm);
   border: 1px solid rgba(0,0,0,0.05);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 .upage__feature-badge:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
 
-.upage__feature-badge-row {
+.upage__feature-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
-  gap: 12px;
-}
-.upage__feature-icon {
-  width: 40px; height: 40px;
-  border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
+  justify-content: center;
   flex-shrink: 0;
 }
-.upage__feature-icon svg { width: 20px; height: 20px; }
+.upage__feature-icon svg { width: 24px; height: 24px; }
 .upage__feature-icon--andina { background: rgba(46,109,164,0.1); color: var(--color-blue-medium); }
-.upage__feature-badge h4 { font-family: var(--font-primary); font-size: 0.95rem; font-weight: 700; color: var(--color-blue-dark); }
-.upage__feature-badge p  { font-family: var(--font-secondary); font-size: 0.82rem; color: var(--color-gray); padding-left: 52px; margin-top: -2px; }
+
+.upage__feature-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.upage__feature-info h4 {
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-blue-dark);
+  margin: 0;
+}
+.upage__feature-info p {
+  font-family: var(--font-secondary);
+  font-size: 0.85rem;
+  color: var(--color-gray);
+  margin: 0;
+  line-height: 1.4;
+}
 
 /* ─────────────────────────────────────
    PROGRAMS SECTION
@@ -627,8 +623,6 @@
 
   .upage__tabs { flex-direction: column; align-items: center; gap: 10px; }
   .upage__tab { width: 260px; justify-content: center; border-radius: 999px; }
-
-  .upage__uni-hero-stats { position: static; flex-direction: row; flex-wrap: wrap; background: var(--color-blue-dark); padding: 1.2rem 1rem; gap: 1rem; border-radius: 0 0 16px 16px; }
 
   .upage__split { gap: 1.5rem; }
   .upage__split-text h2 { font-size: 1.5rem; }

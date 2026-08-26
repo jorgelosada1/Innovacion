@@ -75,23 +75,9 @@ const AreandinaContent = ({ onOpenModal }) => {
   return (
     <div className="upage__content">
 
-      {/* HERO IMAGE — with stat overlays */}
-      <div className="upage__uni-hero">
-        <img src={andinaBanner} alt="Areandina" className="upage__uni-hero-img" />
-        <div className="upage__uni-hero-stats">
-          <div className="upage__uni-stat">
-            <span className="upage__uni-stat-num">38+</span>
-            <span className="upage__uni-stat-label">Años de experiencia</span>
-          </div>
-          <div className="upage__uni-stat">
-            <span className="upage__uni-stat-num">5</span>
-            <span className="upage__uni-stat-label">Sedes regionales</span>
-          </div>
-          <div className="upage__uni-stat">
-            <span className="upage__uni-stat-num">Alta</span>
-            <span className="upage__uni-stat-label">Calidad Acreditada</span>
-          </div>
-        </div>
+      {/* BANNER IMAGE */}
+      <div className="upage__banner">
+        <img src={andinaBanner} alt="Areandina" />
       </div>
 
       {/* INTRO — Split layout */}
@@ -111,25 +97,25 @@ const AreandinaContent = ({ onOpenModal }) => {
         </div>
         <div className="upage__split-badges">
           <div className="upage__feature-badge">
-            <div className="upage__feature-badge-row">
-              <div className="upage__feature-icon upage__feature-icon--andina"><Shield /></div>
+            <div className="upage__feature-icon upage__feature-icon--andina"><Shield /></div>
+            <div className="upage__feature-info">
               <h4>Alta Calidad</h4>
+              <p>Certificación multicampus del MEN</p>
             </div>
-            <p>Certificación multicampus del MEN</p>
           </div>
           <div className="upage__feature-badge">
-            <div className="upage__feature-badge-row">
-              <div className="upage__feature-icon upage__feature-icon--andina"><Globe /></div>
+            <div className="upage__feature-icon upage__feature-icon--andina"><Globe /></div>
+            <div className="upage__feature-info">
               <h4>Internacional</h4>
+              <p>Intercambios y alianzas globales</p>
             </div>
-            <p>Intercambios y alianzas globales</p>
           </div>
           <div className="upage__feature-badge">
-            <div className="upage__feature-badge-row">
-              <div className="upage__feature-icon upage__feature-icon--andina"><Monitor /></div>
+            <div className="upage__feature-icon upage__feature-icon--andina"><Monitor /></div>
+            <div className="upage__feature-info">
               <h4>Flexible</h4>
+              <p>Virtual • Presencial • Mixto</p>
             </div>
-            <p>Virtual • Presencial • Mixto</p>
           </div>
         </div>
       </section>
