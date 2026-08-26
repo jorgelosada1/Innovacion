@@ -111,18 +111,24 @@ const AreandinaContent = ({ onOpenModal }) => {
         </div>
         <div className="upage__split-badges">
           <div className="upage__feature-badge">
-            <div className="upage__feature-icon upage__feature-icon--andina"><Shield /></div>
-            <h4>Alta Calidad</h4>
+            <div className="upage__feature-badge-row">
+              <div className="upage__feature-icon upage__feature-icon--andina"><Shield /></div>
+              <h4>Alta Calidad</h4>
+            </div>
             <p>Certificación multicampus del MEN</p>
           </div>
           <div className="upage__feature-badge">
-            <div className="upage__feature-icon upage__feature-icon--andina"><Globe /></div>
-            <h4>Internacional</h4>
+            <div className="upage__feature-badge-row">
+              <div className="upage__feature-icon upage__feature-icon--andina"><Globe /></div>
+              <h4>Internacional</h4>
+            </div>
             <p>Intercambios y alianzas globales</p>
           </div>
           <div className="upage__feature-badge">
-            <div className="upage__feature-icon upage__feature-icon--andina"><Monitor /></div>
-            <h4>Flexible</h4>
+            <div className="upage__feature-badge-row">
+              <div className="upage__feature-icon upage__feature-icon--andina"><Monitor /></div>
+              <h4>Flexible</h4>
+            </div>
             <p>Virtual • Presencial • Mixto</p>
           </div>
         </div>
