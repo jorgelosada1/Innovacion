@@ -365,18 +365,19 @@
 ───────────────────────────────────── */
 .upage__sedes-section {
   border-radius: 20px;
-  padding: 3rem 2.5rem;
+  padding: 3.5rem 2.5rem;
   margin-bottom: 4rem;
+  text-align: center;
 }
 .upage__sedes-section--andina { background: linear-gradient(135deg, var(--color-blue-dark) 0%, #2a5f8c 100%); }
 .upage__sedes-section--ibero  { background: linear-gradient(135deg, var(--color-blue-medium) 0%, var(--color-blue-primary) 100%); }
 
-.upage__sedes-inner {}
-.upage__sedes-text { max-width: 620px; }
+.upage__sedes-inner { max-width: 700px; margin: 0 auto; }
+.upage__sedes-text { text-align: center; }
 .upage__sedes-text h2 { font-family: var(--font-primary); font-size: clamp(1.5rem,2.5vw,2rem); font-weight: 700; color: #fff; margin-bottom: 0.75rem; }
 .upage__sedes-text p  { font-family: var(--font-secondary); font-size: 0.95rem; color: rgba(255,255,255,0.78); line-height: 1.7; margin-bottom: 1.5rem; }
 
-.upage__sedes-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 1.5rem; }
+.upage__sedes-pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 1.5rem; }
 .upage__sede-pill {
   display: inline-flex;
   align-items: center;
@@ -391,39 +392,57 @@
   border: 1px solid rgba(255,255,255,0.25);
 }
 .upage__sede-pill svg { width: 14px; height: 14px; }
-.upage__sede-pill--ibero {}
 
 .upage__sede-link {
+  display: inline-block;
   color: var(--color-yellow);
   font-family: var(--font-secondary);
   font-size: 0.9rem;
   font-weight: 700;
   text-decoration: none;
   transition: opacity 0.2s;
+  margin-bottom: 1.5rem;
 }
 .upage__sede-link:hover { opacity: 0.8; }
 
-.upage__map-box { margin-top: 1.5rem; border-radius: 14px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+/* Map — full width inside the centered max-width container */
+.upage__map-box {
+  margin-top: 1.5rem;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.25);
+  width: 100%;
+  background: #e8eaed;
+}
+.upage__map-box iframe {
+  display: block;
+  width: 100%;
+  border: none;
+  border-radius: 14px;
+}
 
 /* ─────────────────────────────────────
    PROCESO — Timeline
 ───────────────────────────────────── */
-.upage__proceso { margin-bottom: 4rem; }
+.upage__proceso { margin-bottom: 4rem; text-align: center; }
 .upage__timeline {
   display: flex;
   align-items: flex-start;
+  justify-content: center;
   gap: 0;
   margin-top: 2.5rem;
   margin-bottom: 2.5rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .upage__timeline-step {
   flex: 1;
   text-align: center;
-  padding: 0 1.2rem;
+  padding: 0 1rem;
 }
 .upage__timeline-num {
   font-family: var(--font-primary);
-  font-size: 2.2rem;
   font-weight: 800;
   line-height: 1;
   margin: 0 auto 0.75rem;
@@ -432,18 +451,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
 }
 .upage__timeline-num--andina { background: rgba(46,109,164,0.1); color: var(--color-blue-medium); border: 2px solid rgba(46,109,164,0.2); }
 .upage__timeline-num--ibero  { background: rgba(46,134,193,0.1); color: var(--color-blue-primary); border: 2px solid rgba(46,134,193,0.2); }
-.upage__timeline-step h4 { font-family: var(--font-primary); font-size: 1rem; font-weight: 700; color: var(--color-blue-dark); margin-bottom: 6px; }
-.upage__timeline-step p  { font-family: var(--font-secondary); font-size: 0.85rem; color: var(--color-gray); line-height: 1.55; }
+.upage__timeline-step h4 { font-family: var(--font-primary); font-size: 0.97rem; font-weight: 700; color: var(--color-blue-dark); margin-bottom: 6px; }
+.upage__timeline-step p  { font-family: var(--font-secondary); font-size: 0.83rem; color: var(--color-gray); line-height: 1.55; }
 .upage__timeline-connector {
   flex-shrink: 0;
-  width: 60px;
+  width: 50px;
   height: 2px;
   background: linear-gradient(90deg, rgba(46,109,164,0.2), rgba(46,134,193,0.2));
   margin-top: 32px;
+  align-self: flex-start;
 }
 .upage__timeline-connector--ibero { background: linear-gradient(90deg, rgba(46,134,193,0.2), rgba(52,152,219,0.2)); }
 

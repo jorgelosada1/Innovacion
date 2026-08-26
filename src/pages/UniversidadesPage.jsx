@@ -369,18 +369,20 @@ const IberoContent = ({ onOpenModal }) => {
             <h2>Presencia en Boyacá</h2>
             <p>El Centro de Experiencia IBERO en Boyacá te ofrece acompañamiento presencial con todos los servicios académicos y administrativos.</p>
             <div className="upage__sedes-pills">
-              <span className="upage__sede-pill upage__sede-pill--ibero"><MapPin />Boyacá</span>
+              <span className="upage__sede-pill"><MapPin />Tunja, Boyacá</span>
             </div>
-            <div className="upage__map-box">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3169.0!2d-73.3623!3d5.5353!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNcKwMzInMDcuMSJOIDczwrAyMSc0NC4zIlc!5e0!3m2!1ses!2sco"
-                width="100%" height="220"
-                style={{ border: 0, borderRadius: '12px' }}
-                allowFullScreen loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Centro Ibero Boyacá"
-              />
-            </div>
+          </div>
+          <div className="upage__map-box">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15845.04741048649!2d-73.37012751055789!3d5.546972899999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e6a1701c99ca003%3A0x79c0c0e21c3d8131!2sTunja%2C%20Boyac%C3%A1!5e0!3m2!1ses!2sco!4v1692000000000"
+              width="100%"
+              height="280"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Tunja Boyacá - Centro IBERO"
+            />
           </div>
         </div>
       </section>
