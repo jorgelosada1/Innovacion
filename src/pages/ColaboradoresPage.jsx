@@ -3,15 +3,34 @@ import './ColaboradoresPage.css';
 import fernanImg from '../assets/images/Fernan.png';
 import wilsonImg from '../assets/images/wilson.png';
 import johannaImg from '../assets/images/Johanna.JPG';
+import mariaImg from '../assets/images/Maria.png';
+import img10 from '../assets/images/10.png';
+import img20 from '../assets/images/20.png';
+import img30 from '../assets/images/30.png';
 import PasswordModal from '../components/PasswordModal';
 
 const ColaboradoresPage = () => {
   const [commentIndex, setCommentIndex] = useState(0);
 
   const comments = [
-    { text: 'Trabajar en Innovación e-Learning me ha permitido crecer profesionalmente en un ambiente de constante aprendizaje y colaboración.', name: 'Colaborador', role: 'Equipo Comercial' },
-    { text: 'Me encanta la cultura de equipo que tenemos. Cada día es una oportunidad para innovar y aportar al cambio educativo en Colombia.', name: 'Colaboradora', role: 'Área de Gestión' },
-    { text: 'Aquí valoran nuestras ideas y nos dan las herramientas para hacer la diferencia en la educación superior del país.', name: 'Colaborador', role: 'Liderazgo Comercial' },
+    { 
+      text: 'Trabajar en Innovación e-Learning me ha permitido crecer profesionalmente en un ambiente de constante aprendizaje y colaboración.', 
+      name: 'Colaborador', 
+      role: 'Equipo Comercial',
+      photo: img10
+    },
+    { 
+      text: 'Me encanta la cultura de equipo que tenemos. Cada día es una oportunidad para innovar y aportar al cambio educativo en Colombia.', 
+      name: 'Colaboradora', 
+      role: 'Área de Gestión',
+      photo: img20
+    },
+    { 
+      text: 'Aquí valoran nuestras ideas y nos dan las herramientas para hacer la diferencia en la educación superior del país.', 
+      name: 'Colaborador', 
+      role: 'Liderazgo Comercial',
+      photo: img30
+    },
   ];
 
   useEffect(() => {
@@ -104,11 +123,8 @@ const ColaboradoresPage = () => {
               <div className="org__line-v org__line-v--tiny"></div>
               <div className="org__card org__card--coo">
                 <span className="org__badge org__badge--blue">Nuevos Proyectos</span>
-                <div className="org__avatar org__avatar--placeholder">
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                    <circle cx="12" cy="7" r="4"/>
-                  </svg>
+                <div className="org__avatar">
+                  <img src={mariaImg} alt="María del Socorro" className="org__avatar-img" />
                 </div>
                 <h3 className="org__name">María del Socorro</h3>
                 <p className="org__role">Nuevos Proyectos</p>
@@ -301,10 +317,14 @@ const ColaboradoresPage = () => {
                     >
                       <div className="emp-comments-card__user">
                         <div className="emp-comments-card__avatar">
-                          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                            <circle cx="12" cy="7" r="4"/>
-                          </svg>
+                          {comment.photo ? (
+                            <img src={comment.photo} alt={comment.name} className="emp-comments-card__avatar-img" />
+                          ) : (
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                              <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                          )}
                         </div>
                         <div className="emp-comments-card__info">
                           <h4 className="emp-comments-card__name">{comment.name}</h4>

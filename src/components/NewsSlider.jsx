@@ -4,6 +4,8 @@ import { getSlider, getNoticias } from '../utils/dataManager';
 import './NewsSlider.css';
 import defaultImg1 from '../assets/images/1.png';
 import defaultImg2 from '../assets/images/2.png';
+import andinaBanner from '../assets/images/andina.png';
+import iberoBanner from '../assets/images/ibero.png';
 
 const NewsSlider = () => {
   const [slides, setSlides] = useState([]);
@@ -13,22 +15,56 @@ const NewsSlider = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const rawSlider = getSlider();
+    let rawSlider = getSlider();
     const noticias = getNoticias();
-    const formatted = rawSlider.map((item) => {
+
+    // Asegurar que los banners de Andina e Ibero estén presentes en el slider
+    const hasAndina = rawSlider.some(s => s.imagen && s.imagen.includes('andina.png'));
+    const hasIbero = rawSlider.some(s => s.imagen && s.imagen.includes('ibero.png'));
+
+    let sliderItems = [...rawSlider];
+    if (!hasAndina) {
+      sliderItems.push({
+        id: 's3',
+        imagen: '/src/assets/images/andina.png',
+        link: '/universidades/areandina',
+        title: 'Fundación Universitaria del Área Andina'
+      });
+    }
+    if (!hasIbero) {
+      sliderItems.push({
+        id: 's4',
+        imagen: '/src/assets/images/ibero.png',
+        link: '/universidades/iberoamericana',
+        title: 'Corporación Universitaria Iberoamericana'
+      });
+    }
+
+    const formatted = sliderItems.map((item) => {
       let image = item.imagen;
+      let link = item.link;
+
       if (image && image.includes('1.png')) {
         image = defaultImg1;
       } else if (image && image.includes('2.png')) {
         image = defaultImg2;
+      } else if (image && image.includes('andina.png')) {
+        image = andinaBanner;
+        link = '/universidades/areandina';
+      } else if (image && image.includes('ibero.png')) {
+        image = iberoBanner;
+        link = '/universidades/iberoamericana';
       }
+
       const noticia = noticias.find((n) => n.id === item.noticiaId);
       return {
         ...item,
         image,
-        title: noticia ? noticia.titulo : 'Noticia',
+        link,
+        title: item.title || (noticia ? noticia.titulo : 'Innovación e-Learning'),
       };
     });
+
     setSlides(formatted);
   }, []);
 
@@ -49,7 +85,7 @@ const NewsSlider = () => {
     goToSlide(current === 0 ? slides.length - 1 : current - 1);
   }, [current, goToSlide, slides.length]);
 
-  // Auto-play every 6 seconds (slower), pauses on manual pause toggle
+  // Auto-play every 6 seconds, pauses on manual pause toggle
   useEffect(() => {
     if (slides.length === 0 || isPaused) return;
     const timer = setInterval(nextSlide, 6000);
@@ -60,21 +96,28 @@ const NewsSlider = () => {
     setIsPaused((prev) => !prev);
   };
 
+  const handleSlideClick = (slide) => {
+    if (slide.link) {
+      navigate(slide.link);
+    } else if (slide.noticiaId) {
+      navigate(`/noticias/${slide.noticiaId}`);
+    }
+  };
+
   if (slides.length === 0) return null;
 
   const isAutoPlaying = !isPaused;
 
   return (
-    <section 
-      className="news-slider"
-    >
+    <section className="news-slider">
       <div className="news-slider__track">
         {slides.map((slide, index) => (
           <div
             key={slide.id || index}
             className={`news-slider__slide ${index === current ? 'news-slider__slide--active' : ''}`}
-            onClick={() => slide.noticiaId && navigate(`/noticias/${slide.noticiaId}`)}
+            onClick={() => handleSlideClick(slide)}
             style={{ cursor: 'pointer' }}
+            title={`Ir a ${slide.title}`}
           >
             <img src={slide.image} alt="" className="news-slider__bg" aria-hidden="true" />
             <img src={slide.image} alt={slide.title} className="news-slider__image" />

@@ -1,5 +1,8 @@
 import React from 'react';
 import './Testimonios.css';
+import img10 from '../assets/images/10.png';
+import img20 from '../assets/images/20.png';
+import img30 from '../assets/images/30.png';
 
 const testimoniosData = [
   {
@@ -9,7 +12,8 @@ const testimoniosData = [
     quote: 'Gracias al acompañamiento de Innovación E-Learning pude matricularme sin complicaciones. El proceso fue rápido y transparente.',
     rating: 5,
     initials: 'CM',
-    color: '#3b82f6'
+    color: '#3b82f6',
+    image: img10
   },
   {
     name: 'David Salamanca',
@@ -18,7 +22,8 @@ const testimoniosData = [
     quote: 'Pude estudiar mi especialización mientras trabajaba a tiempo completo. La flexibilidad virtual y la asesoría fueron claves.',
     rating: 5,
     initials: 'DS',
-    color: '#10b981'
+    color: '#10b981',
+    image: img20
   },
   {
     name: 'Mariana Ríos',
@@ -27,7 +32,8 @@ const testimoniosData = [
     quote: 'Excelente atención personalizada. Siempre me resolvieron todas las dudas sobre pagos y plataformas.',
     rating: 5,
     initials: 'MR',
-    color: '#f59e0b'
+    color: '#f59e0b',
+    image: img30
   }
 ];
 
@@ -55,7 +61,11 @@ const Testimonios = () => {
               
               <div className="testimonio-author">
                 <div className="testimonio-avatar" style={{ backgroundColor: t.color }}>
-                  {t.initials}
+                  {t.image ? (
+                    <img src={t.image} alt={t.name} className="testimonio-avatar-img" />
+                  ) : (
+                    t.initials
+                  )}
                 </div>
                 <div className="testimonio-info">
                   <h4>{t.name}</h4>

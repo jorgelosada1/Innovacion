@@ -98,6 +98,8 @@ export const deleteNoticia = (id) => {
 const defaultSlider = [
   { id: 's1', imagen: '/src/assets/images/1.png', noticiaId: 'n1' },
   { id: 's2', imagen: '/src/assets/images/2.png', noticiaId: 'n2' },
+  { id: 's3', imagen: '/src/assets/images/andina.png', link: '/universidades/areandina', title: 'Fundación Universitaria del Área Andina' },
+  { id: 's4', imagen: '/src/assets/images/ibero.png', link: '/universidades/iberoamericana', title: 'Corporación Universitaria Iberoamericana' },
 ];
 
 export const getSlider = () => getData(KEYS.SLIDER, defaultSlider);

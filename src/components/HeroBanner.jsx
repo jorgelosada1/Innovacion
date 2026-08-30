@@ -100,7 +100,7 @@ const HeroBanner = () => {
           <div className="hero-banner__side-cards hero-banner__side-cards--left">
             <div className="hero-banner__feature-card hero-banner__feature-card--1">
               <div className="hero-banner__feature-icon hero-banner__feature-icon--blue">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
                   <line x1="8" y1="21" x2="16" y2="21"/>
                   <line x1="12" y1="17" x2="12" y2="21"/>
@@ -114,7 +114,7 @@ const HeroBanner = () => {
 
             <div className="hero-banner__feature-card hero-banner__feature-card--2">
               <div className="hero-banner__feature-icon hero-banner__feature-icon--yellow">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
                   <circle cx="9" cy="7" r="4"/>
                   <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
@@ -161,7 +161,7 @@ const HeroBanner = () => {
           <div className="hero-banner__side-cards hero-banner__side-cards--right">
             <div className="hero-banner__feature-card hero-banner__feature-card--3">
               <div className="hero-banner__feature-icon hero-banner__feature-icon--green">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                   <path d="M9 12l2 2 4-4"/>
                 </svg>
@@ -174,7 +174,7 @@ const HeroBanner = () => {
 
             <div className="hero-banner__feature-card hero-banner__feature-card--4">
               <div className="hero-banner__feature-icon hero-banner__feature-icon--blue-dark">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
                 </svg>
               </div>
