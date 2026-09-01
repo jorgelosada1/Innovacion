@@ -80,7 +80,7 @@ const ColaboradoresPage = () => {
           <div className="org__level org__level--ceo">
             <div className="org__card org__card--ceo">
               <span className="org__badge org__badge--blue">Gerente General</span>
-              <div className="org__avatar">
+              <div className="org__avatar org__avatar--ceo">
                 <img src={fernanImg} alt="Fernan" className="org__avatar-img" />
               </div>
               <h3 className="org__name">Fernan</h3>
@@ -97,7 +97,7 @@ const ColaboradoresPage = () => {
               <div className="org__line-v org__line-v--tiny"></div>
               <div className="org__card org__card--coo">
                 <span className="org__badge org__badge--blue">Gestión Humana</span>
-                <div className="org__avatar">
+                <div className="org__avatar org__avatar--exec-1">
                   <img src={wilsonImg} alt="Wilson" className="org__avatar-img" />
                 </div>
                 <h3 className="org__name">Wilson</h3>
@@ -110,7 +110,7 @@ const ColaboradoresPage = () => {
               <div className="org__line-v org__line-v--tiny"></div>
               <div className="org__card org__card--coo">
                 <span className="org__badge org__badge--blue">Gerente Comercial</span>
-                <div className="org__avatar">
+                <div className="org__avatar org__avatar--exec-2">
                   <img src={johannaImg} alt="Johanna" className="org__avatar-img" />
                 </div>
                 <h3 className="org__name">Johanna</h3>
@@ -123,7 +123,7 @@ const ColaboradoresPage = () => {
               <div className="org__line-v org__line-v--tiny"></div>
               <div className="org__card org__card--coo">
                 <span className="org__badge org__badge--blue">Nuevos Proyectos</span>
-                <div className="org__avatar">
+                <div className="org__avatar org__avatar--exec-3">
                   <img src={mariaImg} alt="María del Socorro" className="org__avatar-img" />
                 </div>
                 <h3 className="org__name">María del Socorro</h3>

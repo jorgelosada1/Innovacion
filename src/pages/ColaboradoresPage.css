@@ -167,17 +167,93 @@
   color: var(--color-white);
 }
 
+/* === Avatar Animations in Organigrama === */
+@keyframes orgAvatarFloat {
+  0% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translateY(-4px) rotate(2.5deg) scale(1.02);
+  }
+  50% {
+    transform: translateY(2px) rotate(-2deg) scale(1);
+  }
+  75% {
+    transform: translateY(-3px) rotate(1.5deg) scale(1.01);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+}
+
+@keyframes orgAvatarFloatAlt {
+  0% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translateY(-3.5px) rotate(-2.5deg) scale(1.01);
+  }
+  50% {
+    transform: translateY(2.5px) rotate(2deg) scale(1.02);
+  }
+  75% {
+    transform: translateY(-2px) rotate(-1.5deg) scale(1);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+}
+
+@keyframes orgPulseAura {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(46, 134, 193, 0.3), 0 4px 14px rgba(46, 134, 193, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 0 7px rgba(46, 134, 193, 0), 0 8px 22px rgba(46, 134, 193, 0.28);
+  }
+}
+
 .org__avatar {
-  width: 52px;
-  height: 52px;
+  width: 58px;
+  height: 58px;
   border-radius: 50%;
   background: #edf3f8;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--color-blue-primary);
-  margin: 0 auto 8px;
+  margin: 0 auto 10px;
   overflow: hidden;
+  border: 2.5px solid var(--color-white);
+  box-shadow: 0 4px 14px rgba(46, 134, 193, 0.15);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform;
+  cursor: pointer;
+}
+
+.org__avatar--ceo {
+  width: 66px;
+  height: 66px;
+  border-color: #fff;
+  animation: orgAvatarFloat 5s ease-in-out infinite, orgPulseAura 3.5s ease-in-out infinite;
+}
+
+.org__avatar--exec-1 {
+  animation: orgAvatarFloatAlt 5.6s ease-in-out infinite 0.3s, orgPulseAura 4s ease-in-out infinite 0.5s;
+}
+
+.org__avatar--exec-2 {
+  animation: orgAvatarFloat 4.8s ease-in-out infinite 0.8s, orgPulseAura 3.8s ease-in-out infinite 1s;
+}
+
+.org__avatar--exec-3 {
+  animation: orgAvatarFloatAlt 5.2s ease-in-out infinite 1.3s, orgPulseAura 4.2s ease-in-out infinite 1.5s;
+}
+
+.org__card:hover .org__avatar {
+  transform: translateY(-5px) scale(1.1) rotate(5deg);
+  border-color: var(--color-blue-primary);
+  box-shadow: 0 10px 25px rgba(46, 134, 193, 0.35);
 }
 
 .org__avatar-img {
@@ -185,6 +261,11 @@
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
+  transition: transform 0.4s ease;
+}
+
+.org__card:hover .org__avatar-img {
+  transform: scale(1.06);
 }
 
 .org__name {
@@ -312,8 +393,8 @@
 }
 
 .emp-comments-card__avatar {
-  width: 44px;
-  height: 44px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   background: rgba(46, 134, 193, 0.1);
   color: var(--color-blue-primary);
@@ -321,9 +402,16 @@
   align-items: center;
   justify-content: center;
   border: 2px solid var(--color-white);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 3px 10px rgba(46, 134, 193, 0.15);
   flex-shrink: 0;
   overflow: hidden;
+  animation: orgAvatarFloat 5s ease-in-out infinite 0.6s;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.emp-comments-card__avatar:hover {
+  transform: scale(1.1) rotate(4deg);
+  box-shadow: 0 6px 16px rgba(46, 134, 193, 0.25);
 }
 
 .emp-comments-card__avatar-img {
@@ -331,6 +419,11 @@
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.emp-comments-card__avatar:hover .emp-comments-card__avatar-img {
+  transform: scale(1.06);
 }
 
 .emp-comments-card__info {
