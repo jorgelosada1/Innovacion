@@ -595,56 +595,100 @@
 /* ─────────────────────────────────────
    RESPONSIVE
 ───────────────────────────────────── */
+
+/* ── Tablet (≤ 900px) ── */
 @media (max-width: 900px) {
+  .upage__container { padding: 0 1.5rem 4rem; }
+
   .upage__split {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
+
   /* 3 cols → 2 cols at tablet, CTA card spans both */
   .upage__prog-grid {
     grid-template-columns: 1fr 1fr;
+    align-items: start;
   }
   .upage__prog-cta-card {
     grid-column: span 2;
-    min-height: 160px;
+    min-height: 140px;
   }
+
   .upage__ibero-hero {
-    grid-template-columns: 220px 1fr;
-    gap: 1.8rem;
+    grid-template-columns: 200px 1fr;
+    gap: 1.5rem;
   }
   .upage__pilares-inner { flex-wrap: wrap; }
-  .upage__pilar { min-width: 45%; }
+  .upage__pilar { min-width: 44%; }
   .upage__pilar-div:nth-child(even) { display: none; }
+
+  .upage__banner img { border-radius: 14px; }
 }
 
+/* ── Mobile (≤ 640px) ── */
 @media (max-width: 640px) {
+  .upage__container { padding: 0 1rem 3.5rem; }
   .upage__hero-inner { padding: 2rem 1rem 90px; }
   .upage__hero-curve svg { height: 50px; }
 
+  /* Tabs: stack vertical */
   .upage__tabs { flex-direction: column; align-items: center; gap: 10px; }
-  .upage__tab { width: 260px; justify-content: center; border-radius: 999px; }
+  .upage__tab  { width: 240px; justify-content: center; border-radius: 999px; }
 
+  /* Split: 1 col */
   .upage__split { gap: 1.5rem; }
   .upage__split-text h2 { font-size: 1.5rem; }
 
+  /* Feature badges: 1 col stacked */
+  .upage__split-badges { gap: 0.85rem; }
+  .upage__feature-badge { padding: 1rem 1.2rem; }
+
+  /* Programs: 1 col */
   .upage__prog-grid { grid-template-columns: 1fr; }
-  .upage__prog-cta-card { grid-column: span 1; }
+  .upage__prog-cta-card { grid-column: span 1; min-height: 120px; }
 
+  /* Program block list: allow wrap */
+  .upage__prog-block-body ul { padding-left: 0; }
+  .upage__prog-block-body li { font-size: 0.8rem; }
+
+  /* Ibero hero: stack video over text */
   .upage__ibero-hero { grid-template-columns: 1fr; gap: 1.5rem; }
-  .upage__video-frame { max-width: 280px; margin: 0 auto; }
+  .upage__video-frame { max-width: 260px; margin: 0 auto; }
 
-  .upage__pilares-inner { flex-direction: column; }
+  /* Pilares: stack */
+  .upage__pilares-inner { flex-direction: column; align-items: center; }
+  .upage__pilar { min-width: 100%; max-width: 340px; }
   .upage__pilar-div { width: 80%; height: 1px; margin: 0 auto; }
 
+  /* Timeline: stack vertical */
   .upage__timeline { flex-direction: column; align-items: center; gap: 1.2rem; }
   .upage__timeline-step { max-width: 300px; width: 100%; }
-  .upage__timeline-connector { width: 2px; height: 30px; margin: 0 auto; }
+  .upage__timeline-connector { width: 2px; height: 24px; margin: 0 auto; }
 
-  .upage__sedes-section { padding: 2rem 1.2rem; border-radius: 14px; }
+  /* Sedes */
+  .upage__sedes-section { padding: 2rem 1rem; border-radius: 14px; }
+  .upage__sedes-pills { justify-content: center; }
+  .upage__map-box { height: 220px; }
+
+  /* Final CTA */
   .upage__final-cta { padding: 2.5rem 1.2rem; border-radius: 14px; }
+  .upage__final-cta h2 { font-size: 1.5rem; }
 
-  .upage__ibero-stats { gap: 1rem; }
+  /* Ibero stats */
+  .upage__ibero-stats { gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
   .upage__ibero-stat strong { font-size: 1.3rem; }
 
-  .upage__container { padding: 0 1rem 3.5rem; }
+  /* Tags/section heads */
+  .upage__section-head h2 { font-size: 1.5rem; }
 }
+
+/* ── Small phone (≤ 400px) ── */
+@media (max-width: 400px) {
+  .upage__tab { width: 100%; }
+  .upage__prog-block-header { padding: 12px 14px; }
+  .upage__prog-block-body { padding: 10px 14px 14px; }
+  .upage__prog-cta-card { padding: 1.5rem 1rem; }
+  .upage__feature-badge { padding: 0.9rem 1rem; }
+}
+

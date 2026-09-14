@@ -723,10 +723,14 @@
   white-space: nowrap;
 }
 
-/* ===== RESPONSIVE MOBILE ===== */
+/* =============================================
+   RESPONSIVE — ORGANIGRAMA
+   ============================================= */
+
+/* ── Tablet (≤ 900px) ── */
 @media (max-width: 900px) {
   .colaboradores__hero {
-    padding: 100px 0 30px;
+    padding: 100px 16px 30px;
   }
 
   .colaboradores__title {
@@ -734,36 +738,61 @@
   }
 
   .colaboradores__container {
-    padding: 20px var(--spacing-md) 60px;
+    padding: 20px 16px 60px;
   }
 
-  .org__level--areas,
-  .org__level--execs {
-    grid-template-columns: 1fr;
-    gap: var(--spacing-lg);
-    max-width: 450px;
-    margin: 0 auto;
-  }
-
+  /* Ocultar conectores horizontales en árbol */
   .org__area-group::before,
   .org__sub-group::before,
   .org__exec-group::before {
     display: none;
   }
 
-  .org__sub-grid {
+  /* Nivel directivos: 3 col → 1 col */
+  .org__level--execs {
     grid-template-columns: 1fr;
-    gap: var(--spacing-md);
+    gap: 20px;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+
+  /* Nivel áreas: 2 col → 1 col */
+  .org__level--areas {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  /* Sub-grid universidades: mantener 2 col en tablet */
+  .org__sub-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  /* Support cards: 3 col → 1 col */
+  .org__support-cards-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  /* Support card: permitir wrapping de texto */
+  .org__support-name,
+  .org__support-desc {
+    white-space: normal;
   }
 
   .org__card--ceo,
   .org__card--coo {
-    padding: 16px 24px 14px;
-    min-width: 160px;
+    padding: 18px 20px 16px;
+    width: 100%;
   }
 }
 
-@media (max-width: 480px) {
+/* ── Mobile (≤ 600px) ── */
+@media (max-width: 600px) {
+  .colaboradores__hero {
+    padding: 90px 12px 24px;
+  }
+
   .colaboradores__title {
     font-size: 1.5rem;
   }
@@ -772,10 +801,71 @@
     font-size: 0.9rem;
   }
 
-  .org__card--ceo,
+  .colaboradores__container {
+    padding: 16px 12px 48px;
+  }
+
+  /* CEO centrado */
+  .org__level--ceo {
+    width: 100%;
+  }
+
+  .org__card--ceo {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 18px 16px 14px;
+  }
+
+  /* Directivos: 1 col apilada centrada */
+  .org__level--execs {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
   .org__card--coo {
     width: 100%;
-    max-width: 280px;
+    padding: 16px 14px 14px;
+  }
+
+  /* Avatars un poco más pequeños en móvil */
+  .org__avatar--ceo {
+    width: 58px;
+    height: 58px;
+  }
+
+  /* Áreas y soporte: 1 col */
+  .org__level--areas {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  /* Sub-grid universidades: 1 col en móvil */
+  .org__sub-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  /* Support cards: 1 col */
+  .org__support-cards-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  /* Líneas verticales más cortas */
+  .org__line-v--short  { height: 20px; }
+  .org__line-v--medium { height: 24px; }
+  .org__line-v--tiny   { height: 12px; }
+
+  /* Card de comentarios */
+  .emp-comments-card {
+    padding: 18px 16px;
+  }
+
+  .emp-comments-card__slider {
+    min-height: 175px;
   }
 }
 
@@ -969,3 +1059,28 @@
   color: var(--color-blue-dark);
   margin-top: 8px;
 }
+
+@media (max-width: 480px) {
+  .docs-section {
+    padding: var(--spacing-xl) 0;
+  }
+  .docs-section__grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .docs-section__card {
+    padding: var(--spacing-md) var(--spacing-lg);
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  .docs-section__card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+  }
+  .docs-section__card-name {
+    text-align: left;
+    font-size: 0.88rem;
+  }
+}
+

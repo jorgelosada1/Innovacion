@@ -359,13 +359,23 @@
 @media (max-width: 1024px) {
   .hero-banner__main-stage {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 20px;
+  }
+
+  .hero-banner__logo-wrapper {
+    order: -1;
+    margin: 0 auto;
+  }
+
+  .hero-banner__logo-video {
+    width: 260px;
   }
 
   .hero-banner__side-cards {
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
+    gap: 16px;
   }
 
   .hero-banner__side-cards--left,
@@ -374,33 +384,69 @@
   }
 
   .hero-banner__feature-card {
-    max-width: 250px;
+    max-width: 260px;
+    padding: 18px 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-banner {
+    padding: 30px 16px 70px;
   }
 
-  .hero-banner__logo-wrapper {
-    order: -1;
+  .hero-banner__side-cards {
+    gap: 12px;
   }
 
-  .hero-banner__logo-video {
-    width: 270px;
+  .hero-banner__feature-card {
+    max-width: 220px;
+    padding: 14px 16px;
+    gap: 12px;
+  }
+
+  .hero-banner__feature-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .hero-banner__feature-title {
+    font-size: 0.95rem;
+  }
+
+  .hero-banner__feature-text {
+    font-size: 0.78rem;
   }
 }
 
 @media (max-width: 640px) {
   .hero-banner {
-    padding: 30px 15px 60px;
+    padding: 24px 12px 60px;
+  }
+
+  .hero-banner__logo-video {
+    width: 210px;
+  }
+
+  /* Cards: apiladas 1 col full width */
+  .hero-banner__side-cards {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
   }
 
   .hero-banner__feature-card {
     max-width: 100%;
+    padding: 14px 16px;
+    gap: 12px;
   }
 
-  .hero-banner__logo-video {
-    width: 220px;
+  .hero-banner__pills {
+    gap: 8px;
   }
 
   .hero-banner__pill {
     font-size: 0.76rem;
-    padding: 6px 14px;
+    padding: 6px 13px;
   }
 }

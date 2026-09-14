@@ -88,7 +88,6 @@ const Navbar = () => {
               ) : link.type === 'password-protected' ? (
                 <button
                   className="navbar__link"
-                  style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: 'inherit' }}
                   onClick={() => handlePasswordLink(link.href)}
                 >
                   {link.name}
@@ -153,7 +152,6 @@ const Navbar = () => {
               ) : link.type === 'password-protected' ? (
                 <button
                   className="navbar__mobile-link"
-                  style={{ background: 'none', border: 'none', width: '100%', textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit', fontSize: 'inherit' }}
                   onClick={() => handlePasswordLink(link.href)}
                 >
                   {link.name}
