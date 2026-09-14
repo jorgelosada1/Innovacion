@@ -4,9 +4,9 @@ import fernanImg from '../assets/images/Fernan.png';
 import wilsonImg from '../assets/images/wilson.png';
 import johannaImg from '../assets/images/Johanna.JPG';
 import mariaImg from '../assets/images/Maria.png';
-import img10 from '../assets/images/10.png';
-import img20 from '../assets/images/20.png';
-import img30 from '../assets/images/30.png';
+import erikaImg from '../assets/images/erika.JPG';
+import paulaImg from '../assets/images/paula.JPG';
+import johanImg from '../assets/images/johan.JPG';
 import PasswordModal from '../components/PasswordModal';
 
 const ColaboradoresPage = () => {
@@ -15,21 +15,21 @@ const ColaboradoresPage = () => {
   const comments = [
     { 
       text: 'Trabajar en Innovación e-Learning me ha permitido crecer profesionalmente en un ambiente de constante aprendizaje y colaboración.', 
-      name: 'Colaborador', 
+      name: 'Erika', 
       role: 'Equipo Comercial',
-      photo: img10
+      photo: erikaImg
     },
     { 
       text: 'Me encanta la cultura de equipo que tenemos. Cada día es una oportunidad para innovar y aportar al cambio educativo en Colombia.', 
-      name: 'Colaboradora', 
+      name: 'Paula', 
       role: 'Área de Gestión',
-      photo: img20
+      photo: paulaImg
     },
     { 
       text: 'Aquí valoran nuestras ideas y nos dan las herramientas para hacer la diferencia en la educación superior del país.', 
-      name: 'Colaborador', 
+      name: 'Johan', 
       role: 'Liderazgo Comercial',
-      photo: img30
+      photo: johanImg
     },
   ];
 
