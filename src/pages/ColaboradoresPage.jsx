@@ -15,7 +15,7 @@ const ColaboradoresPage = () => {
   const comments = [
     { 
       text: 'Trabajar en Innovación e-Learning me ha permitido crecer profesionalmente en un ambiente de constante aprendizaje y colaboración.', 
-      name: 'Erika', 
+      name: 'Johan', 
       role: 'Equipo Comercial',
       photo: erikaImg
     },
@@ -27,7 +27,7 @@ const ColaboradoresPage = () => {
     },
     { 
       text: 'Aquí valoran nuestras ideas y nos dan las herramientas para hacer la diferencia en la educación superior del país.', 
-      name: 'Johan', 
+      name: 'Erika', 
       role: 'Liderazgo Comercial',
       photo: johanImg
     },
