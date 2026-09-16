@@ -8,9 +8,12 @@ import erikaImg from '../assets/images/erika.JPG';
 import paulaImg from '../assets/images/paula.JPG';
 import johanImg from '../assets/images/johan.JPG';
 import PasswordModal from '../components/PasswordModal';
+import AmigoSecretoBanner from '../components/AmigoSecretoBanner';
+import AmigoSecretoModal from '../components/AmigoSecretoModal';
 
 const ColaboradoresPage = () => {
   const [commentIndex, setCommentIndex] = useState(0);
+  const [showAmigoModal, setShowAmigoModal] = useState(false);
 
   const comments = [
     { 
@@ -75,6 +78,9 @@ const ColaboradoresPage = () => {
       </div>
 
       <div className="colaboradores__container">
+        {/* === BANNER ANUNCIO AMIGO SECRETO === */}
+        <AmigoSecretoBanner onOpenSorteo={() => setShowAmigoModal(true)} />
+
         <div className="org">
           {/* === NIVEL 1: CEO (CENTRO) === */}
           <div className="org__level org__level--ceo">
@@ -397,6 +403,12 @@ const ColaboradoresPage = () => {
           onSuccess={handleDocAccess}
           title="Documentos Importantes"
           message="Ingresa la contraseña para acceder a los documentos"
+        />
+
+        {/* Modal Sorteo Amigo Secreto */}
+        <AmigoSecretoModal
+          isOpen={showAmigoModal}
+          onClose={() => setShowAmigoModal(false)}
         />
       </div>
     </section>
