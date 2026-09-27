@@ -4,12 +4,22 @@ import authMiddleware from '../middleware/auth.js';
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+const defaultFaqs = [
+  { _id: 'f1', question: '¿Los títulos son oficiales?', answer: 'Sí, todas nuestras universidades aliadas están avaladas por el Ministerio de Educación Nacional de Colombia. Los títulos tienen la misma validez que los presenciales.', orden: 0 },
+  { _id: 'f2', question: '¿Cómo es el proceso de acompañamiento?', answer: 'Te asignamos un asesor personal que te guía desde la inscripción hasta la graduación. Tendrás soporte académico y administrativo durante toda tu carrera.', orden: 1 },
+  { _id: 'f3', question: '¿Tiene algún costo la asesoría?', answer: 'No, nuestra asesoría es completamente gratuita. Te ayudamos a encontrar el programa perfecto para ti sin ningún compromiso.', orden: 2 },
+  { _id: 'f4', question: '¿Qué necesito para inscribirme?', answer: 'Solo necesitas tu documento de identidad, diploma de bachiller (o acta de grado) y resultados del ICFES. Nosotros te guiamos en todo el proceso.', orden: 3 },
+  { _id: 'f5', question: '¿Hay opciones de financiación?', answer: 'Sí, contamos con convenios con Icetex y las universidades ofrecen planes de pago flexibles. También hay becas y descuentos especiales.', orden: 4 },
+];
+
+router.get('/', async (_req, res) => {
   try {
     const faqs = await Faq.find().sort({ orden: 1 });
+    if (!faqs || faqs.length === 0) return res.json(defaultFaqs);
     res.json(faqs);
   } catch (error) {
-    res.status(500).json({ error: 'Error del servidor' });
+    console.error('Error in GET /faqs:', error.message);
+    res.json(defaultFaqs);
   }
 });
 
@@ -19,27 +29,25 @@ router.post('/', authMiddleware, async (req, res) => {
     await faq.save();
     res.status(201).json(faq);
   } catch (error) {
-    res.status(400).json({ error: 'Error al crear' });
+    res.status(400).json({ error: 'Error al crear pregunta' });
   }
 });
 
 router.put('/:id', authMiddleware, async (req, res) => {
   try {
     const faq = await Faq.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!faq) return res.status(404).json({ error: 'No encontrado' });
     res.json(faq);
   } catch (error) {
-    res.status(400).json({ error: 'Error al actualizar' });
+    res.status(400).json({ error: 'Error al actualizar pregunta' });
   }
 });
 
 router.delete('/:id', authMiddleware, async (req, res) => {
   try {
-    const faq = await Faq.findByIdAndDelete(req.params.id);
-    if (!faq) return res.status(404).json({ error: 'No encontrado' });
+    await Faq.findByIdAndDelete(req.params.id);
     res.json({ message: 'Eliminado correctamente' });
   } catch (error) {
-    res.status(500).json({ error: 'Error del servidor' });
+    res.status(500).json({ error: 'Error al eliminar pregunta' });
   }
 });
 
