@@ -85,10 +85,6 @@ app.get('/api/health', (_req, res) => {
   });
 });
 
-// Catch-all 404 for unmatched /api routes
-app.use('/api/*', (_req, res) => {
-  res.status(404).json({ error: 'Ruta API no encontrada' });
-});
 
 // Global Error Handler
 app.use((err, _req, res, _next) => {
