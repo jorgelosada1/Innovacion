@@ -23,13 +23,25 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
-// ── MongoDB Connection with Cache for Serverless ──
+// ── MongoDB Connection with Cache & Fallback for Serverless ──
 let isConnected = false;
 export const connectDB = async () => {
   if (isConnected && mongoose.connection.readyState === 1) return;
-  const mongoUri = process.env.MONGODB_URI || 'mongodb+srv://csugalan_db_user:rfnJJmRfRuRBk6xx@cluster0.85hfqb3.mongodb.net/Innovacion?appName=Cluster0';
-  await mongoose.connect(mongoUri);
-  isConnected = true;
+
+  const defaultUri = process.env.MONGODB_URI || 
+    'mongodb://csugalan_db_user:rfnJJmRfRuRBk6xx@ac-mbeiuwr-shard-00-00.85hfqb3.mongodb.net:27017,ac-mbeiuwr-shard-00-01.85hfqb3.mongodb.net:27017,ac-mbeiuwr-shard-00-02.85hfqb3.mongodb.net:27017/Innovacion?ssl=true&replicaSet=atlas-mbeiuwr-shard-0&authSource=admin&retryWrites=true&w=majority';
+
+  try {
+    await mongoose.connect(defaultUri, { serverSelectionTimeoutMS: 5000 });
+    isConnected = true;
+    console.log('✅ Conectado a MongoDB Atlas (Direct URI)');
+  } catch (err) {
+    console.warn('⚠️ Fallback a SRV URI:', err.message);
+    const srvUri = 'mongodb+srv://csugalan_db_user:rfnJJmRfRuRBk6xx@cluster0.85hfqb3.mongodb.net/Innovacion?appName=Cluster0';
+    await mongoose.connect(srvUri, { serverSelectionTimeoutMS: 5000 });
+    isConnected = true;
+    console.log('✅ Conectado a MongoDB Atlas (SRV URI)');
+  }
 };
 
 // ── Middleware ──
@@ -46,7 +58,7 @@ app.use(async (_req, _res, next) => {
     await connectDB();
     next();
   } catch (err) {
-    console.error('Database connection error:', err);
+    console.error('Database connection error in middleware:', err);
     next(err);
   }
 });
@@ -66,7 +78,13 @@ app.use('/api/upload', uploadRoutes);
 
 // Health check
 app.get('/api/health', (_req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+  res.json({ status: 'ok', timestamp: new Date().toISOString(), dbConnected: mongoose.connection.readyState === 1 });
+});
+
+// Error handling middleware
+app.use((err, _req, res, _next) => {
+  console.error('Express Error Handler:', err);
+  res.status(500).json({ error: err.message || 'Internal Server Error' });
 });
 
 export default app;
