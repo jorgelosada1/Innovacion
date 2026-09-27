@@ -2,8 +2,6 @@ import 'dotenv/config';
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import path from 'path';
-import { fileURLToPath } from 'url';
 
 // Routes
 import authRoutes from './routes/auth.js';
@@ -14,9 +12,6 @@ import faqsRoutes from './routes/faqs.js';
 import commentsRoutes from './routes/comments.js';
 import settingsRoutes from './routes/settings.js';
 import uploadRoutes from './routes/upload.js';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -63,9 +58,6 @@ app.use(async (_req, _res, next) => {
   next();
 });
 
-// Serve uploaded files statically
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
 // ── API Routes ──
 app.use('/api/auth', authRoutes);
 app.use('/api/noticias', noticiasRoutes);
@@ -84,7 +76,6 @@ app.get('/api/health', (_req, res) => {
     dbConnected: mongoose.connection.readyState === 1,
   });
 });
-
 
 // Global Error Handler
 app.use((err, _req, res, _next) => {
