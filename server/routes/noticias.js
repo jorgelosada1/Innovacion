@@ -1,5 +1,4 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import Noticia from '../models/Noticia.js';
 import authMiddleware from '../middleware/auth.js';
 
@@ -37,18 +36,17 @@ router.get('/', async (_req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    let noticia = null;
-    if (mongoose.Types.ObjectId.isValid(req.params.id)) {
-      noticia = await Noticia.findById(req.params.id);
-    }
+    const noticia = await Noticia.findById(req.params.id);
     if (!noticia) {
-      const fallback = defaultNoticias.find(n => n._id === req.params.id) || defaultNoticias[0];
+      const fallback = defaultNoticias.find(n => n._id === req.params.id);
+      if (!fallback) return res.status(404).json({ error: 'Noticia no encontrada' });
       return res.json(fallback);
     }
     res.json(noticia);
   } catch (error) {
     console.error('Error in GET /noticias/:id:', error.message);
-    const fallback = defaultNoticias.find(n => n._id === req.params.id) || defaultNoticias[0];
+    const fallback = defaultNoticias.find(n => n._id === req.params.id);
+    if (!fallback) return res.status(404).json({ error: 'Noticia no encontrada' });
     res.json(fallback);
   }
 });
@@ -62,7 +60,7 @@ router.post('/', authMiddleware, async (req, res) => {
     res.status(201).json(noticia);
   } catch (error) {
     console.error('Error creating noticia:', error.message);
-    res.status(400).json({ error: 'Error al crear noticia' });
+    res.status(400).json({ error: 'Error al crear noticia: ' + error.message });
   }
 });
 
@@ -70,32 +68,34 @@ router.put('/:id', authMiddleware, async (req, res) => {
   try {
     const data = { ...req.body };
     delete data._id;
-    let noticia = null;
 
-    if (mongoose.Types.ObjectId.isValid(req.params.id)) {
-      noticia = await Noticia.findByIdAndUpdate(req.params.id, data, { new: true });
-    }
+    const noticia = await Noticia.findByIdAndUpdate(
+      req.params.id,
+      data,
+      { new: true, runValidators: true }
+    );
 
     if (!noticia) {
-      noticia = new Noticia(data);
-      await noticia.save();
+      return res.status(404).json({ error: 'Noticia no encontrada' });
     }
 
     res.json(noticia);
   } catch (error) {
     console.error('Error updating noticia:', error.message);
-    res.status(400).json({ error: 'Error al actualizar noticia' });
+    res.status(400).json({ error: 'Error al actualizar noticia: ' + error.message });
   }
 });
 
 router.delete('/:id', authMiddleware, async (req, res) => {
   try {
-    if (mongoose.Types.ObjectId.isValid(req.params.id)) {
-      await Noticia.findByIdAndDelete(req.params.id);
+    const noticia = await Noticia.findByIdAndDelete(req.params.id);
+    if (!noticia) {
+      return res.status(404).json({ error: 'Noticia no encontrada' });
     }
     res.json({ message: 'Eliminado correctamente' });
   } catch (error) {
-    res.status(500).json({ error: 'Error al eliminar noticia' });
+    console.error('Error deleting noticia:', error.message);
+    res.status(500).json({ error: 'Error al eliminar noticia: ' + error.message });
   }
 });
 

@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
+
 const cursoSchema = new mongoose.Schema({
+  _id: { type: String, default: () => new mongoose.Types.ObjectId().toString() },
   titulo: { type: String, required: true },
   descripcion: { type: String, default: '' },
   videoId: { type: String, default: '' },
@@ -8,4 +10,5 @@ const cursoSchema = new mongoose.Schema({
   temas: [{ type: String }],
   evaluacion: { type: Boolean, default: false },
 }, { timestamps: true });
+
 export default mongoose.model('Curso', cursoSchema);

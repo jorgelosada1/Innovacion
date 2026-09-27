@@ -1,5 +1,4 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import Curso from '../models/Curso.js';
 import authMiddleware from '../middleware/auth.js';
 
@@ -38,7 +37,7 @@ router.post('/', authMiddleware, async (req, res) => {
     res.status(201).json(curso);
   } catch (error) {
     console.error('Error creating curso:', error.message);
-    res.status(400).json({ error: 'Error al crear curso' });
+    res.status(400).json({ error: 'Error al crear curso: ' + error.message });
   }
 });
 
@@ -46,32 +45,34 @@ router.put('/:id', authMiddleware, async (req, res) => {
   try {
     const data = { ...req.body };
     delete data._id;
-    let curso = null;
 
-    if (mongoose.Types.ObjectId.isValid(req.params.id)) {
-      curso = await Curso.findByIdAndUpdate(req.params.id, data, { new: true });
-    }
+    const curso = await Curso.findByIdAndUpdate(
+      req.params.id,
+      data,
+      { new: true, runValidators: true }
+    );
 
     if (!curso) {
-      curso = new Curso(data);
-      await curso.save();
+      return res.status(404).json({ error: 'Curso no encontrado' });
     }
 
     res.json(curso);
   } catch (error) {
     console.error('Error updating curso:', error.message);
-    res.status(400).json({ error: 'Error al actualizar curso' });
+    res.status(400).json({ error: 'Error al actualizar curso: ' + error.message });
   }
 });
 
 router.delete('/:id', authMiddleware, async (req, res) => {
   try {
-    if (mongoose.Types.ObjectId.isValid(req.params.id)) {
-      await Curso.findByIdAndDelete(req.params.id);
+    const curso = await Curso.findByIdAndDelete(req.params.id);
+    if (!curso) {
+      return res.status(404).json({ error: 'Curso no encontrado' });
     }
     res.json({ message: 'Eliminado correctamente' });
   } catch (error) {
-    res.status(500).json({ error: 'Error al eliminar curso' });
+    console.error('Error deleting curso:', error.message);
+    res.status(500).json({ error: 'Error al eliminar curso: ' + error.message });
   }
 });
 

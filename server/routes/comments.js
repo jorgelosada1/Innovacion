@@ -1,5 +1,4 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import Comment from '../models/Comment.js';
 import authMiddleware from '../middleware/auth.js';
 
@@ -14,6 +13,7 @@ const defaultComments = [
   { _id: 'cm6', text: 'El proceso fue muy sencillo y siempre tuve apoyo constante de mi asesor.', name: 'Ana López', role: 'Estudiante de Psicología', type: 'testimonio', university: 'Areandina', rating: 5, color: '#F39C12' },
 ];
 
+// GET all comments (optionally filtered by ?type=colaborador or ?type=testimonio)
 router.get('/', async (req, res) => {
   try {
     const filter = req.query.type ? { type: req.query.type } : {};
@@ -30,49 +30,54 @@ router.get('/', async (req, res) => {
   }
 });
 
+// POST new comment
 router.post('/', authMiddleware, async (req, res) => {
   try {
     const data = { ...req.body };
-    delete data._id;
+    delete data._id; // Let schema auto-assign a unique ID
     const comment = new Comment(data);
     await comment.save();
     res.status(201).json(comment);
   } catch (error) {
     console.error('Error creating comment:', error.message);
-    res.status(400).json({ error: 'Error al crear comentario' });
+    res.status(400).json({ error: 'Error al crear comentario: ' + error.message });
   }
 });
 
+// PUT update existing comment by id (e.g. cm1, cm2, etc.)
 router.put('/:id', authMiddleware, async (req, res) => {
   try {
     const data = { ...req.body };
-    delete data._id;
-    let comment = null;
+    delete data._id; // Prevent overwriting immutable primary key
 
-    if (mongoose.Types.ObjectId.isValid(req.params.id)) {
-      comment = await Comment.findByIdAndUpdate(req.params.id, data, { new: true });
-    }
+    const comment = await Comment.findByIdAndUpdate(
+      req.params.id,
+      data,
+      { new: true, runValidators: true }
+    );
 
     if (!comment) {
-      comment = new Comment(data);
-      await comment.save();
+      return res.status(404).json({ error: 'Comentario no encontrado' });
     }
 
     res.json(comment);
   } catch (error) {
     console.error('Error updating comment:', error.message);
-    res.status(400).json({ error: 'Error al actualizar comentario' });
+    res.status(400).json({ error: 'Error al actualizar comentario: ' + error.message });
   }
 });
 
+// DELETE comment by id
 router.delete('/:id', authMiddleware, async (req, res) => {
   try {
-    if (mongoose.Types.ObjectId.isValid(req.params.id)) {
-      await Comment.findByIdAndDelete(req.params.id);
+    const comment = await Comment.findByIdAndDelete(req.params.id);
+    if (!comment) {
+      return res.status(404).json({ error: 'Comentario no encontrado' });
     }
     res.json({ message: 'Eliminado correctamente' });
   } catch (error) {
-    res.status(500).json({ error: 'Error al eliminar comentario' });
+    console.error('Error deleting comment:', error.message);
+    res.status(500).json({ error: 'Error al eliminar comentario: ' + error.message });
   }
 });
 
