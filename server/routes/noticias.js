@@ -4,33 +4,13 @@ import authMiddleware from '../middleware/auth.js';
 
 const router = express.Router();
 
-const defaultNoticias = [
-  {
-    _id: 'n1',
-    titulo: 'Inscripciones Abiertas 2025-2',
-    resumen: 'Inicia tu camino universitario con nuestras alianzas académicas. Programas presenciales y virtuales disponibles.',
-    contenido: '<p>Las inscripciones para el segundo semestre de 2025 ya están abiertas. Contamos con una amplia oferta de programas académicos en modalidad presencial y virtual, en alianza con la Fundación Universitaria del Área Andina y la Corporación Universitaria Iberoamericana. No pierdas la oportunidad de transformar tu futuro.</p>',
-    fecha: '2025-07-01',
-    imagen: '',
-  },
-  {
-    _id: 'n2',
-    titulo: 'Educación Virtual de Calidad',
-    resumen: 'Accede a programas acreditados desde cualquier lugar. Plataformas modernas y acompañamiento permanente.',
-    contenido: '<p>Nuestra oferta de educación virtual te permite estudiar desde cualquier rincón de Colombia. Con plataformas modernas y un equipo de soporte dedicado, garantizamos una experiencia educativa de primer nivel.</p>',
-    fecha: '2025-06-15',
-    imagen: '',
-  },
-];
-
 router.get('/', async (_req, res) => {
   try {
     const noticias = await Noticia.find().sort({ fecha: -1 });
-    if (!noticias || noticias.length === 0) return res.json(defaultNoticias);
     res.json(noticias);
   } catch (error) {
     console.error('Error in GET /noticias:', error.message);
-    res.json(defaultNoticias);
+    res.status(500).json({ error: 'Error al obtener noticias' });
   }
 });
 
@@ -38,16 +18,12 @@ router.get('/:id', async (req, res) => {
   try {
     const noticia = await Noticia.findById(req.params.id);
     if (!noticia) {
-      const fallback = defaultNoticias.find(n => n._id === req.params.id);
-      if (!fallback) return res.status(404).json({ error: 'Noticia no encontrada' });
-      return res.json(fallback);
+      return res.status(404).json({ error: 'Noticia no encontrada' });
     }
     res.json(noticia);
   } catch (error) {
     console.error('Error in GET /noticias/:id:', error.message);
-    const fallback = defaultNoticias.find(n => n._id === req.params.id);
-    if (!fallback) return res.status(404).json({ error: 'Noticia no encontrada' });
-    res.json(fallback);
+    res.status(500).json({ error: 'Error al obtener noticia' });
   }
 });
 

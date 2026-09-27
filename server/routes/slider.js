@@ -4,21 +4,13 @@ import authMiddleware from '../middleware/auth.js';
 
 const router = express.Router();
 
-const defaultSlider = [
-  { _id: 's1', imagen: '/src/assets/images/1.png', noticiaId: 'n1', title: 'Inscripciones Abiertas' },
-  { _id: 's2', imagen: '/src/assets/images/2.png', noticiaId: 'n2', title: 'Educación Virtual' },
-  { _id: 's3', imagen: '/src/assets/images/andina.png', link: '/universidades/areandina', title: 'Fundación Universitaria del Área Andina' },
-  { _id: 's4', imagen: '/src/assets/images/ibero.png', link: '/universidades/iberoamericana', title: 'Corporación Universitaria Iberoamericana' },
-];
-
 router.get('/', async (_req, res) => {
   try {
     const slides = await Slide.find().sort({ orden: 1 });
-    if (!slides || slides.length === 0) return res.json(defaultSlider);
     res.json(slides);
   } catch (error) {
     console.error('Error in GET /slider:', error.message);
-    res.json(defaultSlider);
+    res.status(500).json({ error: 'Error al obtener slider' });
   }
 });
 
