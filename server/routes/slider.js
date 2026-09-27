@@ -1,4 +1,5 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import Slide from '../models/Slide.js';
 import authMiddleware from '../middleware/auth.js';
 
@@ -24,26 +25,50 @@ router.get('/', async (_req, res) => {
 
 router.post('/', authMiddleware, async (req, res) => {
   try {
-    const slide = new Slide(req.body);
+    const data = { ...req.body };
+    delete data._id;
+    if (data.noticiaId && !mongoose.Types.ObjectId.isValid(data.noticiaId)) {
+      delete data.noticiaId;
+    }
+    const slide = new Slide(data);
     await slide.save();
     res.status(201).json(slide);
   } catch (error) {
+    console.error('Error creating slide:', error.message);
     res.status(400).json({ error: 'Error al crear slide' });
   }
 });
 
 router.put('/:id', authMiddleware, async (req, res) => {
   try {
-    const slide = await Slide.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const data = { ...req.body };
+    delete data._id;
+    if (data.noticiaId && !mongoose.Types.ObjectId.isValid(data.noticiaId)) {
+      delete data.noticiaId;
+    }
+    let slide = null;
+
+    if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+      slide = await Slide.findByIdAndUpdate(req.params.id, data, { new: true });
+    }
+
+    if (!slide) {
+      slide = new Slide(data);
+      await slide.save();
+    }
+
     res.json(slide);
   } catch (error) {
+    console.error('Error updating slide:', error.message);
     res.status(400).json({ error: 'Error al actualizar slide' });
   }
 });
 
 router.delete('/:id', authMiddleware, async (req, res) => {
   try {
-    await Slide.findByIdAndDelete(req.params.id);
+    if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+      await Slide.findByIdAndDelete(req.params.id);
+    }
     res.json({ message: 'Eliminado correctamente' });
   } catch (error) {
     res.status(500).json({ error: 'Error al eliminar slide' });

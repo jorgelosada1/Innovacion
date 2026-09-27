@@ -1,4 +1,5 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import Faq from '../models/Faq.js';
 import authMiddleware from '../middleware/auth.js';
 
@@ -25,26 +26,44 @@ router.get('/', async (_req, res) => {
 
 router.post('/', authMiddleware, async (req, res) => {
   try {
-    const faq = new Faq(req.body);
+    const data = { ...req.body };
+    delete data._id;
+    const faq = new Faq(data);
     await faq.save();
     res.status(201).json(faq);
   } catch (error) {
+    console.error('Error creating faq:', error.message);
     res.status(400).json({ error: 'Error al crear pregunta' });
   }
 });
 
 router.put('/:id', authMiddleware, async (req, res) => {
   try {
-    const faq = await Faq.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const data = { ...req.body };
+    delete data._id;
+    let faq = null;
+
+    if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+      faq = await Faq.findByIdAndUpdate(req.params.id, data, { new: true });
+    }
+
+    if (!faq) {
+      faq = new Faq(data);
+      await faq.save();
+    }
+
     res.json(faq);
   } catch (error) {
+    console.error('Error updating faq:', error.message);
     res.status(400).json({ error: 'Error al actualizar pregunta' });
   }
 });
 
 router.delete('/:id', authMiddleware, async (req, res) => {
   try {
-    await Faq.findByIdAndDelete(req.params.id);
+    if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+      await Faq.findByIdAndDelete(req.params.id);
+    }
     res.json({ message: 'Eliminado correctamente' });
   } catch (error) {
     res.status(500).json({ error: 'Error al eliminar pregunta' });

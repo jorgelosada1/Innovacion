@@ -1,4 +1,5 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import Comment from '../models/Comment.js';
 import authMiddleware from '../middleware/auth.js';
 
@@ -31,26 +32,44 @@ router.get('/', async (req, res) => {
 
 router.post('/', authMiddleware, async (req, res) => {
   try {
-    const comment = new Comment(req.body);
+    const data = { ...req.body };
+    delete data._id;
+    const comment = new Comment(data);
     await comment.save();
     res.status(201).json(comment);
   } catch (error) {
+    console.error('Error creating comment:', error.message);
     res.status(400).json({ error: 'Error al crear comentario' });
   }
 });
 
 router.put('/:id', authMiddleware, async (req, res) => {
   try {
-    const comment = await Comment.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const data = { ...req.body };
+    delete data._id;
+    let comment = null;
+
+    if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+      comment = await Comment.findByIdAndUpdate(req.params.id, data, { new: true });
+    }
+
+    if (!comment) {
+      comment = new Comment(data);
+      await comment.save();
+    }
+
     res.json(comment);
   } catch (error) {
+    console.error('Error updating comment:', error.message);
     res.status(400).json({ error: 'Error al actualizar comentario' });
   }
 });
 
 router.delete('/:id', authMiddleware, async (req, res) => {
   try {
-    await Comment.findByIdAndDelete(req.params.id);
+    if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+      await Comment.findByIdAndDelete(req.params.id);
+    }
     res.json({ message: 'Eliminado correctamente' });
   } catch (error) {
     res.status(500).json({ error: 'Error al eliminar comentario' });
