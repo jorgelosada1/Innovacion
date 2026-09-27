@@ -23,24 +23,24 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
-// ── MongoDB Connection with Cache & Fallback for Serverless ──
+// ── MongoDB Connection with Cache for Serverless ──
 let isConnected = false;
 export const connectDB = async () => {
   if (isConnected && mongoose.connection.readyState === 1) return;
 
-  const defaultUri = process.env.MONGODB_URI || 
-    'mongodb://csugalan_db_user:rfnJJmRfRuRBk6xx@ac-mbeiuwr-shard-00-00.85hfqb3.mongodb.net:27017,ac-mbeiuwr-shard-00-01.85hfqb3.mongodb.net:27017,ac-mbeiuwr-shard-00-02.85hfqb3.mongodb.net:27017/Innovacion?ssl=true&replicaSet=atlas-mbeiuwr-shard-0&authSource=admin&retryWrites=true&w=majority';
+  const mongoUri = process.env.MONGODB_URI || 
+    'mongodb+srv://csugalan_db_user:rfnJJmRfRuRBk6xx@cluster0.85hfqb3.mongodb.net/Innovacion?retryWrites=true&w=majority';
 
   try {
-    await mongoose.connect(defaultUri, { serverSelectionTimeoutMS: 5000 });
-    isConnected = true;
-    console.log('✅ Conectado a MongoDB Atlas (Direct URI)');
-  } catch (err) {
-    console.warn('⚠️ Fallback a SRV URI:', err.message);
-    const srvUri = 'mongodb+srv://csugalan_db_user:rfnJJmRfRuRBk6xx@cluster0.85hfqb3.mongodb.net/Innovacion?appName=Cluster0';
-    await mongoose.connect(srvUri, { serverSelectionTimeoutMS: 5000 });
+    await mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 5000 });
     isConnected = true;
     console.log('✅ Conectado a MongoDB Atlas (SRV URI)');
+  } catch (err) {
+    console.warn('⚠️ Error SRV URI, probando URI directa:', err.message);
+    const directUri = 'mongodb://csugalan_db_user:rfnJJmRfRuRBk6xx@ac-mbeiuwr-shard-00-00.85hfqb3.mongodb.net:27017,ac-mbeiuwr-shard-00-01.85hfqb3.mongodb.net:27017,ac-mbeiuwr-shard-00-02.85hfqb3.mongodb.net:27017/Innovacion?ssl=true&replicaSet=atlas-mbeiuwr-shard-0&authSource=admin&retryWrites=true&w=majority';
+    await mongoose.connect(directUri, { serverSelectionTimeoutMS: 5000 });
+    isConnected = true;
+    console.log('✅ Conectado a MongoDB Atlas (Direct URI)');
   }
 };
 
@@ -52,15 +52,14 @@ app.use(cors({
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
-// Middleware to ensure DB is connected on every request
+// Middleware to attempt DB connection without crashing if DB is warming up
 app.use(async (_req, _res, next) => {
   try {
     await connectDB();
-    next();
   } catch (err) {
-    console.error('Database connection error in middleware:', err);
-    next(err);
+    console.error('Database connection error in middleware:', err.message);
   }
+  next();
 });
 
 // Serve uploaded files statically
@@ -81,7 +80,12 @@ app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString(), dbConnected: mongoose.connection.readyState === 1 });
 });
 
-// Error handling middleware
+// Catch-all 404 for unmatched /api routes
+app.use('/api/*', (_req, res) => {
+  res.status(404).json({ error: 'Ruta API no encontrada' });
+});
+
+// Global Error Handler
 app.use((err, _req, res, _next) => {
   console.error('Express Error Handler:', err);
   res.status(500).json({ error: err.message || 'Internal Server Error' });
