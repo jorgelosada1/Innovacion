@@ -8,15 +8,20 @@ const LoginPage = () => {
   const [user, setUser] = useState('');
   const [pass, setPass] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (login(user, pass)) {
+    setLoading(true);
+    setError('');
+    const success = await login(user, pass);
+    if (success) {
       navigate('/admin');
     } else {
       setError('Credenciales incorrectas');
     }
+    setLoading(false);
   };
 
   return (
@@ -35,7 +40,9 @@ const LoginPage = () => {
             <input type="password" value={pass} onChange={e => setPass(e.target.value)} className="login-page__input" placeholder="Contraseña" required />
           </div>
           {error && <p className="login-page__error">{error}</p>}
-          <button type="submit" className="login-page__btn">Ingresar</button>
+          <button type="submit" className="login-page__btn" disabled={loading}>
+            {loading ? 'Ingresando...' : 'Ingresar'}
+          </button>
         </form>
       </div>
     </section>

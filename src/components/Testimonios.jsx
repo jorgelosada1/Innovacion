@@ -1,43 +1,59 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Testimonios.css';
 import img10 from '../assets/images/10.png';
 import img20 from '../assets/images/20.png';
 import img30 from '../assets/images/30.png';
-
-const testimoniosData = [
-  {
-    name: 'Carolina Mendoza',
-    role: 'Estudiante de Psicología',
-    university: 'Iberoamericana',
-    quote: 'Gracias al acompañamiento de Innovación E-Learning pude matricularme sin complicaciones. El proceso fue rápido y transparente.',
-    rating: 5,
-    initials: 'CM',
-    color: '#3b82f6',
-    image: img10
-  },
-  {
-    name: 'David Salamanca',
-    role: 'Especialista en Gestión de Proyectos',
-    university: 'Areandina',
-    quote: 'Pude estudiar mi especialización mientras trabajaba a tiempo completo. La flexibilidad virtual y la asesoría fueron claves.',
-    rating: 5,
-    initials: 'DS',
-    color: '#10b981',
-    image: img20
-  },
-  {
-    name: 'Mariana Ríos',
-    role: 'Estudiante de Licenciatura',
-    university: 'Iberoamericana',
-    quote: 'Excelente atención personalizada. Siempre me resolvieron todas las dudas sobre pagos y plataformas.',
-    rating: 5,
-    initials: 'MR',
-    color: '#f59e0b',
-    image: img30
-  }
-];
+import { getComments } from '../utils/dataManager';
 
 const Testimonios = () => {
+  const [testimoniosData, setTestimoniosData] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await getComments('testimonio');
+        const formattedData = data.map((t) => {
+          let photo = t.photoUrl;
+          if (photo && (photo.startsWith('http') || photo.startsWith('/uploads/'))) {
+            if (photo.startsWith('/uploads/')) {
+              photo = `http://localhost:5000${photo}`;
+            }
+          } else {
+            // fallback
+            if (t.name?.includes('Carolina')) photo = img10;
+            else if (t.name?.includes('David')) photo = img20;
+            else if (t.name?.includes('Mariana')) photo = img30;
+          }
+
+          let initials = '';
+          if (t.name) {
+            const parts = t.name.split(' ');
+            if (parts.length >= 2) {
+              initials = (parts[0][0] + parts[1][0]).toUpperCase();
+            } else if (parts.length === 1) {
+              initials = parts[0].substring(0, 2).toUpperCase();
+            }
+          }
+
+          return {
+            name: t.name,
+            role: t.role,
+            university: t.university,
+            quote: t.text,
+            rating: t.rating || 5,
+            initials: initials,
+            color: t.color || '#3b82f6',
+            image: photo,
+            _id: t._id || t.id
+          };
+        });
+        setTestimoniosData(formattedData);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, []);
+
   return (
     <section className="testimonios-section">
       <div className="testimonios-container">
@@ -46,7 +62,7 @@ const Testimonios = () => {
         
         <div className="testimonios-grid">
           {testimoniosData.map((t, index) => (
-            <div className="testimonio-card" key={index}>
+            <div className="testimonio-card" key={t._id || index}>
               <div className="testimonio-quote-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="currentColor" opacity="0.1"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
               </div>

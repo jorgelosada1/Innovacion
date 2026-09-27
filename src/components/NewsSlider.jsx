@@ -15,57 +15,67 @@ const NewsSlider = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    let rawSlider = getSlider();
-    const noticias = getNoticias();
+    (async () => {
+      try {
+        let rawSlider = await getSlider();
+        const noticias = await getNoticias();
 
-    // Asegurar que los banners de Andina e Ibero estén presentes en el slider
-    const hasAndina = rawSlider.some(s => s.imagen && s.imagen.includes('andina.png'));
-    const hasIbero = rawSlider.some(s => s.imagen && s.imagen.includes('ibero.png'));
+        // Asegurar que los banners de Andina e Ibero estén presentes en el slider
+        const hasAndina = rawSlider.some(s => s.imagen && s.imagen.includes('andina.png'));
+        const hasIbero = rawSlider.some(s => s.imagen && s.imagen.includes('ibero.png'));
 
-    let sliderItems = [...rawSlider];
-    if (!hasAndina) {
-      sliderItems.push({
-        id: 's3',
-        imagen: '/src/assets/images/andina.png',
-        link: '/universidades/areandina',
-        title: 'Fundación Universitaria del Área Andina'
-      });
-    }
-    if (!hasIbero) {
-      sliderItems.push({
-        id: 's4',
-        imagen: '/src/assets/images/ibero.png',
-        link: '/universidades/iberoamericana',
-        title: 'Corporación Universitaria Iberoamericana'
-      });
-    }
+        let sliderItems = [...rawSlider];
+        if (!hasAndina) {
+          sliderItems.push({
+            _id: 's3',
+            imagen: '/src/assets/images/andina.png',
+            link: '/universidades/areandina',
+            title: 'Fundación Universitaria del Área Andina'
+          });
+        }
+        if (!hasIbero) {
+          sliderItems.push({
+            _id: 's4',
+            imagen: '/src/assets/images/ibero.png',
+            link: '/universidades/iberoamericana',
+            title: 'Corporación Universitaria Iberoamericana'
+          });
+        }
 
-    const formatted = sliderItems.map((item) => {
-      let image = item.imagen;
-      let link = item.link;
+        const formatted = sliderItems.map((item) => {
+          let image = item.imagen;
+          let link = item.link;
 
-      if (image && image.includes('1.png')) {
-        image = defaultImg1;
-      } else if (image && image.includes('2.png')) {
-        image = defaultImg2;
-      } else if (image && image.includes('andina.png')) {
-        image = andinaBanner;
-        link = '/universidades/areandina';
-      } else if (image && image.includes('ibero.png')) {
-        image = iberoBanner;
-        link = '/universidades/iberoamericana';
+          if (image && image.includes('1.png')) {
+            image = defaultImg1;
+          } else if (image && image.includes('2.png')) {
+            image = defaultImg2;
+          } else if (image && image.includes('andina.png')) {
+            image = andinaBanner;
+            link = '/universidades/areandina';
+          } else if (image && image.includes('ibero.png')) {
+            image = iberoBanner;
+            link = '/universidades/iberoamericana';
+          } else if (image && (image.startsWith('http') || image.startsWith('/uploads/'))) {
+             if (image.startsWith('/uploads/')) {
+               image = `http://localhost:5000${image}`;
+             }
+          }
+
+          const noticia = noticias.find((n) => (n._id || n.id) === item.noticiaId);
+          return {
+            ...item,
+            image,
+            link,
+            title: item.title || (noticia ? noticia.titulo : 'Innovación e-Learning'),
+          };
+        });
+
+        setSlides(formatted);
+      } catch (error) {
+        console.error("Error fetching slider data:", error);
       }
-
-      const noticia = noticias.find((n) => n.id === item.noticiaId);
-      return {
-        ...item,
-        image,
-        link,
-        title: item.title || (noticia ? noticia.titulo : 'Innovación e-Learning'),
-      };
-    });
-
-    setSlides(formatted);
+    })();
   }, []);
 
   const goToSlide = useCallback((index) => {
@@ -113,7 +123,7 @@ const NewsSlider = () => {
       <div className="news-slider__track">
         {slides.map((slide, index) => (
           <div
-            key={slide.id || index}
+            key={slide._id || slide.id || index}
             className={`news-slider__slide ${index === current ? 'news-slider__slide--active' : ''}`}
             onClick={() => handleSlideClick(slide)}
             style={{ cursor: 'pointer' }}

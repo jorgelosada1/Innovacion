@@ -1,15 +1,30 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getFaqs } from '../utils/dataManager';
 import './FaqSection.css';
 
 const FaqSection = () => {
   const [openIdx, setOpenIdx] = useState(null);
-  const faqs = getFaqs();
+  const [faqs, setFaqs] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      try {
+        const data = await getFaqs();
+        setFaqs(data);
+      } catch (error) {
+        console.error(error);
+      }
+      setLoading(false);
+    })();
+  }, []);
 
   const toggleOpen = (index) => {
     setOpenIdx(openIdx === index ? null : index);
   };
 
+  if (loading) return null;
   if (!faqs || faqs.length === 0) return null;
 
   return (
@@ -20,7 +35,7 @@ const FaqSection = () => {
         <div className="faq-list">
           {faqs.map((faq, index) => (
             <div 
-              key={faq.id || index} 
+              key={faq._id || faq.id || index} 
               className={`faq-item ${openIdx === index ? 'active' : ''}`}
               onClick={() => toggleOpen(index)}
             >

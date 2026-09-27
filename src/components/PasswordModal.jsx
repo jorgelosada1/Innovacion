@@ -1,13 +1,30 @@
 import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import { getSetting } from '../utils/dataManager';
 import './PasswordModal.css';
 
 const PasswordModal = ({ isOpen, onClose, onSuccess, title = 'Acceso Restringido', message = 'Ingresa la contraseña para continuar' }) => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isShaking, setIsShaking] = useState(false);
+  const [correctPassword, setCorrectPassword] = useState('');
   const inputRef = useRef(null);
-  const CORRECT_PASSWORD = '0228';
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const pin = await getSetting('pin');
+        if (pin) {
+          setCorrectPassword(pin);
+        } else {
+          setCorrectPassword('0228');
+        }
+      } catch (error) {
+        console.error(error);
+        setCorrectPassword('0228');
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
@@ -19,7 +36,7 @@ const PasswordModal = ({ isOpen, onClose, onSuccess, title = 'Acceso Restringido
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password === CORRECT_PASSWORD) {
+    if (password === correctPassword) {
       setError('');
       onSuccess();
       onClose();

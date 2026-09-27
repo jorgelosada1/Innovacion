@@ -8,32 +8,42 @@ import erikaImg from '../assets/images/erika.JPG';
 import paulaImg from '../assets/images/paula.JPG';
 import johanImg from '../assets/images/johan.JPG';
 import PasswordModal from '../components/PasswordModal';
+import { getComments } from '../utils/dataManager';
 
 const ColaboradoresPage = () => {
   const [commentIndex, setCommentIndex] = useState(0);
-
-  const comments = [
-    { 
-      text: 'Trabajar en Innovación e-Learning me ha permitido crecer profesionalmente en un ambiente de constante aprendizaje y colaboración.', 
-      name: 'Johan', 
-      role: 'Equipo Comercial',
-      photo: erikaImg
-    },
-    { 
-      text: 'Me encanta la cultura de equipo que tenemos. Cada día es una oportunidad para innovar y aportar al cambio educativo en Colombia.', 
-      name: 'Paula', 
-      role: 'Área de Gestión',
-      photo: paulaImg
-    },
-    { 
-      text: 'Aquí valoran nuestras ideas y nos dan las herramientas para hacer la diferencia en la educación superior del país.', 
-      name: 'Erika', 
-      role: 'Liderazgo Comercial',
-      photo: johanImg
-    },
-  ];
+  const [comments, setComments] = useState([]);
+  
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await getComments('colaborador');
+        const formattedData = data.map((comment) => {
+          let photo = comment.photoUrl;
+          if (photo && (photo.startsWith('http') || photo.startsWith('/uploads/'))) {
+            if (photo.startsWith('/uploads/')) {
+              photo = `http://localhost:5000${photo}`;
+            }
+          } else {
+            // fallback static images swapped logic preserved
+            if (comment.name === 'Johan') photo = erikaImg;
+            else if (comment.name === 'Paula') photo = paulaImg;
+            else if (comment.name === 'Erika') photo = johanImg;
+          }
+          return {
+            ...comment,
+            photo
+          };
+        });
+        setComments(formattedData);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, []);
 
   useEffect(() => {
+    if (comments.length === 0) return;
     const timer = setInterval(() => {
       setCommentIndex((prev) => (prev + 1) % comments.length);
     }, 5000);
@@ -300,61 +310,63 @@ const ColaboradoresPage = () => {
               </div>
 
               {/* === SLEEK EMPLOYEE COMMENTS CARD IN ORGANIGRAMA EMPTY SPACE === */}
-              <div className="emp-comments-card">
-                <div className="emp-comments-card__header">
-                  <div className="emp-comments-card__badge">
-                    <span className="emp-comments-card__dot"></span>
-                    Nuestra Cultura
-                  </div>
-                  <h3 className="emp-comments-card__title">Voces del Equipo</h3>
-                </div>
-
-                <div className="emp-comments-card__slider">
-                  {comments.map((comment, i) => (
-                    <div
-                      key={i}
-                      className={`emp-comments-card__slide ${i === commentIndex ? 'emp-comments-card__slide--active' : ''}`}
-                    >
-                      <div className="emp-comments-card__user">
-                        <div className="emp-comments-card__avatar">
-                          {comment.photo ? (
-                            <img src={comment.photo} alt={comment.name} className="emp-comments-card__avatar-img" />
-                          ) : (
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                              <circle cx="12" cy="7" r="4"/>
-                            </svg>
-                          )}
-                        </div>
-                        <div className="emp-comments-card__info">
-                          <h4 className="emp-comments-card__name">{comment.name}</h4>
-                          <span className="emp-comments-card__role">{comment.role}</span>
-                        </div>
-                      </div>
-
-                      <div className="emp-comments-card__body">
-                        <svg className="emp-comments-card__quote-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609L9.978 5.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H0z"/>
-                        </svg>
-                        <p className="emp-comments-card__text">{comment.text}</p>
-                      </div>
+              {comments.length > 0 && (
+                <div className="emp-comments-card">
+                  <div className="emp-comments-card__header">
+                    <div className="emp-comments-card__badge">
+                      <span className="emp-comments-card__dot"></span>
+                      Nuestra Cultura
                     </div>
-                  ))}
-                </div>
+                    <h3 className="emp-comments-card__title">Voces del Equipo</h3>
+                  </div>
 
-                <div className="emp-comments-card__footer">
-                  <div className="emp-comments-card__dots">
-                    {comments.map((_, i) => (
-                      <button
-                        key={i}
-                        className={`emp-comments-card__dot ${i === commentIndex ? 'emp-comments-card__dot--active' : ''}`}
-                        onClick={() => setCommentIndex(i)}
-                        aria-label={`Ver comentario ${i + 1}`}
-                      />
+                  <div className="emp-comments-card__slider">
+                    {comments.map((comment, i) => (
+                      <div
+                        key={comment._id || i}
+                        className={`emp-comments-card__slide ${i === commentIndex ? 'emp-comments-card__slide--active' : ''}`}
+                      >
+                        <div className="emp-comments-card__user">
+                          <div className="emp-comments-card__avatar">
+                            {comment.photo ? (
+                              <img src={comment.photo} alt={comment.name} className="emp-comments-card__avatar-img" />
+                            ) : (
+                              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                              </svg>
+                            )}
+                          </div>
+                          <div className="emp-comments-card__info">
+                            <h4 className="emp-comments-card__name">{comment.name}</h4>
+                            <span className="emp-comments-card__role">{comment.role}</span>
+                          </div>
+                        </div>
+
+                        <div className="emp-comments-card__body">
+                          <svg className="emp-comments-card__quote-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609L9.978 5.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H0z"/>
+                          </svg>
+                          <p className="emp-comments-card__text">{comment.text}</p>
+                        </div>
+                      </div>
                     ))}
                   </div>
+
+                  <div className="emp-comments-card__footer">
+                    <div className="emp-comments-card__dots">
+                      {comments.map((_, i) => (
+                        <button
+                          key={i}
+                          className={`emp-comments-card__dot ${i === commentIndex ? 'emp-comments-card__dot--active' : ''}`}
+                          onClick={() => setCommentIndex(i)}
+                          aria-label={`Ver comentario ${i + 1}`}
+                        />
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
           </div>

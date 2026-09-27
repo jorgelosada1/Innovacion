@@ -8,9 +8,19 @@ const CursosPage = () => {
   const [activeTab, setActiveTab] = useState('cursos');
   const [showPwModal, setShowPwModal] = useState(false);
   const [pendingVideoUrl, setPendingVideoUrl] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setCursosData(getCursos());
+    (async () => {
+      setLoading(true);
+      try {
+        const data = await getCursos();
+        setCursosData(data);
+      } catch (error) {
+        console.error(error);
+      }
+      setLoading(false);
+    })();
   }, []);
 
   const handleCursoClick = (videoId) => {
@@ -22,6 +32,10 @@ const CursosPage = () => {
     window.open(pendingVideoUrl, '_blank');
     setShowPwModal(false);
   };
+
+  if (loading) {
+    return <section className="cursos-page"><div style={{padding: '5rem', textAlign: 'center'}}>Cargando...</div></section>;
+  }
 
   return (
     <section className="cursos-page">
@@ -77,7 +91,7 @@ const CursosPage = () => {
         {activeTab === 'cursos' && (
           <div className="cursos-page__grid" key="cursos">
             {cursosData.map((curso) => (
-              <div key={curso.id} className="curso-card">
+              <div key={curso._id || curso.id} className="curso-card">
                 {/* Video preview */}
                 <div className="curso-card__video">
                   <iframe
