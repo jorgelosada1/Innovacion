@@ -1,7 +1,7 @@
 // ===== DATA MANAGER (API Backend) =====
 // Handles all CRUD operations via REST API calls to Express/MongoDB backend
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = import.meta.env.VITE_API_URL || '/api';
 
 // ===== HTTP HELPERS =====
 const getToken = () => localStorage.getItem('innovacion_token');
@@ -249,18 +249,15 @@ export const updateSetting = async (key, value) => {
   });
 };
 
-// ===== FILE UPLOAD =====
+// ===== FILE UPLOAD (Base64 for Vercel + MongoDB persistence) =====
 export const uploadImage = async (file) => {
-  const formData = new FormData();
-  formData.append('image', file);
-  const token = getToken();
-  const res = await fetch(`${API_BASE}/upload`, {
-    method: 'POST',
-    headers: token ? { 'Authorization': `Bearer ${token}` } : {},
-    body: formData,
+  return new Promise((resolve, reject) => {
+    if (file.size > 5 * 1024 * 1024) {
+      return reject(new Error('La imagen debe ser menor a 5MB'));
+    }
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (err) => reject(err);
+    reader.readAsDataURL(file);
   });
-  if (!res.ok) throw new Error('Error subiendo imagen');
-  const data = await res.json();
-  // Return full URL to the uploaded file
-  return `http://localhost:5000${data.url}`;
 };
