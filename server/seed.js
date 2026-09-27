@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import bcrypt from 'bcryptjs';
+import dns from 'node:dns';
 import User from './models/User.js';
 import Noticia from './models/Noticia.js';
 import Slide from './models/Slide.js';
@@ -8,6 +9,11 @@ import Curso from './models/Curso.js';
 import Faq from './models/Faq.js';
 import Comment from './models/Comment.js';
 import Setting from './models/Setting.js';
+
+// Configura DNS públicos para resolver SRV en Windows
+try {
+  dns.setServers(['8.8.8.8', '1.1.1.1']);
+} catch {}
 
 dotenv.config();
 
@@ -121,14 +127,24 @@ export const seedData = async () => {
 // Si se ejecuta directamente desde línea de comandos (node seed.js)
 if (process.argv[1] && process.argv[1].endsWith('seed.js')) {
   const mongoUri = process.env.MONGODB_URI || 'mongodb+srv://csugalan_db_user:rfnJJmRfRuRBk6xx@cluster0.85hfqb3.mongodb.net/Innovacion?retryWrites=true&w=majority';
+  
   mongoose.connect(mongoUri)
     .then(async () => {
       await seedData();
       await mongoose.disconnect();
       process.exit(0);
     })
-    .catch((err) => {
-      console.error('❌ Error ejecutando seed:', err);
-      process.exit(1);
+    .catch(async (err) => {
+      console.warn('⚠️ Falló conexión SRV, intentando conexión directa...', err.message);
+      const directUri = 'mongodb://csugalan_db_user:rfnJJmRfRuRBk6xx@ac-mbeiuwr-shard-00-00.85hfqb3.mongodb.net:27017,ac-mbeiuwr-shard-00-01.85hfqb3.mongodb.net:27017,ac-mbeiuwr-shard-00-02.85hfqb3.mongodb.net:27017/Innovacion?ssl=true&replicaSet=atlas-mbeiuwr-shard-0&authSource=admin&retryWrites=true&w=majority';
+      try {
+        await mongoose.connect(directUri);
+        await seedData();
+        await mongoose.disconnect();
+        process.exit(0);
+      } catch (err2) {
+        console.error('❌ Error final conectando a MongoDB:', err2);
+        process.exit(1);
+      }
     });
 }
