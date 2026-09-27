@@ -4,9 +4,6 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import dns from 'node:dns';
-
-try { dns.setServers(['8.8.8.8', '1.1.1.1']); } catch {}
 
 // Routes
 import authRoutes from './routes/auth.js';
@@ -23,24 +20,28 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
-// ── MongoDB Connection with Cache for Serverless ──
-let isConnected = false;
+// ── MongoDB Connection with Cache for Vercel Serverless ──
+let cachedDb = null;
+
 export const connectDB = async () => {
-  if (isConnected && mongoose.connection.readyState === 1) return;
+  if (cachedDb && mongoose.connection.readyState === 1) {
+    return cachedDb;
+  }
 
   const mongoUri = process.env.MONGODB_URI || 
     'mongodb+srv://csugalan_db_user:rfnJJmRfRuRBk6xx@cluster0.85hfqb3.mongodb.net/Innovacion?retryWrites=true&w=majority';
 
   try {
-    await mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 5000 });
-    isConnected = true;
-    console.log('✅ Conectado a MongoDB Atlas (SRV URI)');
+    mongoose.set('strictQuery', false);
+    cachedDb = await mongoose.connect(mongoUri, {
+      bufferCommands: false,
+      serverSelectionTimeoutMS: 4000,
+    });
+    console.log('✅ Conectado a MongoDB Atlas');
+    return cachedDb;
   } catch (err) {
-    console.warn('⚠️ Error SRV URI, probando URI directa:', err.message);
-    const directUri = 'mongodb://csugalan_db_user:rfnJJmRfRuRBk6xx@ac-mbeiuwr-shard-00-00.85hfqb3.mongodb.net:27017,ac-mbeiuwr-shard-00-01.85hfqb3.mongodb.net:27017,ac-mbeiuwr-shard-00-02.85hfqb3.mongodb.net:27017/Innovacion?ssl=true&replicaSet=atlas-mbeiuwr-shard-0&authSource=admin&retryWrites=true&w=majority';
-    await mongoose.connect(directUri, { serverSelectionTimeoutMS: 5000 });
-    isConnected = true;
-    console.log('✅ Conectado a MongoDB Atlas (Direct URI)');
+    console.warn('⚠️ Error conectando a MongoDB:', err.message);
+    return null;
   }
 };
 
@@ -52,12 +53,12 @@ app.use(cors({
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
-// Middleware to attempt DB connection without crashing if DB is warming up
+// Middleware to attempt DB connection without blocking
 app.use(async (_req, _res, next) => {
   try {
     await connectDB();
   } catch (err) {
-    console.error('Database connection error in middleware:', err.message);
+    console.error('DB connect error:', err.message);
   }
   next();
 });
@@ -77,7 +78,11 @@ app.use('/api/upload', uploadRoutes);
 
 // Health check
 app.get('/api/health', (_req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString(), dbConnected: mongoose.connection.readyState === 1 });
+  res.json({
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    dbConnected: mongoose.connection.readyState === 1,
+  });
 });
 
 // Catch-all 404 for unmatched /api routes

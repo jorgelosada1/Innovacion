@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import dns from 'node:dns';
 import User from './models/User.js';
 import Noticia from './models/Noticia.js';
 import Slide from './models/Slide.js';
@@ -9,13 +8,12 @@ import Faq from './models/Faq.js';
 import Comment from './models/Comment.js';
 import Setting from './models/Setting.js';
 
-try { dns.setServers(['8.8.8.8', '1.1.1.1']); } catch {}
-
 dotenv.config();
 
 const seed = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/Innovacion');
+    const mongoUri = process.env.MONGODB_URI || 'mongodb+srv://csugalan_db_user:rfnJJmRfRuRBk6xx@cluster0.85hfqb3.mongodb.net/Innovacion?retryWrites=true&w=majority';
+    await mongoose.connect(mongoUri);
     console.log('Conectado a MongoDB');
 
     // Clean up
@@ -35,13 +33,13 @@ const seed = async () => {
     const noticia1 = new Noticia({
       titulo: 'Inscripciones Abiertas 2025-2',
       resumen: 'Conoce las nuevas opciones...',
-      contenido: '<p>Las inscripciones para...</p>',
+      contenido: '<p>Las inscripciones para el segundo semestre de 2025 ya están abiertas. Contamos con una amplia oferta de programas académicos en modalidad presencial y virtual, en alianza con la Fundación Universitaria del Área Andina y la Corporación Universitaria Iberoamericana. No pierdas la oportunidad de transformar tu futuro.</p>',
       fecha: '2025-07-01'
     });
     const noticia2 = new Noticia({
       titulo: 'Educación Virtual de Calidad',
       resumen: 'Descubre por qué somos líderes...',
-      contenido: '<p>En Innovación e-Learning...</p>',
+      contenido: '<p>Nuestra oferta de educación virtual te permite estudiar desde cualquier rincón de Colombia. Con plataformas modernas y un equipo de soporte dedicado, garantizamos una experiencia educativa de primer nivel.</p>',
       fecha: '2025-06-15'
     });
     await noticia1.save();
