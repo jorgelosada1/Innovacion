@@ -8,6 +8,7 @@ import { hasWebGL } from './support';
 const scenes = {
   logo: lazy(() => import('./LogoScene')),
   shapes: lazy(() => import('./FloatingShapes')),
+  book: lazy(() => import('./BookScene')),
 };
 
 class SceneBoundary extends Component {

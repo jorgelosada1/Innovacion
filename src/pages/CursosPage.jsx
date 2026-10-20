@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getCursos } from '../utils/dataManager';
 import PasswordModal from '../components/PasswordModal';
+import BookShowcase from '../components/BookShowcase';
 import './CursosPage.css';
 
 const CursosPage = () => {
@@ -73,6 +74,9 @@ const CursosPage = () => {
       </div>
 
       <div className="cursos-page__container">
+        {/* Biblioteca digital: libro 3D */}
+        <BookShowcase />
+
         {/* Cursos Tab */}
         {activeTab === 'cursos' && (
           <div className="cursos-page__grid" key="cursos">
