@@ -414,7 +414,7 @@
   stroke-dashoffset: 620;
 }
 
-.bridge.is-revealed .bridge__arc {
+.bridge[data-revealed] .bridge__arc {
   animation: bridgeDraw 1.8s var(--ease-out-expo) 0.3s forwards;
 }
 
