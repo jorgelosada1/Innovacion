@@ -89,15 +89,14 @@ const Ventajas = () => {
   return (
     <section className="ventajas-section" ref={sectionRef}>
       <div className="ventajas-container">
-        <div className="ventajas-stats" data-reveal="flip">
+        <div className="ventajas-stats" data-reveal>
           <div className="ventajas-stats__orb ventajas-stats__orb--1" aria-hidden="true"></div>
           <div className="ventajas-stats__orb ventajas-stats__orb--2" aria-hidden="true"></div>
           {stats.map((stat, i) => (
             <div
               className="stat-item"
               key={stat.label}
-              data-tilt="12"
-              data-reveal="zoom"
+              data-reveal
               style={{ '--reveal-delay': `${200 + i * 110}ms` }}
             >
               <span className="stat-item__icon" aria-hidden="true">

@@ -3,9 +3,11 @@
   position: relative;
   width: 100%;
   margin-top: 80px;
-  /* Misma proporción que los banners (1600 × 458) para mostrarlos completos */
-  aspect-ratio: 1600 / 458;
-  max-height: 640px;
+  /* Ocupa toda la pantalla bajo el menú; el banner conserva su proporción
+     y el espacio sobrante se completa con una versión desenfocada del mismo */
+  height: calc(100vh - 80px);
+  height: calc(100svh - 80px);
+  min-height: 420px;
   overflow: hidden;
   background: #0d1f33;
 }
@@ -75,17 +77,88 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  filter: blur(25px) brightness(0.45);
-  transform: scale(1.12);
+  filter: blur(40px) saturate(1.15) brightness(0.92);
+  transform: scale(1.25);
   z-index: 0;
-  /* Solo visible cuando la pantalla supera el ancho máximo del banner */
-  display: none;
 }
 
-@media (min-width: 2235px) {
-  .news-slider__bg {
-    display: block;
-  }
+/* Franjas que prolongan el borde del banner (fila de píxeles estirada) */
+.news-slider__edge {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  /* La fila es uniforme en vertical: el desenfoque solo suaviza las rayas */
+  filter: blur(14px) saturate(1.05);
+  transform: scale(1.04, 1.1);
+}
+
+.news-slider__edge--top {
+  top: 0;
+  bottom: 50%;
+}
+
+.news-slider__edge--bottom {
+  top: 50%;
+  bottom: 0;
+}
+
+/* Viñeta suave para que el banner resalte sobre el fondo extendido */
+.news-slider__track::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(13, 31, 51, 0.35) 100%);
+}
+
+/* Indicador para bajar */
+.news-slider__scroll {
+  position: absolute;
+  left: 50%;
+  bottom: 74px;
+  z-index: 5;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.news-slider__scroll-mouse {
+  width: 24px;
+  height: 38px;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  border-radius: 14px;
+  position: relative;
+}
+
+.news-slider__scroll-mouse::after {
+  content: '';
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  width: 4px;
+  height: 8px;
+  margin-left: -2px;
+  border-radius: 2px;
+  background: var(--color-yellow);
+  animation: scrollWheel 1.8s ease-in-out infinite;
+}
+
+@keyframes scrollWheel {
+  0% { transform: translateY(0); opacity: 1; }
+  80% { transform: translateY(12px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 0; }
 }
 
 .news-slider__image {
@@ -96,13 +169,6 @@
   object-position: center;
   display: block;
   z-index: 1;
-  transform: scale(1.04);
-  transition: transform 7s ease-out;
-}
-
-/* Ken Burns suave en el banner activo */
-.news-slider__slide--active .news-slider__image {
-  transform: scale(1);
 }
 
 .news-slider__overlay {
@@ -455,6 +521,17 @@
 
 /* En pantallas pequeñas el banner es bajito: se navega con swipe y los controles se compactan */
 @media (max-width: 768px) {
+  .news-slider {
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 1600 / 458;
+  }
+
+  .news-slider__scroll,
+  .news-slider__track::after {
+    display: none;
+  }
+
   .news-slider__arrow {
     display: none;
   }

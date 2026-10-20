@@ -53,9 +53,21 @@
   background: linear-gradient(90deg, var(--color-blue-primary), var(--color-yellow));
 }
 
-.testimonio-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 40px 70px -25px rgba(245, 166, 35, 0.35);
+.testimonio-card::before {
+  transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* La franja superior crece al pasar el mouse; la tarjeta no se mueve */
+.testimonio-card:hover::before {
+  height: 8px;
+}
+
+.testimonio-quote-icon {
+  transition: color 0.4s ease;
+}
+
+.testimonio-card:hover .testimonio-quote-icon {
+  color: var(--color-yellow);
 }
 
 .testimonio-quote-icon {

@@ -8,6 +8,25 @@ import andinaBanner from '../assets/images/andina-virtual.jpg';
 import iberoBanner from '../assets/images/ibero.png';
 import aniversarioBanner from '../assets/images/aniversario-8.jpg';
 
+// Toma la primera y la última fila de píxeles del banner para prolongar sus
+// colores arriba y abajo cuando el banner ocupa toda la pantalla
+const extractEdges = (img) => {
+  try {
+    const w = Math.min(img.naturalWidth, 800);
+    const canvas = document.createElement('canvas');
+    canvas.width = w;
+    canvas.height = 1;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 1, img.naturalWidth, 1, 0, 0, w, 1);
+    const top = canvas.toDataURL();
+    ctx.drawImage(img, 0, img.naturalHeight - 2, img.naturalWidth, 1, 0, 0, w, 1);
+    const bottom = canvas.toDataURL();
+    return { top, bottom };
+  } catch {
+    return null;
+  }
+};
+
 const NewsSlider = () => {
   const [slides, setSlides] = useState([]);
   const [current, setCurrent] = useState(0);
@@ -15,6 +34,13 @@ const NewsSlider = () => {
   const [isPaused, setIsPaused] = useState(false);
   const navigate = useNavigate();
   const touchStartX = useRef(null);
+  const [edges, setEdges] = useState({});
+
+  const handleImageLoad = (key, e) => {
+    if (edges[key]) return;
+    const result = extractEdges(e.currentTarget);
+    if (result) setEdges((prev) => ({ ...prev, [key]: result }));
+  };
 
   useEffect(() => {
     let rawSlider = getSlider();
@@ -59,6 +85,7 @@ const NewsSlider = () => {
         image = aniversarioBanner;
       } else if (image && (image.includes('1.png') || image.includes('encuentro-2026'))) {
         image = defaultImg1;
+        link = '/noticias/encuentro-nacional-2026';
       } else if (image && image.includes('2.png')) {
         image = defaultImg2;
       } else if (image && (image.includes('andina.png') || image.includes('andina-virtual'))) {
@@ -152,7 +179,18 @@ const NewsSlider = () => {
             title={`Ir a ${slide.title}`}
           >
             <img src={slide.image} alt="" className="news-slider__bg" aria-hidden="true" />
-            <img src={slide.image} alt={slide.title} className="news-slider__image" />
+            {edges[slide.image] && (
+              <>
+                <div className="news-slider__edge news-slider__edge--top" style={{ backgroundImage: `url(${edges[slide.image].top})` }} aria-hidden="true" />
+                <div className="news-slider__edge news-slider__edge--bottom" style={{ backgroundImage: `url(${edges[slide.image].bottom})` }} aria-hidden="true" />
+              </>
+            )}
+            <img
+              src={slide.image}
+              alt={slide.title}
+              className="news-slider__image"
+              onLoad={(e) => handleImageLoad(slide.image, e)}
+            />
           </div>
         ))}
       </div>
@@ -205,6 +243,15 @@ const NewsSlider = () => {
           ))}
         </div>
       </div>
+
+      {/* Indicador para bajar */}
+      <button
+        className="news-slider__scroll"
+        onClick={() => window.scrollTo({ top: window.innerHeight - 70, behavior: 'smooth' })}
+        aria-label="Bajar al contenido"
+      >
+        <span className="news-slider__scroll-mouse" />
+      </button>
 
       {/* Progress bar */}
       <div className="news-slider__progress">

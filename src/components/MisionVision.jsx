@@ -86,7 +86,7 @@ const MisionVision = () => {
         </div>
 
         {/* Content */}
-        <div className="mv__content" key={activeTab} data-tilt="5">
+        <div className="mv__content" key={activeTab}>
           <div className="mv__icon">
             {current.icon}
           </div>

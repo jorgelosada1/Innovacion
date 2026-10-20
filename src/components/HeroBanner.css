@@ -175,11 +175,6 @@
   overflow: hidden;
 }
 
-.hero-banner__feature-card.is-tilting {
-  box-shadow: 0 24px 50px -14px rgba(46, 134, 193, 0.35);
-  border-color: rgba(46, 134, 193, 0.35);
-}
-
 .hero-banner__feature-card::before {
   content: '';
   position: absolute;
@@ -197,9 +192,8 @@
 .hero-banner__feature-card--4:hover::before { background: var(--color-blue-dark); }
 
 .hero-banner__feature-card:hover {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 18px 40px rgba(46, 134, 193, 0.12);
-  border-color: rgba(46, 134, 193, 0.35);
+  box-shadow: 0 18px 40px -16px rgba(46, 134, 193, 0.3);
+  border-color: rgba(46, 134, 193, 0.3);
 }
 
 .hero-banner__feature-icon {
@@ -211,12 +205,26 @@
   justify-content: center;
   flex-shrink: 0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-  transition: transform 0.3s ease;
+  transition: background 0.35s ease, color 0.35s ease;
 }
 
-.hero-banner__feature-card:hover .hero-banner__feature-icon {
-  transform: scale(1.08) rotate(3deg);
+.hero-banner__feature-icon svg {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
+
+/* Al pasar el mouse el ícono se “rellena” con su color */
+.hero-banner__feature-card:hover .hero-banner__feature-icon {
+  color: #fff;
+}
+
+.hero-banner__feature-card:hover .hero-banner__feature-icon svg {
+  transform: scale(1.12);
+}
+
+.hero-banner__feature-card--1:hover .hero-banner__feature-icon { background: var(--color-blue-primary); }
+.hero-banner__feature-card--2:hover .hero-banner__feature-icon { background: #d97706; }
+.hero-banner__feature-card--3:hover .hero-banner__feature-icon { background: #059669; }
+.hero-banner__feature-card--4:hover .hero-banner__feature-icon { background: var(--color-blue-dark); }
 
 .hero-banner__feature-icon--blue {
   background: rgba(46, 134, 193, 0.12);
