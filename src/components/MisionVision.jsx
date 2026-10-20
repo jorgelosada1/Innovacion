@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './MisionVision.css';
+import Scene3D from './three/Scene3D';
 
 const tabs = [
   {
@@ -54,6 +55,9 @@ const MisionVision = () => {
 
   return (
     <section id="nosotros" className="mv">
+      {/* Figuras 3D flotantes de fondo */}
+      <Scene3D type="shapes" variant="dark" count={12} seed={11} />
+
       {/* Decorative dots */}
       <div className="mv__dot mv__dot--1"></div>
       <div className="mv__dot mv__dot--2"></div>
@@ -61,15 +65,15 @@ const MisionVision = () => {
 
       <div className="mv__container">
         {/* Badge */}
-        <span className="mv__badge">Identidad Corporativa</span>
+        <span className="mv__badge" data-reveal>Identidad Corporativa</span>
 
         {/* Title */}
-        <h2 className="mv__title">
+        <h2 className="mv__title" data-reveal style={{ '--reveal-delay': '100ms' }}>
           Lo que nos <em className="mv__title-accent">mueve</em>
         </h2>
 
         {/* Tabs */}
-        <div className="mv__tabs">
+        <div className="mv__tabs" data-reveal style={{ '--reveal-delay': '200ms' }}>
           {tabs.map((tab) => (
             <button
               key={tab.key}
@@ -82,7 +86,7 @@ const MisionVision = () => {
         </div>
 
         {/* Content */}
-        <div className="mv__content" key={activeTab}>
+        <div className="mv__content" key={activeTab} data-tilt="5">
           <div className="mv__icon">
             {current.icon}
           </div>

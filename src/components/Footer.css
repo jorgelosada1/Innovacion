@@ -452,3 +452,10 @@
     font-size: 0.68rem;
   }
 }
+
+/* width: 100% + margen lateral desbordaba 16px en móvil */
+@media (max-width: 768px) {
+  .footer__logo-overlap {
+    width: auto;
+  }
+}

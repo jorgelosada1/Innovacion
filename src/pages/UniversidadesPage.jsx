@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './UniversidadesPage.css';
-import andinaBanner from '../assets/images/andina.png';
+import andinaBanner from '../assets/images/andina-virtual.jpg';
 import iberoBanner from '../assets/images/ibero.png';
 import AsesoriaModal from '../components/AsesoriaModal';
 

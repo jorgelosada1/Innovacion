@@ -1,77 +1,8 @@
-import { useRef, useState, useEffect } from 'react';
 import './HeroBanner.css';
-import logoVideo from '../assets/Animacion_Logo.mp4';
 import logoColor from '../assets/images/Logo.png';
+import Scene3D from './three/Scene3D';
 
 const HeroBanner = () => {
-  const logoContainerRef = useRef(null);
-  const videoRef = useRef(null);
-  const [hasPlayed, setHasPlayed] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [hasEnded, setHasEnded] = useState(false);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    const target = logoContainerRef.current;
-    if (!target || !video) return;
-
-    video.muted = true;
-    video.playsInline = true;
-
-    let timer = null;
-
-    const startPlayback = () => {
-      setHasPlayed(true);
-      video.currentTime = 0;
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            setIsPlaying(true);
-          })
-          .catch((err) => {
-            console.warn('Playback error:', err);
-            setIsPlaying(true);
-          });
-      }
-    };
-
-    // Opción 1: Se reproduce automáticamente 5 segundos después de cargar la página
-    timer = setTimeout(() => {
-      if (!hasPlayed) {
-        startPlayback();
-      }
-    }, 5000);
-
-    // Opción 2: O se reproduce inmediatamente cuando el usuario baja con el scroll a esa sección
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const [entry] = entries;
-        if (entry.isIntersecting && !hasPlayed) {
-          if (timer) clearTimeout(timer);
-          startPlayback();
-        }
-      },
-      {
-        threshold: 0.15,
-      }
-    );
-
-    observer.observe(target);
-
-    return () => {
-      if (timer) clearTimeout(timer);
-      observer.disconnect();
-    };
-  }, [hasPlayed]);
-
-  const handleEnded = () => {
-    setHasEnded(true);
-    if (videoRef.current) {
-      videoRef.current.pause();
-    }
-  };
-
   return (
     <section className="hero-banner" id="inicio">
       {/* Decorative background grid and glowing circles */}
@@ -84,13 +15,13 @@ const HeroBanner = () => {
 
       <div className="hero-banner__container">
         {/* Top Header Tag */}
-        <div className="hero-banner__header">
+        <div className="hero-banner__header" data-reveal>
           <div className="hero-banner__badge">
             <span className="hero-banner__badge-dot"></span>
             INNOVACIÓN E-LEARNING
           </div>
           <h2 className="hero-banner__title">
-            Tu futuro profesional <span className="hero-banner__title-highlight">comienza aquí</span>
+            Tu futuro profesional <span className="hero-banner__title-highlight text-shimmer">comienza aquí</span>
           </h2>
         </div>
 
@@ -98,7 +29,7 @@ const HeroBanner = () => {
         <div className="hero-banner__main-stage">
           {/* Left Floating Cards */}
           <div className="hero-banner__side-cards hero-banner__side-cards--left">
-            <div className="hero-banner__feature-card hero-banner__feature-card--1">
+            <div className="hero-banner__feature-card hero-banner__feature-card--1" data-tilt="10" data-reveal="left" style={{ '--reveal-delay': '150ms' }}>
               <div className="hero-banner__feature-icon hero-banner__feature-icon--blue">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
@@ -112,7 +43,7 @@ const HeroBanner = () => {
               </div>
             </div>
 
-            <div className="hero-banner__feature-card hero-banner__feature-card--2">
+            <div className="hero-banner__feature-card hero-banner__feature-card--2" data-tilt="10" data-reveal="left" style={{ '--reveal-delay': '290ms' }}>
               <div className="hero-banner__feature-icon hero-banner__feature-icon--yellow">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
@@ -128,38 +59,27 @@ const HeroBanner = () => {
             </div>
           </div>
 
-          {/* Center Logo Video Wrapper */}
-          <div className="hero-banner__logo-wrapper" ref={logoContainerRef}>
+          {/* Center 3D Logo */}
+          <div className="hero-banner__logo-wrapper" data-reveal="zoom">
             <div className="hero-banner__logo-glow"></div>
-            
-            {/* Fallback de logo estático mientras no se reproduce */}
-            {!isPlaying && !hasPlayed && (
-              <img
-                src={logoColor}
-                alt="Innovación e-Learning"
-                className="hero-banner__logo-placeholder"
-              />
-            )}
-
-            <video
-              ref={videoRef}
-              src={logoVideo}
-              className={`hero-banner__logo-video ${isPlaying || hasEnded ? 'hero-banner__logo-video--visible' : ''}`}
-              muted
-              playsInline
-              preload="auto"
-              disablePictureInPicture
-              disableRemotePlayback
-              onPlay={() => setIsPlaying(true)}
-              onPlaying={() => setIsPlaying(true)}
-              onEnded={handleEnded}
-              aria-label="Animación de logo Innovación e-Learning"
+            <div className="hero-banner__logo-halo"></div>
+            <div className="hero-banner__logo-shadow"></div>
+            <Scene3D
+              type="logo"
+              fallback={
+                <img
+                  src={logoColor}
+                  alt="Innovación e-Learning"
+                  className="hero-banner__logo-placeholder"
+                />
+              }
             />
+            <span className="hero-banner__logo-hint">Mueve el cursor ✦</span>
           </div>
 
           {/* Right Floating Cards */}
           <div className="hero-banner__side-cards hero-banner__side-cards--right">
-            <div className="hero-banner__feature-card hero-banner__feature-card--3">
+            <div className="hero-banner__feature-card hero-banner__feature-card--3" data-tilt="10" data-reveal="right" style={{ '--reveal-delay': '150ms' }}>
               <div className="hero-banner__feature-icon hero-banner__feature-icon--green">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
@@ -172,7 +92,7 @@ const HeroBanner = () => {
               </div>
             </div>
 
-            <div className="hero-banner__feature-card hero-banner__feature-card--4">
+            <div className="hero-banner__feature-card hero-banner__feature-card--4" data-tilt="10" data-reveal="right" style={{ '--reveal-delay': '290ms' }}>
               <div className="hero-banner__feature-icon hero-banner__feature-icon--blue-dark">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
@@ -187,7 +107,7 @@ const HeroBanner = () => {
         </div>
 
         {/* Floating Pills / Chips at bottom */}
-        <div className="hero-banner__pills">
+        <div className="hero-banner__pills" data-reveal style={{ '--reveal-delay': '250ms' }}>
           <span className="hero-banner__pill">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
             +8 Años Transformando Vidas

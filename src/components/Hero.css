@@ -306,3 +306,76 @@
     border-radius: 50px;
   }
 }
+
+/* ===== 3D DECOR ===== */
+.hero__image-wrapper::before,
+.hero__image-wrapper::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Bloque degradado girado detrás de la foto */
+.hero__image-wrapper::before {
+  width: 78%;
+  height: 86%;
+  border-radius: 36px;
+  background: var(--gradient-brand);
+  transform: rotate(-7deg) translate(-26px, 14px);
+  opacity: 0.9;
+  box-shadow: var(--shadow-glow-blue);
+  animation: heroBlock 9s ease-in-out infinite;
+}
+
+/* Patrón de puntos dorados */
+.hero__image-wrapper::after {
+  width: 130px;
+  height: 130px;
+  top: -18px;
+  right: 4%;
+  background-image: radial-gradient(rgba(245, 166, 35, 0.75) 2px, transparent 2.5px);
+  background-size: 16px 16px;
+  animation: heroDots 7s ease-in-out infinite;
+}
+
+@keyframes heroBlock {
+  0%, 100% { transform: rotate(-7deg) translate(-26px, 14px); }
+  50% { transform: rotate(-4deg) translate(-18px, 6px); }
+}
+
+@keyframes heroDots {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(12px); }
+}
+
+.hero__image-container {
+  z-index: 1;
+  box-shadow: 0 40px 80px -30px rgba(13, 31, 51, 0.45);
+}
+
+.hero__floating-card {
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.hero__btn {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Destello que cruza los botones al pasar el mouse */
+.hero__btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero__btn:hover::after {
+  left: 130%;
+}
