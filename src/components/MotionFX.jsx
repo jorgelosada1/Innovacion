@@ -4,7 +4,6 @@ import { useLocation } from 'react-router-dom';
 // ===== EFECTOS DE MOVIMIENTO GLOBALES =====
 // - [data-reveal]: aparece con animación al entrar en pantalla (variantes: up, left, right, zoom, flip).
 //   Retraso opcional con style={{ '--reveal-delay': '120ms' }}.
-// - [data-tilt]: tarjeta con inclinación 3D y brillo que sigue al puntero.
 // - Barra de progreso de lectura en la parte superior.
 
 const REVEALED = 'is-revealed';
@@ -50,62 +49,6 @@ const MotionFX = () => {
       mo.disconnect();
     };
   }, [location.pathname]);
-
-  // 3D tilt (solo con puntero fino, p. ej. mouse)
-  useEffect(() => {
-    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!canHover || reduced) return;
-
-    let active = null;
-    let frame = 0;
-
-    const reset = (el) => {
-      el.style.setProperty('--rx', '0deg');
-      el.style.setProperty('--ry', '0deg');
-      el.classList.remove('is-tilting');
-    };
-
-    const onMove = (e) => {
-      const el = e.target.closest?.('[data-tilt]');
-      if (active && active !== el) reset(active);
-      active = el;
-      if (!el) return;
-
-      if (!el.querySelector(':scope > .tilt-glare')) {
-        const glare = document.createElement('span');
-        glare.className = 'tilt-glare';
-        glare.setAttribute('aria-hidden', 'true');
-        el.appendChild(glare);
-      }
-
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        const r = el.getBoundingClientRect();
-        const px = (e.clientX - r.left) / r.width;
-        const py = (e.clientY - r.top) / r.height;
-        const strength = parseFloat(el.dataset.tilt) || 8;
-        el.classList.add('is-tilting');
-        el.style.setProperty('--ry', `${(px - 0.5) * strength * 2}deg`);
-        el.style.setProperty('--rx', `${(0.5 - py) * strength * 2}deg`);
-        el.style.setProperty('--mx', `${px * 100}%`);
-        el.style.setProperty('--my', `${py * 100}%`);
-      });
-    };
-
-    const onLeave = () => {
-      if (active) reset(active);
-      active = null;
-    };
-
-    document.addEventListener('pointermove', onMove, { passive: true });
-    document.documentElement.addEventListener('pointerleave', onLeave);
-    return () => {
-      cancelAnimationFrame(frame);
-      document.removeEventListener('pointermove', onMove);
-      document.documentElement.removeEventListener('pointerleave', onLeave);
-    };
-  }, []);
 
   // Barra de progreso de scroll
   useEffect(() => {

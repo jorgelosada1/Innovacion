@@ -8,7 +8,7 @@ const WHATSAPP = 'https://wa.link/rgw8yn';
 
 /* Ilustración animada del "puente": personas ↔ oportunidades */
 const BridgeIllustration = () => (
-  <figure className="bridge" data-reveal="zoom">
+  <figure className="bridge" data-reveal>
     <svg viewBox="0 0 640 220" className="bridge__svg" role="img" aria-label="Un puente que conecta personas con oportunidades">
       <defs>
         <linearGradient id="bridgeGrad" x1="0" x2="1">
@@ -119,14 +119,14 @@ const Block = ({ block }) => {
       return <h2 id={block.id} className="blog-article__h2" data-reveal>{block.text}</h2>;
     case 'highlight':
       return (
-        <blockquote className="blog-article__highlight" data-reveal="zoom" data-tilt="4">
+        <blockquote className="blog-article__highlight" data-reveal>
           <span aria-hidden="true">“</span>
           <p>{block.text}</p>
         </blockquote>
       );
     case 'figure':
       return (
-        <figure className="blog-article__figure" data-reveal="zoom">
+        <figure className="blog-article__figure" data-reveal>
           <img src={block.src} alt={block.alt} loading="lazy" />
           <figcaption>{block.caption}</figcaption>
         </figure>
@@ -250,7 +250,7 @@ const BlogPostPage = () => {
             <ShareButtons title={post.title} />
           </div>
 
-          <section className="blog-cta" data-reveal="flip" data-tilt="5">
+          <section className="blog-cta" data-reveal>
             <img src={post.closingImage} alt="" className="blog-cta__img" aria-hidden="true" />
             <div className="blog-cta__content">
               <span className="blog-cta__eyebrow">¿Y si estudias?</span>

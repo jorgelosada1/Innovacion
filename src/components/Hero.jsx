@@ -37,8 +37,8 @@ const Hero = () => {
         </div>
 
         {/* Right Image */}
-        <div className="hero__image-wrapper" data-reveal="right">
-          <div className="hero__image-container" data-tilt="7">
+        <div className="hero__image-wrapper" data-reveal>
+          <div className="hero__image-container">
             <img
               src={heroImage}
               alt="Estudiante universitaria aprendiendo en línea"

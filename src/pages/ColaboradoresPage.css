@@ -1293,8 +1293,63 @@
 }
 
 .voice-card:hover {
-  border-color: rgba(245, 166, 35, 0.5);
-  box-shadow: 0 30px 55px -28px rgba(46, 134, 193, 0.45);
+  border-color: rgba(245, 166, 35, 0.6);
+}
+
+.voice-card__quote {
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.voice-card:hover .voice-card__quote {
+  transform: scale(1.15) rotate(-6deg);
+}
+
+/* Variantes de color para que el muro no se vea repetido */
+.voice-card--v1 {
+  background: linear-gradient(170deg, #eef6fd 0%, #e3f0fb 100%);
+  border-color: #d3e6f7;
+}
+
+.voice-card--v1 .voice-card__quote {
+  color: var(--color-blue-primary);
+}
+
+.voice-card--v2 {
+  background: linear-gradient(170deg, #fff9ee 0%, #fff2da 100%);
+  border-color: #fbe3b8;
+}
+
+.voice-card--v2 .voice-card__author {
+  border-top-color: #f5d79f;
+}
+
+.voice-card--v3 {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(245, 166, 35, 0.22), transparent 45%),
+    linear-gradient(160deg, #163f63 0%, #1e5a8a 100%);
+  border-color: transparent;
+}
+
+.voice-card--v3 .voice-card__text p,
+.voice-card--v3 .voice-card__name {
+  color: #fff;
+}
+
+.voice-card--v3 .voice-card__role {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.voice-card--v3 .voice-card__more {
+  color: var(--color-yellow);
+}
+
+.voice-card--v3 .voice-card__author {
+  border-top-color: rgba(255, 255, 255, 0.2);
+}
+
+.voice-card--v3.voice-card--clamped .voice-card__text {
+  -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent);
+  mask-image: linear-gradient(180deg, #000 60%, transparent);
 }
 
 .voice-card__quote {

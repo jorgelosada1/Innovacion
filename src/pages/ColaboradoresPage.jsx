@@ -96,9 +96,8 @@ const VoiceCard = ({ comment, index }) => {
 
   return (
     <article
-      className={`voice-card ${isLong && !expanded ? 'voice-card--clamped' : ''}`}
-      data-tilt="6"
-      data-reveal="flip"
+      className={`voice-card voice-card--v${index % 4} ${isLong && !expanded ? 'voice-card--clamped' : ''}`}
+      data-reveal
       style={{ '--reveal-delay': `${(index % 3) * 120}ms` }}
     >
       <svg className="voice-card__quote" width="34" height="34" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -407,7 +406,6 @@ const ColaboradoresPage = () => {
               {/* === SLEEK EMPLOYEE COMMENTS CARD IN ORGANIGRAMA EMPTY SPACE === */}
               <div
                 className="emp-comments-card"
-                data-tilt="4"
                 onMouseEnter={() => setCommentsPaused(true)}
                 onMouseLeave={() => setCommentsPaused(false)}
               >
@@ -492,7 +490,7 @@ const ColaboradoresPage = () => {
           </div>
 
           {featuredVoice && (
-            <blockquote className="voices__featured" data-reveal="zoom" data-tilt="4">
+            <blockquote className="voices__featured" data-reveal>
               <span className="voices__featured-mark" aria-hidden="true">“</span>
               <p>{featuredVoice.text}</p>
               <footer>

@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { getNoticias, getNoticiaById } from '../utils/dataManager';
 import { blogPosts, formatDate, readingTime } from '../data/blog';
+import { encuentro } from '../data/encuentro2026';
 import Scene3D from '../components/three/Scene3D';
 import logoSolo from '../assets/images/LogoSolo.png';
 import './NoticiasPage.css';
@@ -62,6 +63,22 @@ const NoticiasPage = () => {
       </div>
 
       <div className="noticias-container list-view">
+        {/* === PRÓXIMO EVENTO === */}
+        <Link to={`/noticias/${encuentro.slug}`} className="event-feature" data-reveal>
+          <img src={encuentro.banner} alt={encuentro.title} className="event-feature__banner" />
+          <div className="event-feature__body">
+            <div>
+              <span className="event-feature__chip">Próximo evento</span>
+              <h2 className="event-feature__title">{encuentro.title}</h2>
+              <p className="event-feature__meta">{encuentro.dates} · {encuentro.places}</p>
+            </div>
+            <span className="event-feature__cta">
+              Ver agenda y recomendaciones
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </Link>
+
         {/* === MINI BLOG === */}
         {featured && (
           <section className="blog-feature" aria-labelledby="blog-inne-title">
@@ -73,7 +90,7 @@ const NoticiasPage = () => {
               <h2 id="blog-inne-title">Historias que <span className="text-shimmer">conectan</span></h2>
             </div>
 
-            <Link to={`/noticias/blog/${featured.slug}`} className="blog-feature__card" data-tilt="5" data-reveal="flip">
+            <Link to={`/noticias/blog/${featured.slug}`} className="blog-feature__card" data-reveal>
               <div className="blog-feature__media">
                 <img src={featured.thumb || featured.cover} alt="Estudiantes compartiendo y aprendiendo juntos" loading="lazy" />
                 <span className="blog-feature__category">{featured.category}</span>
@@ -115,7 +132,7 @@ const NoticiasPage = () => {
         <h2 className="noticias-section-title" data-reveal>Últimas noticias</h2>
         <div className="noticias-grid">
           {noticias.map((noticia, index) => (
-            <div key={noticia.id} className="noticia-card" data-tilt="6" data-reveal style={{ '--reveal-delay': `${(index % 2) * 120}ms` }}>
+            <div key={noticia.id} className="noticia-card" data-reveal style={{ '--reveal-delay': `${(index % 2) * 120}ms` }}>
               <div className="noticia-card-body">
                 <span className="noticia-card-fecha">{noticia.fecha}</span>
                 <h3 className="noticia-card-titulo">{noticia.titulo}</h3>

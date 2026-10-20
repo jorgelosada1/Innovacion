@@ -29,7 +29,7 @@ const HeroBanner = () => {
         <div className="hero-banner__main-stage">
           {/* Left Floating Cards */}
           <div className="hero-banner__side-cards hero-banner__side-cards--left">
-            <div className="hero-banner__feature-card hero-banner__feature-card--1" data-tilt="10" data-reveal="left" style={{ '--reveal-delay': '150ms' }}>
+            <div className="hero-banner__feature-card hero-banner__feature-card--1" data-reveal style={{ '--reveal-delay': '150ms' }}>
               <div className="hero-banner__feature-icon hero-banner__feature-icon--blue">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
@@ -43,7 +43,7 @@ const HeroBanner = () => {
               </div>
             </div>
 
-            <div className="hero-banner__feature-card hero-banner__feature-card--2" data-tilt="10" data-reveal="left" style={{ '--reveal-delay': '290ms' }}>
+            <div className="hero-banner__feature-card hero-banner__feature-card--2" data-reveal style={{ '--reveal-delay': '290ms' }}>
               <div className="hero-banner__feature-icon hero-banner__feature-icon--yellow">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
@@ -79,7 +79,7 @@ const HeroBanner = () => {
 
           {/* Right Floating Cards */}
           <div className="hero-banner__side-cards hero-banner__side-cards--right">
-            <div className="hero-banner__feature-card hero-banner__feature-card--3" data-tilt="10" data-reveal="right" style={{ '--reveal-delay': '150ms' }}>
+            <div className="hero-banner__feature-card hero-banner__feature-card--3" data-reveal style={{ '--reveal-delay': '150ms' }}>
               <div className="hero-banner__feature-icon hero-banner__feature-icon--green">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
@@ -92,7 +92,7 @@ const HeroBanner = () => {
               </div>
             </div>
 
-            <div className="hero-banner__feature-card hero-banner__feature-card--4" data-tilt="10" data-reveal="right" style={{ '--reveal-delay': '290ms' }}>
+            <div className="hero-banner__feature-card hero-banner__feature-card--4" data-reveal style={{ '--reveal-delay': '290ms' }}>
               <div className="hero-banner__feature-icon hero-banner__feature-icon--blue-dark">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>

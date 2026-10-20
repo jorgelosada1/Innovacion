@@ -11,6 +11,7 @@ import AdminPanel from './pages/AdminPanel';
 import NoticiasPage from './pages/NoticiasPage';
 import UniversidadesPage from './pages/UniversidadesPage';
 import BlogPostPage from './pages/BlogPostPage';
+import EncuentroPage from './pages/EncuentroPage';
 import './App.css';
 
 const AppContent = () => {
@@ -30,6 +31,7 @@ const AppContent = () => {
           <Route path="/admin" element={<AdminPanel />} />
           <Route path="/noticias" element={<NoticiasPage />} />
           <Route path="/noticias/blog/:slug" element={<BlogPostPage />} />
+          <Route path="/noticias/encuentro-nacional-2026" element={<EncuentroPage />} />
           <Route path="/noticias/:id" element={<NoticiasPage />} />
           <Route path="/universidades" element={<UniversidadesPage />} />
           <Route path="/universidades/:uni" element={<UniversidadesPage />} />
