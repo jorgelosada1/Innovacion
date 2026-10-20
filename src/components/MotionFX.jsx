@@ -6,7 +6,9 @@ import { useLocation } from 'react-router-dom';
 //   Retraso opcional con style={{ '--reveal-delay': '120ms' }}.
 // - Barra de progreso de lectura en la parte superior.
 
-const REVEALED = 'is-revealed';
+// Se marca con un atributo (no con una clase): si React cambia el className
+// del elemento (p. ej. al abrir una pregunta frecuente) la marca se conserva
+const REVEALED = 'data-revealed';
 
 const MotionFX = () => {
   const location = useLocation();
@@ -23,7 +25,7 @@ const MotionFX = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add(REVEALED);
+            entry.target.setAttribute(REVEALED, '');
             io.unobserve(entry.target);
           }
         });
@@ -33,8 +35,8 @@ const MotionFX = () => {
 
     const scan = (root) => {
       if (root.nodeType !== 1) return;
-      if (root.matches('[data-reveal]') && !root.classList.contains(REVEALED)) io.observe(root);
-      root.querySelectorAll(`[data-reveal]:not(.${REVEALED})`).forEach((el) => io.observe(el));
+      if (root.matches('[data-reveal]') && !root.hasAttribute(REVEALED)) io.observe(root);
+      root.querySelectorAll(`[data-reveal]:not([${REVEALED}])`).forEach((el) => io.observe(el));
     };
 
     scan(document.body);
