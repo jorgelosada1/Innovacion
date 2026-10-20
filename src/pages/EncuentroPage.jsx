@@ -156,8 +156,11 @@ const EncuentroPage = () => {
       {/* === HERO === */}
       <header className="ev-hero">
         <div className="ev-hero__dots" aria-hidden="true" />
+        <Link to="/noticias" className="ev-back ev-back--top">← Noticias</Link>
+        <figure className="ev-hero__banner">
+          <img src={encuentro.banner} alt="Encuentro Nacional 2026: conferencias, talleres, networking y planeación estratégica" />
+        </figure>
         <div className="ev-hero__inner">
-          <Link to="/noticias" className="ev-back">← Noticias</Link>
           <span className="ev-hero__badge">Evento interno · Equipo INNE</span>
           <h1 className="ev-hero__title">
             Encuentro Nacional <span className="text-shimmer">INNE 2026</span>
@@ -169,9 +172,9 @@ const EncuentroPage = () => {
           </div>
           <Countdown />
         </div>
-        <figure className="ev-hero__banner">
-          <img src={encuentro.banner} alt="Encuentro Nacional 2026: conferencias, talleres, networking y planeación estratégica" />
-        </figure>
+        <div className="ev-hero__curve" aria-hidden="true">
+          <svg viewBox="0 0 1440 70" preserveAspectRatio="none"><path d="M0 70V30C360 -10 1080 -10 1440 30V70Z" /></svg>
+        </div>
       </header>
 
       <div className="ev-container">
