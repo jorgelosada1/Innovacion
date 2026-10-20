@@ -52,7 +52,7 @@ const comments = [
   {
     text: 'Ser parte de un equipo que abre puertas y transforma vidas a través de la educación.',
     name: 'Diego',
-    role: 'Mi frase',
+    role: 'Mercadeo',
     featured: true,
   },
   {

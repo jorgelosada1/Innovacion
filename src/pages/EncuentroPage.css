@@ -172,34 +172,66 @@
 }
 
 /* Banner del evento */
+.ev-hero {
+  padding-top: 28px;
+  padding-bottom: 100px;
+}
+
+/* Banner dentro del hero, con resplandor de marca detrás */
 .ev-hero__banner {
   position: relative;
   z-index: 1;
-  max-width: 1080px;
-  /* El banner “cuelga” sobre el contenido de abajo */
-  margin: 0 auto -90px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.ev-hero__banner::before {
+  content: '';
+  position: absolute;
+  inset: 12% 6% -8%;
+  z-index: -1;
+  border-radius: 40px;
+  background: linear-gradient(90deg, rgba(52, 152, 219, 0.7), rgba(245, 166, 35, 0.55));
+  filter: blur(50px);
+  opacity: 0.55;
 }
 
 .ev-hero__banner img {
   width: 100%;
-  border-radius: 22px;
-  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.7);
-  border: 4px solid rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.12);
 }
 
-.ev-hero {
-  padding-bottom: 0;
+/* Curva de transición hacia el contenido */
+.ev-hero__curve {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  line-height: 0;
+}
+
+.ev-hero__curve svg {
+  width: 100%;
+  height: 70px;
+  fill: #f5f7fa;
 }
 
 .ev-hero__inner {
-  padding-bottom: 44px;
+  padding-top: 40px;
+}
+
+.ev-back--top {
+  position: relative;
+  display: table;
+  margin: 0 auto 18px;
 }
 
 /* Contenedor */
 .ev-container {
   max-width: 1080px;
   margin: 0 auto;
-  padding: 120px 24px 0;
+  padding: 24px 24px 0;
 }
 
 .ev-chip {
@@ -823,17 +855,25 @@
     font-size: 1.5rem;
   }
 
-  .ev-hero__banner {
-    margin-bottom: -40px;
+  .ev-hero {
+    padding-top: 18px;
+    padding-bottom: 60px;
+  }
+
+  .ev-hero__inner {
+    padding-top: 26px;
   }
 
   .ev-hero__banner img {
-    border-radius: 14px;
-    border-width: 2px;
+    border-radius: 12px;
+  }
+
+  .ev-hero__curve svg {
+    height: 36px;
   }
 
   .ev-container {
-    padding: 70px 14px 0;
+    padding: 16px 14px 0;
   }
 
   .ev-objective {
