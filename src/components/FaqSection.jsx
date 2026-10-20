@@ -15,13 +15,15 @@ const FaqSection = () => {
   return (
     <section className="faq-section" id="faq">
       <div className="faq-container">
-        <span className="faq-badge">Resolvemos tus dudas</span>
-        <h2 className="faq-title">Preguntas Frecuentes</h2>
+        <span className="faq-badge" data-reveal>Resolvemos tus dudas</span>
+        <h2 className="faq-title" data-reveal style={{ '--reveal-delay': '80ms' }}>Preguntas Frecuentes</h2>
         <div className="faq-list">
           {faqs.map((faq, index) => (
             <div 
               key={faq.id || index} 
               className={`faq-item ${openIdx === index ? 'active' : ''}`}
+              data-reveal
+              style={{ '--reveal-delay': `${index * 80}ms` }}
               onClick={() => toggleOpen(index)}
             >
               <div className="faq-header">

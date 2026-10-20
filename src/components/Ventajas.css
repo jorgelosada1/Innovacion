@@ -11,17 +11,84 @@
 }
 
 .ventajas-stats {
+  position: relative;
+  overflow: hidden;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
-  background: linear-gradient(135deg, #0d1f33 0%, #17365d 100%);
+  gap: 1.25rem;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(52, 152, 219, 0.35), transparent 45%),
+    linear-gradient(135deg, #0d1f33 0%, #17365d 100%);
   color: white;
-  padding: 3.5rem 2rem;
+  padding: 2.25rem;
+  border-radius: 1.75rem;
+  box-shadow: 0 30px 60px -20px rgba(13, 31, 51, 0.45);
+  perspective: 1200px;
+}
+
+.ventajas-stats__orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.ventajas-stats__orb--1 {
+  width: 160px;
+  height: 160px;
+  top: -100px;
+  right: -50px;
+  background: radial-gradient(circle at 30% 30%, #ffd27a, #f5a623 45%, #b86f0c 100%);
+  opacity: 0.35;
+  animation: orbFloat 9s ease-in-out infinite;
+}
+
+.ventajas-stats__orb--2 {
+  width: 90px;
+  height: 90px;
+  bottom: -40px;
+  left: 6%;
+  background: radial-gradient(circle at 30% 30%, #9fd0ff, #3498db 50%, #1b3a5c 100%);
+  opacity: 0.5;
+  animation: orbFloat 11s ease-in-out infinite reverse;
+}
+
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-20px, 16px); }
+}
+
+.stat-item {
+  position: relative;
+  z-index: 1;
+  padding: 1.75rem 1rem 1.5rem;
   border-radius: 1.25rem;
-  box-shadow: 0 15px 35px rgba(13, 31, 51, 0.2);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.stat-item:hover {
+  border-color: rgba(245, 166, 35, 0.45);
+  box-shadow: 0 20px 40px -18px rgba(245, 166, 35, 0.45);
+}
+
+.stat-item__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 0.75rem;
+  border-radius: 14px;
+  color: #0d1f33;
+  background: var(--gradient-gold);
+  box-shadow: 0 10px 22px -6px rgba(245, 166, 35, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  transform: translateZ(30px);
 }
 
 .stat-item h4 {
+  transform: translateZ(20px);
+  font-variant-numeric: tabular-nums;
   font-size: 2.8rem;
   font-weight: 800;
   margin-bottom: 0.5rem;
@@ -46,7 +113,7 @@
   .ventajas-stats {
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
-    padding: 2.5rem 1.2rem;
+    padding: 1.2rem;
   }
 
   .stat-item h4 {

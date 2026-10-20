@@ -1,11 +1,12 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getSlider, getNoticias } from '../utils/dataManager';
 import './NewsSlider.css';
-import defaultImg1 from '../assets/images/1.png';
+import defaultImg1 from '../assets/images/encuentro-2026.jpg';
 import defaultImg2 from '../assets/images/2.png';
-import andinaBanner from '../assets/images/andina.png';
+import andinaBanner from '../assets/images/andina-virtual.jpg';
 import iberoBanner from '../assets/images/ibero.png';
+import aniversarioBanner from '../assets/images/aniversario-8.jpg';
 
 const NewsSlider = () => {
   const [slides, setSlides] = useState([]);
@@ -13,20 +14,30 @@ const NewsSlider = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const navigate = useNavigate();
+  const touchStartX = useRef(null);
 
   useEffect(() => {
     let rawSlider = getSlider();
     const noticias = getNoticias();
 
-    // Asegurar que los banners de Andina e Ibero estén presentes en el slider
-    const hasAndina = rawSlider.some(s => s.imagen && s.imagen.includes('andina.png'));
+    // Asegurar que los banners de aniversario, Andina e Ibero estén presentes en el slider
+    const hasAniversario = rawSlider.some(s => s.imagen && s.imagen.includes('aniversario-8'));
+    const hasAndina = rawSlider.some(s => s.imagen && s.imagen.includes('andina'));
     const hasIbero = rawSlider.some(s => s.imagen && s.imagen.includes('ibero.png'));
 
     let sliderItems = [...rawSlider];
+    if (!hasAniversario) {
+      sliderItems.unshift({
+        id: 's0',
+        imagen: '/src/assets/images/aniversario-8.jpg',
+        link: '/noticias/blog/educacion-que-conecta',
+        title: 'Celebrando juntos 8 años: conectando sueños con oportunidades'
+      });
+    }
     if (!hasAndina) {
       sliderItems.push({
         id: 's3',
-        imagen: '/src/assets/images/andina.png',
+        imagen: '/src/assets/images/andina-virtual.jpg',
         link: '/universidades/areandina',
         title: 'Fundación Universitaria del Área Andina'
       });
@@ -44,11 +55,13 @@ const NewsSlider = () => {
       let image = item.imagen;
       let link = item.link;
 
-      if (image && image.includes('1.png')) {
+      if (image && image.includes('aniversario-8')) {
+        image = aniversarioBanner;
+      } else if (image && (image.includes('1.png') || image.includes('encuentro-2026'))) {
         image = defaultImg1;
       } else if (image && image.includes('2.png')) {
         image = defaultImg2;
-      } else if (image && image.includes('andina.png')) {
+      } else if (image && (image.includes('andina.png') || image.includes('andina-virtual'))) {
         image = andinaBanner;
         link = '/universidades/areandina';
       } else if (image && image.includes('ibero.png')) {
@@ -96,6 +109,19 @@ const NewsSlider = () => {
     setIsPaused((prev) => !prev);
   };
 
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e) => {
+    if (touchStartX.current === null) return;
+    const delta = e.changedTouches[0].clientX - touchStartX.current;
+    touchStartX.current = null;
+    if (Math.abs(delta) < 45) return;
+    if (delta < 0) nextSlide();
+    else prevSlide();
+  };
+
   const handleSlideClick = (slide) => {
     if (slide.link) {
       navigate(slide.link);
@@ -109,12 +135,18 @@ const NewsSlider = () => {
   const isAutoPlaying = !isPaused;
 
   return (
-    <section className="news-slider">
+    <section className="news-slider" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
       <div className="news-slider__track">
         {slides.map((slide, index) => (
           <div
             key={slide.id || index}
-            className={`news-slider__slide ${index === current ? 'news-slider__slide--active' : ''}`}
+            className={`news-slider__slide ${
+              index === current
+                ? 'news-slider__slide--active'
+                : index < current
+                  ? 'news-slider__slide--before'
+                  : 'news-slider__slide--after'
+            }`}
             onClick={() => handleSlideClick(slide)}
             style={{ cursor: 'pointer' }}
             title={`Ir a ${slide.title}`}
@@ -156,6 +188,11 @@ const NewsSlider = () => {
             </svg>
           )}
         </button>
+
+        <span className="news-slider__counter">
+          {String(current + 1).padStart(2, '0')}
+          <span>/ {String(slides.length).padStart(2, '0')}</span>
+        </span>
 
         <div className="news-slider__dots">
           {slides.map((_, index) => (

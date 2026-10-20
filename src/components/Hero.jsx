@@ -8,21 +8,21 @@ const Hero = () => {
       <div className="hero__container">
         {/* Left Content */}
         <div className="hero__content">
-          <div className="hero__badge">
+          <div className="hero__badge" data-reveal>
             <span className="hero__badge-dot"></span>
             ALIADO COMERCIAL UNIVERSITARIO
           </div>
 
-          <h1 className="hero__title">
+          <h1 className="hero__title" data-reveal style={{ '--reveal-delay': '100ms' }}>
             Encuentra la universidad y el programa{' '}
-            <span className="hero__title-highlight">ideal para tu futuro</span>
+            <span className="hero__title-highlight text-shimmer">ideal para tu futuro</span>
           </h1>
 
-          <p className="hero__description">
+          <p className="hero__description" data-reveal style={{ '--reveal-delay': '200ms' }}>
             Somos aliados comerciales autorizados de la Fundación Universitaria del Área Andina y la Corporación Universitaria Iberoamericana. Te asesoramos de manera personalizada y te acompañamos durante todo el proceso de inscripción y matrícula para que estudiar sea una decisión más fácil.
           </p>
 
-          <div className="hero__buttons">
+          <div className="hero__buttons" data-reveal style={{ '--reveal-delay': '300ms' }}>
             <Link to="/universidades/areandina" className="hero__btn hero__btn--areandina">
               <span className="hero__btn-dot hero__btn-dot--yellow"></span>
               Conoce Areandina →
@@ -37,8 +37,8 @@ const Hero = () => {
         </div>
 
         {/* Right Image */}
-        <div className="hero__image-wrapper">
-          <div className="hero__image-container">
+        <div className="hero__image-wrapper" data-reveal="right">
+          <div className="hero__image-container" data-tilt="7">
             <img
               src={heroImage}
               alt="Estudiante universitaria aprendiendo en línea"

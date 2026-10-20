@@ -8,37 +8,141 @@ import erikaImg from '../assets/images/erika.JPG';
 import paulaImg from '../assets/images/paula.JPG';
 import johanImg from '../assets/images/johan.JPG';
 import PasswordModal from '../components/PasswordModal';
+import Scene3D from '../components/three/Scene3D';
+
+// Voces del equipo: lo que significa Innovación E-learning para cada colaborador
+const comments = [
+  {
+    text: 'Innovación E-learning no es solo una empresa, es mi casa, es mi familia, y ver crecer a cada uno de los que trabajamos acá no tiene precio.',
+    name: 'Johanna',
+    role: 'Gerente Comercial',
+    photo: johannaImg,
+  },
+  {
+    text: 'Para mí significa una búsqueda constante de mejoras, de avanzar y aportar crecimiento a los colaboradores y a la empresa por medio de la innovación en cada uno de los procesos que se llevan a cabo.',
+    name: 'Paula',
+    role: 'Área de Gestión',
+    photo: paulaImg,
+  },
+  {
+    text: 'Para personas como yo, que no había estado involucrada más a fondo en el sector educativo, significa crear expectativas y experiencias en las personas para avivar el entusiasmo de continuar con un propósito y proyecto de vida.',
+    name: 'Lina',
+    role: 'Equipo INNE',
+  },
+  {
+    text: 'Para mí es estabilidad, oportunidad y mi refugio. Es una empresa con grandes logros, y aporta al 100 % todo lo necesario para que su equipo de trabajo funcione bien 🫶🏼',
+    name: 'Gladys',
+    role: 'Equipo INNE',
+  },
+  {
+    text: 'Para mí, es crecimiento continuo, es aprender y compartir experiencias.',
+    name: 'Andrea',
+    role: 'Equipo INNE',
+  },
+  {
+    text: 'Crecimiento, aprendizajes, un lugar de retos que nos ayuda a sacar habilidades ocultas, jejeje. La empresa es el lugar que me ha retado a descubrir mi potencial.',
+    name: 'Diana',
+    role: 'Equipo INNE',
+  },
+  {
+    text: 'INNOVACIÓN E-LEARNING significa para mí una empresa que me brindó la oportunidad de poner en práctica los conocimientos adquiridos a lo largo de mi experiencia laboral en el área de Talento Humano, pero que también me retó a asumir nuevos desafíos y a desarrollar tareas y procesos que no eran mi fortaleza ni estaban entre mis principales preferencias profesionales.\n\nMi experiencia ha sido muy enriquecedora y fortalecedora, tanto a nivel profesional como personal. Me ha permitido aprender constantemente, desarrollar mayor paciencia, manejar la frustración y fortalecer la empatía frente a las diferentes situaciones y necesidades de cada colaborador.\n\nHoy considero que esta experiencia me ha ayudado a salir de mi zona de confort, reconocer oportunidades de mejora y comprender que trabajar en Talento Humano no solo implica gestionar procesos, sino también escuchar, comprender, acompañar y aportar al crecimiento de las personas y de la organización.',
+    name: 'Saira',
+    role: 'Talento Humano',
+  },
+  {
+    text: 'Ser parte de un equipo que abre puertas y transforma vidas a través de la educación.',
+    name: 'Diego',
+    role: 'Mi frase',
+    featured: true,
+  },
+  {
+    text: 'Trabajar en Innovación e-Learning me ha permitido crecer profesionalmente en un ambiente de constante aprendizaje y colaboración.',
+    name: 'Johan',
+    role: 'Equipo Comercial',
+    photo: erikaImg,
+  },
+  {
+    text: 'Aquí valoran nuestras ideas y nos dan las herramientas para hacer la diferencia en la educación superior del país.',
+    name: 'Erika',
+    role: 'Liderazgo Comercial',
+    photo: johanImg,
+  },
+];
+
+const AVATAR_GRADIENTS = [
+  'linear-gradient(135deg, #2E86C1, #1B3A5C)',
+  'linear-gradient(135deg, #F7B731, #E8961E)',
+  'linear-gradient(135deg, #10b981, #047857)',
+  'linear-gradient(135deg, #8b5cf6, #5b21b6)',
+  'linear-gradient(135deg, #ec4899, #be185d)',
+];
+
+const LONG_TEXT = 260;
+
+const VoiceAvatar = ({ comment, index, className }) => (
+  <div className={className} style={comment.photo ? undefined : { background: AVATAR_GRADIENTS[index % AVATAR_GRADIENTS.length] }}>
+    {comment.photo ? (
+      <img src={comment.photo} alt={comment.name} className={`${className}-img`} />
+    ) : (
+      <span className={`${className}-initial`}>{comment.name.charAt(0)}</span>
+    )}
+  </div>
+);
+
+const VoiceCard = ({ comment, index }) => {
+  const [expanded, setExpanded] = useState(false);
+  const paragraphs = comment.text.split('\n\n');
+  const isLong = comment.text.length > LONG_TEXT;
+
+  return (
+    <article
+      className={`voice-card ${isLong && !expanded ? 'voice-card--clamped' : ''}`}
+      data-tilt="6"
+      data-reveal="flip"
+      style={{ '--reveal-delay': `${(index % 3) * 120}ms` }}
+    >
+      <svg className="voice-card__quote" width="34" height="34" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609L9.978 5.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H0z"/>
+      </svg>
+      <div className="voice-card__text">
+        {paragraphs.map((p, i) => <p key={i}>{p}</p>)}
+      </div>
+      {isLong && (
+        <button className="voice-card__more" onClick={() => setExpanded((v) => !v)} aria-expanded={expanded}>
+          {expanded ? 'Ver menos' : 'Leer completo'}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      )}
+      <footer className="voice-card__author">
+        <VoiceAvatar comment={comment} index={index} className="voice-card__avatar" />
+        <div>
+          <h4 className="voice-card__name">{comment.name}</h4>
+          <span className="voice-card__role">{comment.role}</span>
+        </div>
+      </footer>
+    </article>
+  );
+};
 
 const ColaboradoresPage = () => {
   const [commentIndex, setCommentIndex] = useState(0);
 
-  const comments = [
-    { 
-      text: 'Trabajar en Innovación e-Learning me ha permitido crecer profesionalmente en un ambiente de constante aprendizaje y colaboración.', 
-      name: 'Johan', 
-      role: 'Equipo Comercial',
-      photo: erikaImg
-    },
-    { 
-      text: 'Me encanta la cultura de equipo que tenemos. Cada día es una oportunidad para innovar y aportar al cambio educativo en Colombia.', 
-      name: 'Paula', 
-      role: 'Área de Gestión',
-      photo: paulaImg
-    },
-    { 
-      text: 'Aquí valoran nuestras ideas y nos dan las herramientas para hacer la diferencia en la educación superior del país.', 
-      name: 'Erika', 
-      role: 'Liderazgo Comercial',
-      photo: johanImg
-    },
-  ];
+  const [commentsPaused, setCommentsPaused] = useState(false);
 
   useEffect(() => {
+    if (commentsPaused) return;
     const timer = setInterval(() => {
       setCommentIndex((prev) => (prev + 1) % comments.length);
-    }, 5000);
+    }, 6500);
     return () => clearInterval(timer);
-  }, [comments.length]);
+  }, [commentsPaused]);
+
+  const featuredVoice = comments.find((c) => c.featured);
+  const wallVoices = comments.filter((c) => !c.featured);
+
+  const scrollToVoices = () => {
+    document.getElementById('voces')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   const [showDocModal, setShowDocModal] = useState(false);
   const [pendingDoc, setPendingDoc] = useState(null);
@@ -63,7 +167,8 @@ const ColaboradoresPage = () => {
   return (
     <section className="colaboradores">
       <div className="colaboradores__hero">
-        <div className="colaboradores__hero-content">
+        <Scene3D type="shapes" variant="light" count={10} seed={23} />
+        <div className="colaboradores__hero-content" data-reveal>
           <span className="colaboradores__badge">Nuestro equipo</span>
           <h1 className="colaboradores__title">
             Nuestros <em className="colaboradores__title-accent">Colaboradores</em>
@@ -300,7 +405,12 @@ const ColaboradoresPage = () => {
               </div>
 
               {/* === SLEEK EMPLOYEE COMMENTS CARD IN ORGANIGRAMA EMPTY SPACE === */}
-              <div className="emp-comments-card">
+              <div
+                className="emp-comments-card"
+                data-tilt="4"
+                onMouseEnter={() => setCommentsPaused(true)}
+                onMouseLeave={() => setCommentsPaused(false)}
+              >
                 <div className="emp-comments-card__header">
                   <div className="emp-comments-card__badge">
                     <span className="emp-comments-card__dot"></span>
@@ -316,16 +426,7 @@ const ColaboradoresPage = () => {
                       className={`emp-comments-card__slide ${i === commentIndex ? 'emp-comments-card__slide--active' : ''}`}
                     >
                       <div className="emp-comments-card__user">
-                        <div className="emp-comments-card__avatar">
-                          {comment.photo ? (
-                            <img src={comment.photo} alt={comment.name} className="emp-comments-card__avatar-img" />
-                          ) : (
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                              <circle cx="12" cy="7" r="4"/>
-                            </svg>
-                          )}
-                        </div>
+                        <VoiceAvatar comment={comment} index={i} className="emp-comments-card__avatar" />
                         <div className="emp-comments-card__info">
                           <h4 className="emp-comments-card__name">{comment.name}</h4>
                           <span className="emp-comments-card__role">{comment.role}</span>
@@ -336,13 +437,20 @@ const ColaboradoresPage = () => {
                         <svg className="emp-comments-card__quote-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609L9.978 5.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H0z"/>
                         </svg>
-                        <p className="emp-comments-card__text">{comment.text}</p>
+                        <p className="emp-comments-card__text">{comment.text.split('\n\n')[0]}</p>
                       </div>
                     </div>
                   ))}
                 </div>
 
                 <div className="emp-comments-card__footer">
+                  <button
+                    className="emp-comments-card__nav"
+                    onClick={() => setCommentIndex((commentIndex - 1 + comments.length) % comments.length)}
+                    aria-label="Comentario anterior"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                  </button>
                   <div className="emp-comments-card__dots">
                     {comments.map((_, i) => (
                       <button
@@ -353,12 +461,56 @@ const ColaboradoresPage = () => {
                       />
                     ))}
                   </div>
+                  <button
+                    className="emp-comments-card__nav"
+                    onClick={() => setCommentIndex((commentIndex + 1) % comments.length)}
+                    aria-label="Comentario siguiente"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                  </button>
                 </div>
+                <button className="emp-comments-card__all" onClick={scrollToVoices}>
+                  Ver todas las voces ({comments.length})
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+                </button>
               </div>
             </div>
 
           </div>
         </div>
+
+        {/* === MURO DE VOCES DEL EQUIPO === */}
+        <section className="voices" id="voces">
+          <div className="voices__header" data-reveal>
+            <span className="colaboradores__badge">8 años · Nuestra gente</span>
+            <h2 className="colaboradores__section-title">
+              Lo que significa <span className="text-shimmer">INNE</span> para nosotros
+            </h2>
+            <p className="voices__desc">
+              Detrás de cada estudiante que acompañamos hay un equipo que cree en lo que hace. Estas son sus palabras.
+            </p>
+          </div>
+
+          {featuredVoice && (
+            <blockquote className="voices__featured" data-reveal="zoom" data-tilt="4">
+              <span className="voices__featured-mark" aria-hidden="true">“</span>
+              <p>{featuredVoice.text}</p>
+              <footer>
+                <VoiceAvatar comment={featuredVoice} index={comments.indexOf(featuredVoice)} className="voice-card__avatar" />
+                <div>
+                  <strong>{featuredVoice.name}</strong>
+                  <span>{featuredVoice.role}</span>
+                </div>
+              </footer>
+            </blockquote>
+          )}
+
+          <div className="voices__wall">
+            {wallVoices.map((comment, i) => (
+              <VoiceCard key={comment.name} comment={comment} index={i} />
+            ))}
+          </div>
+        </section>
 
         {/* === DOCUMENTOS IMPORTANTES === */}
         <div className="docs-section">

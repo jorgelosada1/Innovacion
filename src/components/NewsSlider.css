@@ -3,31 +3,69 @@
   position: relative;
   width: 100%;
   margin-top: 80px;
-  height: calc(100vh - 80px);
-  min-height: 420px;
-  max-height: 700px;
+  /* Misma proporción que los banners (1600 × 458) para mostrarlos completos */
+  aspect-ratio: 1600 / 458;
+  max-height: 640px;
   overflow: hidden;
   background: #0d1f33;
 }
 
-/* Track & Slides */
+/* Track & Slides — transición con profundidad 3D */
 .news-slider__track {
   position: relative;
   width: 100%;
   height: 100%;
+  perspective: 1600px;
+  transform-style: preserve-3d;
 }
 
 .news-slider__slide {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 0.6s ease-in-out;
+  overflow: hidden;
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1.1s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.9s ease;
   pointer-events: none;
+  backface-visibility: hidden;
+}
+
+.news-slider__slide--before {
+  transform: translateX(-12%) rotateY(14deg) scale(0.9);
+  filter: brightness(0.6);
+}
+
+.news-slider__slide--after {
+  transform: translateX(12%) rotateY(-14deg) scale(0.9);
+  filter: brightness(0.6);
 }
 
 .news-slider__slide--active {
   opacity: 1;
+  transform: none;
   pointer-events: auto;
+  z-index: 1;
+}
+
+/* Brillo diagonal que recorre el banner al entrar */
+.news-slider__slide::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.22) 50%, transparent 65%);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+
+.news-slider__slide--active::after {
+  animation: slideSheen 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.35s;
+}
+
+@keyframes slideSheen {
+  to { transform: translateX(120%); }
 }
 
 .news-slider__bg {
@@ -40,6 +78,14 @@
   filter: blur(25px) brightness(0.45);
   transform: scale(1.12);
   z-index: 0;
+  /* Solo visible cuando la pantalla supera el ancho máximo del banner */
+  display: none;
+}
+
+@media (min-width: 2235px) {
+  .news-slider__bg {
+    display: block;
+  }
 }
 
 .news-slider__image {
@@ -50,6 +96,13 @@
   object-position: center;
   display: block;
   z-index: 1;
+  transform: scale(1.04);
+  transition: transform 7s ease-out;
+}
+
+/* Ken Burns suave en el banner activo */
+.news-slider__slide--active .news-slider__image {
+  transform: scale(1);
 }
 
 .news-slider__overlay {
@@ -143,12 +196,15 @@
   top: 50%;
   transform: translateY(-50%);
   z-index: 5;
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  border: none;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(13, 31, 51, 0.35);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  opacity: 0;
   color: var(--color-white);
   cursor: pointer;
   display: flex;
@@ -157,9 +213,22 @@
   transition: all var(--transition-normal);
 }
 
+.news-slider:hover .news-slider__arrow,
+.news-slider__arrow:focus-visible {
+  opacity: 1;
+}
+
 .news-slider__arrow:hover {
-  background: rgba(255, 255, 255, 0.35);
-  transform: translateY(-50%) scale(1.08);
+  background: var(--color-yellow);
+  border-color: var(--color-yellow);
+  color: var(--color-blue-dark);
+  transform: translateY(-50%) scale(1.1);
+}
+
+@media (hover: none) {
+  .news-slider__arrow {
+    opacity: 1;
+  }
 }
 
 .news-slider__arrow--prev {
@@ -210,6 +279,21 @@
   color: var(--color-yellow);
 }
 
+.news-slider__counter {
+  font-family: var(--font-primary);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 1px;
+  font-variant-numeric: tabular-nums;
+}
+
+.news-slider__counter span {
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+  margin-left: 3px;
+}
+
 .news-slider__dots {
   display: flex;
   gap: 8px;
@@ -228,9 +312,11 @@
 }
 
 .news-slider__dot--active {
+  width: 26px;
+  border-radius: 999px;
   background: var(--color-yellow);
   border-color: var(--color-yellow);
-  transform: scale(1.2);
+  box-shadow: 0 0 12px rgba(245, 166, 35, 0.7);
 }
 
 .news-slider__dot:hover {
@@ -267,9 +353,6 @@
 @media (max-width: 1024px) {
   .news-slider {
     margin-top: 80px;
-    height: 48vw;
-    min-height: 280px;
-    max-height: 480px;
   }
 
   .news-slider__content {
@@ -285,9 +368,6 @@
 @media (max-width: 768px) {
   .news-slider {
     margin-top: 70px;
-    height: 55vw;
-    min-height: 220px;
-    max-height: 360px;
   }
 
   .news-slider__content {
@@ -332,9 +412,6 @@
 @media (max-width: 480px) {
   .news-slider {
     margin-top: 60px;
-    height: 60vw;
-    min-height: 190px;
-    max-height: 270px;
   }
 
   .news-slider__content {
@@ -373,5 +450,38 @@
   .news-slider__controls {
     padding: 5px 10px;
     gap: 8px;
+  }
+}
+
+/* En pantallas pequeñas el banner es bajito: se navega con swipe y los controles se compactan */
+@media (max-width: 768px) {
+  .news-slider__arrow {
+    display: none;
+  }
+
+  .news-slider__controls {
+    bottom: 6px;
+    padding: 3px 8px;
+    gap: 6px;
+    background: rgba(13, 31, 51, 0.45);
+  }
+
+  .news-slider__counter {
+    display: none;
+  }
+
+  .news-slider__dot {
+    width: 6px;
+    height: 6px;
+    border-width: 1.5px;
+  }
+
+  .news-slider__dot--active {
+    width: 16px;
+  }
+
+  .news-slider__pause-btn svg {
+    width: 10px;
+    height: 10px;
   }
 }

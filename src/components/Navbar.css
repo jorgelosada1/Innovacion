@@ -293,3 +293,25 @@ button.navbar__mobile-link {
     padding: 0.75rem 2rem;
   }
 }
+
+/* ===== GLASS NAV ===== */
+.navbar--scrolled {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(18px) saturate(1.6);
+  -webkit-backdrop-filter: blur(18px) saturate(1.6);
+  box-shadow: 0 12px 30px -18px rgba(13, 31, 51, 0.35);
+}
+
+.navbar__cta {
+  background: var(--gradient-brand);
+  box-shadow: 0 10px 24px -10px rgba(27, 58, 92, 0.6);
+}
+
+.navbar__cta:hover {
+  box-shadow: 0 14px 30px -10px rgba(46, 109, 164, 0.75);
+}
+
+/* Evita que el menú móvil (fuera de pantalla) genere scroll horizontal */
+.navbar {
+  overflow-x: clip;
+}

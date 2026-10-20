@@ -1097,3 +1097,294 @@
   }
 }
 
+
+/* ===== HERO 3D ===== */
+.colaboradores__hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.colaboradores__hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== VOCES (TARJETA DEL ORGANIGRAMA) ===== */
+.emp-comments-card {
+  border-radius: 22px;
+  box-shadow: 0 20px 45px -25px rgba(13, 31, 51, 0.35);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(245, 166, 35, 0.08), transparent 40%),
+    var(--color-white);
+}
+
+.emp-comments-card__avatar-initial,
+.voice-card__avatar-initial {
+  font-family: var(--font-primary);
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.emp-comments-card__slide {
+  transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateX(24px);
+}
+
+.emp-comments-card__slide--active {
+  transform: none;
+}
+
+.emp-comments-card__text {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.emp-comments-card__footer {
+  align-items: center;
+  gap: 10px;
+}
+
+.emp-comments-card__dots {
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.emp-comments-card__dot--active {
+  width: 20px;
+  border-radius: 999px;
+  transform: none;
+}
+
+.emp-comments-card__nav {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-blue-primary);
+  background: rgba(46, 134, 193, 0.08);
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.emp-comments-card__nav:hover {
+  background: var(--color-blue-primary);
+  color: #fff;
+  transform: scale(1.08);
+}
+
+.emp-comments-card__all {
+  margin: 14px auto 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-blue-primary);
+  padding: 6px 14px;
+  border-radius: 999px;
+  transition: background 0.2s ease;
+}
+
+.emp-comments-card__all:hover {
+  background: rgba(46, 134, 193, 0.08);
+}
+
+/* ===== MURO DE VOCES ===== */
+.voices {
+  margin-top: var(--spacing-4xl);
+  scroll-margin-top: 90px;
+}
+
+.voices__header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto var(--spacing-2xl);
+}
+
+.voices__desc {
+  margin-top: 10px;
+  color: #64748b;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Frase destacada */
+.voices__featured {
+  position: relative;
+  overflow: hidden;
+  max-width: 900px;
+  margin: 0 auto var(--spacing-2xl);
+  padding: 3rem 3rem 2.25rem;
+  border-radius: 28px;
+  color: #fff;
+  text-align: center;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(245, 166, 35, 0.35), transparent 40%),
+    radial-gradient(circle at 90% 90%, rgba(52, 152, 219, 0.45), transparent 45%),
+    var(--gradient-brand);
+  box-shadow: 0 40px 80px -35px rgba(13, 31, 51, 0.7);
+}
+
+.voices__featured-mark {
+  position: absolute;
+  top: -40px;
+  left: 24px;
+  font-family: Georgia, serif;
+  font-size: 12rem;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+}
+
+.voices__featured p {
+  position: relative;
+  font-family: var(--font-primary);
+  font-size: clamp(1.35rem, 2.6vw, 2rem);
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.3px;
+}
+
+.voices__featured footer {
+  margin-top: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+}
+
+.voices__featured footer strong {
+  display: block;
+  font-family: var(--font-primary);
+  font-size: 1rem;
+}
+
+.voices__featured footer span {
+  font-size: 0.78rem;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--color-yellow);
+  font-weight: 700;
+}
+
+/* Muro tipo masonry */
+.voices__wall {
+  columns: 3 300px;
+  column-gap: 22px;
+}
+
+.voice-card {
+  break-inside: avoid;
+  display: inline-flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 22px;
+  padding: 26px 24px 22px;
+  border-radius: 22px;
+  background: linear-gradient(170deg, #ffffff 0%, #f8fbff 100%);
+  border: 1px solid #e8eef6;
+  box-shadow: 0 18px 40px -26px rgba(13, 31, 51, 0.35);
+  transition: box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.voice-card:hover {
+  border-color: rgba(245, 166, 35, 0.5);
+  box-shadow: 0 30px 55px -28px rgba(46, 134, 193, 0.45);
+}
+
+.voice-card__quote {
+  color: var(--color-yellow);
+  opacity: 0.85;
+  margin-bottom: 10px;
+}
+
+.voice-card__text p {
+  color: #334155;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.voice-card__text p + p {
+  margin-top: 0.75rem;
+}
+
+.voice-card--clamped .voice-card__text {
+  max-height: 11.5em;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent);
+  mask-image: linear-gradient(180deg, #000 60%, transparent);
+}
+
+.voice-card__more {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-blue-primary);
+}
+
+.voice-card__more svg {
+  transition: transform 0.3s ease;
+}
+
+.voice-card__more[aria-expanded='true'] svg {
+  transform: rotate(180deg);
+}
+
+.voice-card__author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px dashed #e2e8f0;
+}
+
+.voice-card__avatar {
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 3px #fff, 0 0 0 5px rgba(245, 166, 35, 0.55);
+}
+
+.voice-card__avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.voice-card__name {
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-blue-dark);
+}
+
+.voice-card__role {
+  font-size: 0.78rem;
+  color: #64748b;
+}
+
+@media (max-width: 640px) {
+  .voices__featured {
+    padding: 2.25rem 1.4rem 1.75rem;
+    border-radius: 22px;
+  }
+
+  .voices__wall {
+    columns: 1;
+  }
+}

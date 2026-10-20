@@ -1,4 +1,3 @@
-import React from 'react';
 import './Testimonios.css';
 import img10 from '../assets/images/10.png';
 import img20 from '../assets/images/20.png';
@@ -41,12 +40,12 @@ const Testimonios = () => {
   return (
     <section className="testimonios-section">
       <div className="testimonios-container">
-        <h2 className="testimonios-title">Historias de Éxito de nuestros Estudiantes</h2>
-        <p className="testimonios-subtitle">Descubre cómo hemos ayudado a miles de estudiantes a alcanzar sus metas profesionales.</p>
+        <h2 className="testimonios-title" data-reveal>Historias de Éxito de nuestros Estudiantes</h2>
+        <p className="testimonios-subtitle" data-reveal style={{ '--reveal-delay': '100ms' }}>Descubre cómo hemos ayudado a miles de estudiantes a alcanzar sus metas profesionales.</p>
         
         <div className="testimonios-grid">
           {testimoniosData.map((t, index) => (
-            <div className="testimonio-card" key={index}>
+            <div className="testimonio-card" key={index} data-tilt="8" data-reveal="flip" style={{ '--reveal-delay': `${index * 140}ms` }}>
               <div className="testimonio-quote-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="currentColor" opacity="0.1"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
               </div>

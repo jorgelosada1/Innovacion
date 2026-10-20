@@ -96,9 +96,10 @@ export const deleteNoticia = (id) => {
 
 // ===== SLIDER =====
 const defaultSlider = [
-  { id: 's1', imagen: '/src/assets/images/1.png', noticiaId: 'n1' },
+  { id: 's0', imagen: '/src/assets/images/aniversario-8.jpg', link: '/noticias/blog/educacion-que-conecta', title: 'Celebrando juntos 8 años: conectando sueños con oportunidades' },
+  { id: 's1', imagen: '/src/assets/images/encuentro-2026.jpg', noticiaId: 'n1', title: 'Encuentro Nacional 2026' },
   { id: 's2', imagen: '/src/assets/images/2.png', noticiaId: 'n2' },
-  { id: 's3', imagen: '/src/assets/images/andina.png', link: '/universidades/areandina', title: 'Fundación Universitaria del Área Andina' },
+  { id: 's3', imagen: '/src/assets/images/andina-virtual.jpg', link: '/universidades/areandina', title: 'Fundación Universitaria del Área Andina' },
   { id: 's4', imagen: '/src/assets/images/ibero.png', link: '/universidades/iberoamericana', title: 'Corporación Universitaria Iberoamericana' },
 ];
 
