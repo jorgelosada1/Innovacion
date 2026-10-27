@@ -1,0 +1,266 @@
+/* ===== VIDEO DE PRESENTACIÓN ===== */
+.video-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  overflow: hidden;
+  color: #fff;
+  background:
+    radial-gradient(60% 60% at 50% 40%, rgba(46, 134, 193, 0.35), transparent 70%),
+    #07121f;
+  transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.video-intro--leaving {
+  opacity: 0;
+  transform: scale(1.04);
+  pointer-events: none;
+}
+
+/* Carga */
+.video-intro__loader {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  transition: opacity 0.8s ease;
+}
+
+.video-intro--playing .video-intro__loader {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.video-intro__logo {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-intro__logo img {
+  width: 84px;
+  height: 84px;
+  padding: 10px;
+  border-radius: 50%;
+  background: #fff;
+  animation: introPulse 2s ease-in-out infinite;
+}
+
+.video-intro__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.12);
+  border-top-color: var(--color-yellow);
+  animation: introSpin 1.1s linear infinite;
+}
+
+.video-intro__loader p {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+@keyframes introSpin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes introPulse {
+  50% { transform: scale(0.94); }
+}
+
+/* Video a pantalla completa (recorta para cubrir sin franjas negras) */
+.video-intro__stage {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.06);
+  transition: opacity 1.2s ease, transform 2.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.video-intro--playing .video-intro__stage {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.video-intro__frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100vw, 177.78vh);
+  height: max(56.25vw, 100vh);
+  transform: translate(-50%, -50%);
+}
+
+.video-intro__frame iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  pointer-events: none;
+}
+
+.video-intro__shield {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+}
+
+/* En vertical (celular) se muestra completo, sin recortar */
+@media (orientation: portrait) {
+  .video-intro__frame {
+    width: 100vw;
+    height: 56.25vw;
+  }
+}
+
+.video-intro__vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(7, 18, 31, 0.75) 0%, transparent 18%, transparent 75%, rgba(7, 18, 31, 0.85) 100%);
+}
+
+/* Barra superior */
+.video-intro__top,
+.video-intro__bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 22px clamp(16px, 4vw, 48px);
+  animation: introBarIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+}
+
+.video-intro__top {
+  top: 0;
+  justify-content: space-between;
+}
+
+.video-intro__bottom {
+  bottom: 0;
+}
+
+@keyframes introBarIn {
+  from { opacity: 0; }
+}
+
+.video-intro__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-primary);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.video-intro__brand img {
+  width: 34px;
+  height: 34px;
+  padding: 4px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.video-intro__skip,
+.video-intro__sound {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: background 0.3s ease, transform 0.3s ease, color 0.3s ease;
+}
+
+.video-intro__skip:hover,
+.video-intro__sound:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: translateY(-2px);
+}
+
+/* El botón de sonido destaca mientras está en silencio */
+.video-intro__sound--muted {
+  color: var(--color-blue-dark);
+  background: var(--gradient-gold);
+  border-color: transparent;
+  box-shadow: 0 0 0 0 rgba(245, 166, 35, 0.6);
+  animation: introSoundPing 2.2s ease-out infinite;
+}
+
+.video-intro__sound--muted:hover {
+  background: var(--gradient-gold);
+}
+
+@keyframes introSoundPing {
+  70%, 100% { box-shadow: 0 0 0 14px rgba(245, 166, 35, 0); }
+}
+
+.video-intro__progress {
+  flex: 1;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+}
+
+.video-intro__progress div {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--color-blue-light), var(--color-yellow));
+  transition: width 0.25s linear;
+}
+
+.video-intro__time {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.75);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .video-intro__brand span,
+  .video-intro__time {
+    display: none;
+  }
+
+  .video-intro__brand {
+    font-size: 0.85rem;
+  }
+
+  .video-intro__skip,
+  .video-intro__sound {
+    padding: 9px 14px;
+    font-size: 0.82rem;
+  }
+}
+
+/* Los controles inferiores aparecen cuando el video ya está sonando */
+.video-intro:not(.video-intro--playing) .video-intro__bottom {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.video-intro__bottom {
+  transition: opacity 0.6s ease;
+}

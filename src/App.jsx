@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import FloatingSocial from './components/FloatingSocial';
 import MotionFX from './components/MotionFX';
+import VideoIntro from './components/VideoIntro';
 import HomePage from './pages/HomePage';
 import ColaboradoresPage from './pages/ColaboradoresPage';
 import CursosPage from './pages/CursosPage';
@@ -21,6 +22,7 @@ const AppContent = () => {
   return (
     <div className="app">
       <MotionFX />
+      <VideoIntro />
       <Navbar />
       <main>
         <Routes>
