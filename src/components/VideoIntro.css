@@ -264,3 +264,42 @@
 .video-intro__bottom {
   transition: opacity 0.6s ease;
 }
+
+/* Botón de pantalla completa */
+.video-intro__icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.video-intro__icon-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: scale(1.06);
+}
+
+/* Sin actividad: se ocultan barras, sombreado y cursor; queda solo el video */
+.video-intro__top,
+.video-intro__vignette {
+  transition: opacity 0.6s ease;
+}
+
+.video-intro--idle .video-intro__top,
+.video-intro--idle .video-intro__bottom,
+.video-intro--idle .video-intro__vignette {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.video-intro--idle,
+.video-intro--idle .video-intro__shield {
+  cursor: none;
+}

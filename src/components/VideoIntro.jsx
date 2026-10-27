@@ -12,6 +12,18 @@ export const INTRO_VIDEO_ID = 'S1iEdlDkZhM';
 
 const SEEN_KEY = 'inne_video_intro_visto';
 const READY_TIMEOUT = 12000;
+const IDLE_HIDE_MS = 2500;
+
+// YouTube a veces activa los subtítulos solos (sobre todo con el video en silencio)
+const hideCaptions = (player) => {
+  try {
+    player.unloadModule('captions');
+    player.unloadModule('cc');
+    player.setOption('captions', 'track', {});
+  } catch {
+    /* el reproductor aún no tiene el módulo de subtítulos */
+  }
+};
 
 const readSeen = () => {
   try {
@@ -64,8 +76,12 @@ const VideoIntro = () => {
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(true);
   const [progress, setProgress] = useState({ current: 0, duration: 0 });
+  const [idle, setIdle] = useState(false);
+  const [fullscreen, setFullscreen] = useState(false);
+  const rootRef = useRef(null);
   const hostRef = useRef(null);
   const playerRef = useRef(null);
+  const idleTimer = useRef(null);
 
   // Se marca antes de que la intro del logo revise si ya se mostró
   useLayoutEffect(() => {
@@ -73,6 +89,7 @@ const VideoIntro = () => {
   }, [visible]);
 
   const close = useCallback(() => {
+    if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {});
     setLeaving(true);
     setTimeout(() => {
       setVisible(false);
@@ -117,6 +134,7 @@ const VideoIntro = () => {
             mute: 1,
             controls: 0,
             rel: 0,
+            cc_load_policy: 0,
             playsinline: 1,
             modestbranding: 1,
             iv_load_policy: 3,
@@ -126,10 +144,14 @@ const VideoIntro = () => {
           events: {
             onReady: (e) => {
               e.target.mute();
+              hideCaptions(e.target);
               e.target.playVideo();
             },
             onStateChange: (e) => {
-              if (e.data === YT.PlayerState.PLAYING) setPlaying(true);
+              if (e.data === YT.PlayerState.PLAYING) {
+                hideCaptions(e.target);
+                setPlaying(true);
+              }
               if (e.data === YT.PlayerState.ENDED) close();
             },
             onError: () => close(),
@@ -155,6 +177,34 @@ const VideoIntro = () => {
     return () => clearInterval(id);
   }, [playing]);
 
+  // Los controles se ocultan solos tras unos segundos sin mover el mouse o tocar la pantalla
+  const wake = useCallback(() => {
+    setIdle(false);
+    clearTimeout(idleTimer.current);
+    idleTimer.current = setTimeout(() => setIdle(true), IDLE_HIDE_MS);
+  }, []);
+
+  // Al empezar el video arranca la cuenta para ocultar los controles
+  useEffect(() => {
+    if (!playing) return;
+    idleTimer.current = setTimeout(() => setIdle(true), IDLE_HIDE_MS);
+    return () => clearTimeout(idleTimer.current);
+  }, [playing]);
+
+  useEffect(() => {
+    const onChange = () => setFullscreen(!!document.fullscreenElement);
+    document.addEventListener('fullscreenchange', onChange);
+    return () => document.removeEventListener('fullscreenchange', onChange);
+  }, []);
+
+  const toggleFullscreen = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen?.().catch(() => {});
+    } else {
+      rootRef.current?.requestFullscreen?.().catch(() => {});
+    }
+  };
+
   const toggleSound = () => {
     const p = playerRef.current;
     if (!p) return;
@@ -172,7 +222,16 @@ const VideoIntro = () => {
   const pct = progress.duration ? (progress.current / progress.duration) * 100 : 0;
 
   return createPortal(
-    <div className={`video-intro ${leaving ? 'video-intro--leaving' : ''} ${playing ? 'video-intro--playing' : ''}`} role="dialog" aria-modal="true" aria-label="Video de presentación">
+    <div
+      ref={rootRef}
+      className={`video-intro ${leaving ? 'video-intro--leaving' : ''} ${playing ? 'video-intro--playing' : ''} ${idle ? 'video-intro--idle' : ''}`}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Video de presentación"
+      onPointerMove={wake}
+      onPointerDown={wake}
+      onKeyDown={wake}
+    >
       {/* Pantalla de carga con el logo mientras arranca el video */}
       <div className="video-intro__loader" aria-hidden={playing}>
         <div className="video-intro__logo">
@@ -223,6 +282,20 @@ const VideoIntro = () => {
         <span className="video-intro__time">
           {formatTime(progress.current)} / {formatTime(progress.duration)}
         </span>
+        {document.fullscreenEnabled && (
+          <button
+            className="video-intro__icon-btn"
+            onClick={toggleFullscreen}
+            aria-label={fullscreen ? 'Salir de pantalla completa' : 'Pantalla completa'}
+            title={fullscreen ? 'Salir de pantalla completa' : 'Pantalla completa'}
+          >
+            {fullscreen ? (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 3v3a2 2 0 0 1-2 2H3M21 8h-3a2 2 0 0 1-2-2V3M3 16h3a2 2 0 0 1 2 2v3M16 21v-3a2 2 0 0 1 2-2h3" /></svg>
+            ) : (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3" /></svg>
+            )}
+          </button>
+        )}
       </footer>
     </div>,
     document.body
