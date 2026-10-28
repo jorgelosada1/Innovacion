@@ -74,6 +74,7 @@ const VideoIntro = () => {
   const [visible, setVisible] = useState(() => !!INTRO_VIDEO_ID && location.pathname === '/' && !readSeen());
   const [leaving, setLeaving] = useState(false);
   const [playing, setPlaying] = useState(false);
+  const [paused, setPaused] = useState(false);
   const [muted, setMuted] = useState(true);
   const [progress, setProgress] = useState({ current: 0, duration: 0 });
   const [idle, setIdle] = useState(false);
@@ -148,7 +149,9 @@ const VideoIntro = () => {
               e.target.playVideo();
             },
             onStateChange: (e) => {
+              if (e.data === YT.PlayerState.PAUSED) setPaused(true);
               if (e.data === YT.PlayerState.PLAYING) {
+                setPaused(false);
                 hideCaptions(e.target);
                 setPlaying(true);
               }
@@ -205,6 +208,31 @@ const VideoIntro = () => {
     }
   };
 
+  const togglePlay = useCallback(() => {
+    const p = playerRef.current;
+    if (!p?.getPlayerState) return;
+    if (p.getPlayerState() === window.YT?.PlayerState?.PLAYING) {
+      p.pauseVideo();
+      setPaused(true);
+    } else {
+      p.playVideo();
+      setPaused(false);
+    }
+  }, []);
+
+  // Barra espaciadora o tecla K para pausar / reanudar
+  useEffect(() => {
+    if (!visible) return;
+    const onKey = (e) => {
+      if (e.code === 'Space' || e.key === 'k' || e.key === 'K') {
+        e.preventDefault();
+        togglePlay();
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [visible, togglePlay]);
+
   const toggleSound = () => {
     const p = playerRef.current;
     if (!p) return;
@@ -224,7 +252,7 @@ const VideoIntro = () => {
   return createPortal(
     <div
       ref={rootRef}
-      className={`video-intro ${leaving ? 'video-intro--leaving' : ''} ${playing ? 'video-intro--playing' : ''} ${idle ? 'video-intro--idle' : ''}`}
+      className={`video-intro ${leaving ? 'video-intro--leaving' : ''} ${playing ? 'video-intro--playing' : ''} ${idle && !paused ? 'video-intro--idle' : ''} ${paused ? 'video-intro--paused' : ''}`}
       role="dialog"
       aria-modal="true"
       aria-label="Video de presentación"
@@ -246,7 +274,11 @@ const VideoIntro = () => {
           <div ref={hostRef} />
         </div>
         {/* Capa que evita que aparezcan los menús de YouTube al pasar el mouse */}
-        <div className="video-intro__shield" onClick={toggleSound} />
+        <div className="video-intro__shield" onClick={togglePlay} />
+        {/* Indicador central cuando el video está en pausa */}
+        <span className="video-intro__paused-icon" aria-hidden="true">
+          <svg width="38" height="38" viewBox="0 0 24 24"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z" fill="currentColor" /></svg>
+        </span>
       </div>
 
       <div className="video-intro__vignette" aria-hidden="true" />
@@ -263,6 +295,18 @@ const VideoIntro = () => {
       </header>
 
       <footer className="video-intro__bottom">
+        <button
+          className="video-intro__icon-btn video-intro__play"
+          onClick={togglePlay}
+          aria-label={paused ? 'Reproducir' : 'Pausar'}
+          title={paused ? 'Reproducir (espacio)' : 'Pausar (espacio)'}
+        >
+          {paused ? (
+            <svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z" fill="currentColor" /></svg>
+          ) : (
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4.5" width="4" height="15" rx="1.2" /><rect x="14" y="4.5" width="4" height="15" rx="1.2" /></svg>
+          )}
+        </button>
         <button className={`video-intro__sound ${muted ? 'video-intro__sound--muted' : ''}`} onClick={toggleSound}>
           {muted ? (
             <>
