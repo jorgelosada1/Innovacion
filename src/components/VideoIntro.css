@@ -303,3 +303,55 @@
 .video-intro--idle .video-intro__shield {
   cursor: none;
 }
+
+/* Pausa */
+.video-intro__play {
+  color: var(--color-blue-dark);
+  background: #fff;
+  border-color: #fff;
+}
+
+.video-intro__play:hover {
+  background: #fff;
+}
+
+.video-intro__paused-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 96px;
+  padding-left: 6px;
+  border-radius: 50%;
+  color: var(--color-blue-dark);
+  background: var(--gradient-gold);
+  box-shadow: 0 0 0 14px rgba(245, 166, 35, 0.22), 0 24px 50px -12px rgba(0, 0, 0, 0.6);
+  transform: translate(-50%, -50%) scale(0.6);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.video-intro--paused .video-intro__paused-icon {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* En pausa el video se oscurece un poco */
+.video-intro__stage::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(7, 18, 31, 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.video-intro--paused .video-intro__stage::after {
+  opacity: 1;
+}
