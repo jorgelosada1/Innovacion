@@ -3,8 +3,56 @@ import { getNoticias, getNoticiaById } from '../utils/dataManager';
 import { blogPosts, formatDate, readingTime } from '../data/blog';
 import { encuentro } from '../data/encuentro2026';
 import Scene3D from '../components/three/Scene3D';
+import ShareButtons from '../components/ShareButtons';
 import logoSolo from '../assets/images/LogoSolo.png';
+import imgGrado from '../assets/images/blog-conecta-grado.jpg';
+import imgVirtual from '../assets/images/blog-conecta-virtual.jpg';
+import imgEstudiantes from '../assets/images/blog-conecta-tarjeta.jpg';
 import './NoticiasPage.css';
+import './BlogPostPage.css';
+
+// Imagen por defecto para las noticias que no tienen una propia
+const FALLBACK_IMAGES = [imgGrado, imgVirtual, imgEstudiantes];
+const noticiaImage = (noticia, index) =>
+  noticia.imagen || FALLBACK_IMAGES[Math.max(index, 0) % FALLBACK_IMAGES.length];
+
+const fechaNoticia = (fecha) => (/^\d{4}-\d{2}-\d{2}$/.test(fecha || '') ? formatDate(fecha) : fecha);
+
+const minutosLectura = (texto = '') => Math.max(1, Math.round(texto.split(/\s+/).filter(Boolean).length / 200));
+
+/* Tarjeta de noticia con el mismo estilo del blog */
+const NoticiaCard = ({ noticia, index }) => (
+  <Link
+    to={`/noticias/${noticia.id}`}
+    className="news-card"
+    data-reveal
+    style={{ '--reveal-delay': `${(index % 2) * 120}ms` }}
+  >
+    <div className="news-card__media">
+      <img src={noticiaImage(noticia, index)} alt="" loading="lazy" />
+      <span className="news-card__category">Noticia</span>
+    </div>
+    <div className="news-card__body">
+      <div className="blog-feature__meta">
+        <time dateTime={noticia.fecha}>{fechaNoticia(noticia.fecha)}</time>
+        <span>•</span>
+        <span>{minutosLectura(noticia.contenido)} min de lectura</span>
+      </div>
+      <h3 className="news-card__title">{noticia.titulo}</h3>
+      <p className="news-card__excerpt">{noticia.resumen}</p>
+      <div className="blog-feature__footer">
+        <span className="blog-feature__author">
+          <img src={logoSolo} alt="" />
+          Innovación E-learning
+        </span>
+        <span className="blog-feature__cta">
+          Leer más
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </span>
+      </div>
+    </div>
+  </Link>
+);
 
 const NoticiasPage = () => {
   const { id } = useParams();
@@ -27,24 +75,43 @@ const NoticiasPage = () => {
       );
     }
 
+    const index = getNoticias().findIndex((n) => n.id === noticia.id);
+    const parrafos = (noticia.contenido || '').split(/\n\s*\n/).filter((t) => t.trim());
+
     return (
-      <div className="noticias-page">
-        <div className="noticias-hero detail-hero">
-          <span className="noticias-badge">Noticia</span>
-          <h1>{noticia.titulo}</h1>
-          <p className="noticia-fecha">{noticia.fecha}</p>
-        </div>
-        
-        <div className="noticias-container detail-view">
-          <div className="noticia-content">
-            <p>{noticia.contenido}</p>
+      <article className="blog-post blog-post--simple">
+        <header className="blog-hero">
+          <img src={noticiaImage(noticia, index)} alt="" className="blog-hero__cover" aria-hidden="true" />
+          <div className="blog-hero__overlay" />
+          <div className="blog-hero__content">
+            <Link to="/noticias" className="blog-back blog-back--light">← Noticias & Blog</Link>
+            <span className="blog-hero__category">Noticia</span>
+            <h1 className="blog-hero__title">{noticia.titulo}</h1>
+            <div className="blog-hero__meta">
+              <img src={logoSolo} alt="" className="blog-hero__author-img" />
+              <span>Innovación E-learning</span>
+              <span className="blog-hero__sep">•</span>
+              <time dateTime={noticia.fecha}>{fechaNoticia(noticia.fecha)}</time>
+              <span className="blog-hero__sep">•</span>
+              <span>{minutosLectura(noticia.contenido)} min de lectura</span>
+            </div>
           </div>
-          
-          <Link to="/noticias" className="btn-back">
-            <span>&larr;</span> Volver a noticias
-          </Link>
+          <div className="blog-hero__curve" aria-hidden="true">
+            <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0 80V40C360 0 1080 0 1440 40V80Z" /></svg>
+          </div>
+        </header>
+
+        <div className="blog-layout">
+          <div className="blog-article">
+            {noticia.resumen && <p className="blog-article__lead">{noticia.resumen}</p>}
+            {parrafos.map((t, i) => (
+              <p key={i} className="blog-article__p">{t}</p>
+            ))}
+            <ShareButtons title={noticia.titulo} />
+            <Link to="/noticias" className="blog-back news-detail__back">← Volver a noticias</Link>
+          </div>
         </div>
-      </div>
+      </article>
     );
   }
 
@@ -130,18 +197,9 @@ const NoticiasPage = () => {
         )}
 
         <h2 className="noticias-section-title" data-reveal>Últimas noticias</h2>
-        <div className="noticias-grid">
+        <div className="news-grid">
           {noticias.map((noticia, index) => (
-            <div key={noticia.id} className="noticia-card" data-reveal style={{ '--reveal-delay': `${(index % 2) * 120}ms` }}>
-              <div className="noticia-card-body">
-                <span className="noticia-card-fecha">{noticia.fecha}</span>
-                <h3 className="noticia-card-titulo">{noticia.titulo}</h3>
-                <p className="noticia-card-resumen">{noticia.resumen}</p>
-                <Link to={`/noticias/${noticia.id}`} className="noticia-card-link">
-                  Leer más <span className="arrow">&rarr;</span>
-                </Link>
-              </div>
-            </div>
+            <NoticiaCard key={noticia.id} noticia={noticia} index={index} />
           ))}
         </div>
       </div>

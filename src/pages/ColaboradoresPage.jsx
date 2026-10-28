@@ -8,6 +8,7 @@ import erikaImg from '../assets/images/erika.JPG';
 import paulaImg from '../assets/images/paula.JPG';
 import johanImg from '../assets/images/johan.JPG';
 import PasswordModal from '../components/PasswordModal';
+import IdeaBox from '../components/IdeaBox';
 import Scene3D from '../components/three/Scene3D';
 
 // Voces del equipo: lo que significa Innovación E-learning para cada colaborador
@@ -540,6 +541,9 @@ const ColaboradoresPage = () => {
             ))}
           </div>
         </div>
+
+        {/* === BUZÓN DE IDEAS === */}
+        <IdeaBox />
 
         <PasswordModal
           isOpen={showDocModal}

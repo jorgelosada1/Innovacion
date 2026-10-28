@@ -533,3 +533,121 @@
 .event-feature:hover .event-feature__cta svg {
   transform: translateX(5px);
 }
+
+/* ===== ÚLTIMAS NOTICIAS (mismo estilo del blog) ===== */
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 26px;
+}
+
+.news-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 26px;
+  background: #fff;
+  border: 1px solid #edf1f6;
+  box-shadow: 0 40px 80px -50px rgba(13, 31, 51, 0.55);
+  color: inherit;
+  transition: border-color 0.4s ease;
+}
+
+.news-card:hover {
+  border-color: rgba(245, 166, 35, 0.5);
+}
+
+.news-card__media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.news-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s var(--ease-out-expo);
+}
+
+.news-card:hover .news-card__media img {
+  transform: scale(1.06);
+}
+
+.news-card__category {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--gradient-brand);
+  box-shadow: var(--shadow-glow-blue);
+}
+
+.news-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 26px 28px 24px;
+}
+
+.news-card__title {
+  margin: 10px 0 10px;
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  line-height: 1.25;
+  color: var(--color-blue-dark);
+}
+
+.news-card__excerpt {
+  flex-grow: 1;
+  color: #475569;
+  line-height: 1.7;
+}
+
+.news-card:hover .blog-feature__cta svg {
+  transform: translateX(5px);
+}
+
+/* Detalle de noticia sin índice lateral: columna centrada */
+.blog-post--simple .blog-hero__content {
+  max-width: 820px;
+  padding-left: 24px;
+}
+
+.blog-post--simple .blog-layout {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 820px;
+}
+
+.blog-post--simple .blog-article {
+  max-width: none;
+}
+
+.blog-post--simple .blog-article__p {
+  white-space: pre-line;
+}
+
+.news-detail__back {
+  margin-top: 28px;
+}
+
+@media (max-width: 860px) {
+  .news-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* En las noticias el resumen va sin letra capital */
+.blog-post--simple .blog-article__lead::first-letter {
+  float: none;
+  font-size: inherit;
+  line-height: inherit;
+  margin: 0;
+  color: inherit;
+  text-shadow: none;
+}

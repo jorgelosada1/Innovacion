@@ -6,6 +6,7 @@ const KEYS = {
   SLIDER: 'innovacion_slider',
   CURSOS: 'innovacion_cursos',
   FAQS: 'innovacion_faqs',
+  IDEAS: 'innovacion_ideas',
   AUTH: 'innovacion_auth',
 };
 
@@ -218,3 +219,16 @@ export const deleteFaq = (id) => {
   setData(KEYS.FAQS, faqs);
 };
 
+
+// ===== BUZÓN DE IDEAS =====
+// Por ahora se guardan en este navegador; al conectar el backend basta con
+// reemplazar estas funciones por llamadas a la API.
+export const getIdeas = () => getData(KEYS.IDEAS, []);
+
+export const addIdea = (idea) => {
+  const ideas = getIdeas();
+  const nueva = { ...idea, id: generateId(), fecha: new Date().toISOString() };
+  ideas.unshift(nueva);
+  setData(KEYS.IDEAS, ideas);
+  return nueva;
+};
