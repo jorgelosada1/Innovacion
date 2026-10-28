@@ -511,6 +511,9 @@ const ColaboradoresPage = () => {
           </div>
         </section>
 
+        {/* === BUZÓN DE IDEAS === */}
+        <IdeaBox />
+
         {/* === DOCUMENTOS IMPORTANTES === */}
         <div className="docs-section">
           <div className="docs-section__header">
@@ -541,9 +544,6 @@ const ColaboradoresPage = () => {
             ))}
           </div>
         </div>
-
-        {/* === BUZÓN DE IDEAS === */}
-        <IdeaBox />
 
         <PasswordModal
           isOpen={showDocModal}
