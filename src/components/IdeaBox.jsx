@@ -3,10 +3,8 @@ import { addIdea } from '../utils/dataManager';
 import './IdeaBox.css';
 
 // ===== BUZÓN DE IDEAS =====
-// Los colaboradores proponen mejoras para cualquier área. Mientras se conecta el
-// backend, la idea se guarda en el navegador y se envía por correo a Talento Humano.
-
-const DESTINO = 'talentohumano@csu.com.co';
+// Los colaboradores proponen mejoras para cualquier área. La idea se guarda con
+// addIdea (dataManager); al conectar el backend basta con que esa función llame a la API.
 
 const AREAS = ['Cualquier área / General', 'Área Comercial', 'Talento Humano', 'Mercadeo', 'Contabilidad', 'Gerencia', 'Nuevos Proyectos'];
 
@@ -28,39 +26,34 @@ const Icon = ({ children, size = 18 }) => (
   </svg>
 );
 
-const buildMailto = (data) => {
-  const tipo = TIPOS.find((t) => t.id === data.tipo)?.label;
-  const subject = `Buzón de ideas: ${data.titulo}`;
-  const body = [
-    `Idea: ${data.titulo}`,
-    `Área: ${data.area}`,
-    `Tipo de mejora: ${tipo}`,
-    `Propuesta por: ${data.nombre || 'No indicó su nombre'}`,
-    '',
-    'Descripción:',
-    data.idea,
-    '',
-    data.beneficio ? `¿Cómo ayudaría?\n${data.beneficio}` : '',
-  ].join('\n');
-  return `mailto:${DESTINO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-};
-
 const IdeaBox = () => {
   const [form, setForm] = useState(EMPTY);
   const [sent, setSent] = useState(null);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState(false);
 
   const set = (field) => (e) => setForm((f) => ({ ...f, [field]: e.target.value }));
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    const data = { ...form, titulo: form.titulo.trim(), idea: form.idea.trim(), nombre: form.nombre.trim() };
+    const data = {
+      ...form,
+      titulo: form.titulo.trim(),
+      idea: form.idea.trim(),
+      nombre: form.nombre.trim(),
+      beneficio: form.beneficio.trim(),
+    };
+    setSaving(true);
+    setError(false);
     try {
-      addIdea(data);
+      // Promise.resolve permite que addIdea pase a ser asíncrona (API) sin tocar este componente
+      await Promise.resolve(addIdea(data));
+      setSent(data);
     } catch {
-      /* sin almacenamiento local: se envía igual por correo */
+      setError(true);
+    } finally {
+      setSaving(false);
     }
-    setSent(data);
-    window.location.href = buildMailto(data);
   };
 
   const reset = () => {
@@ -99,12 +92,9 @@ const IdeaBox = () => {
             </span>
             <h3>¡Gracias por tu idea{sent.nombre ? `, ${sent.nombre.split(' ')[0]}` : ''}!</h3>
             <p>
-              Se abrió tu correo con la idea lista para enviar a <strong>{DESTINO}</strong>. Solo presiona <em>Enviar</em>.
+              Tu idea <strong>“{sent.titulo}”</strong> quedó registrada en el buzón. Talento Humano la revisará junto con el área correspondiente.
             </p>
             <div className="ideas__done-actions">
-              <a className="ideas__btn ideas__btn--ghost" href={buildMailto(sent)}>
-                Abrir el correo de nuevo
-              </a>
               <button type="button" className="ideas__btn" onClick={reset}>
                 Proponer otra idea
               </button>
@@ -161,11 +151,13 @@ const IdeaBox = () => {
               <input type="text" value={form.beneficio} onChange={set('beneficio')} placeholder="Ej. Ahorraría tiempo al equipo comercial" maxLength={160} />
             </label>
 
-            <button type="submit" className="ideas__btn ideas__btn--submit">
-              Enviar mi idea
+            {error && (
+              <p className="ideas__error" role="alert">No pudimos guardar tu idea. Inténtalo de nuevo en un momento.</p>
+            )}
+            <button type="submit" className="ideas__btn ideas__btn--submit" disabled={saving}>
+              {saving ? 'Enviando…' : 'Enviar mi idea'}
               <Icon><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z" /></Icon>
             </button>
-            <p className="ideas__note">Al enviar se abrirá tu correo con la idea lista para Talento Humano.</p>
           </form>
         )}
       </div>
