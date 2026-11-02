@@ -2,16 +2,20 @@ import { useState, useEffect } from 'react';
 import './IntroSplash.css';
 import logoImg from '../assets/images/LogoSolo.png';
 
+const alreadySeen = () => {
+  try {
+    return !!sessionStorage.getItem('intro_seen');
+  } catch {
+    return false;
+  }
+};
+
 const IntroSplash = () => {
-  const [phase, setPhase] = useState('loading'); // 'loading' | 'fadeout' | 'done'
+  const [phase, setPhase] = useState(() => (alreadySeen() ? 'done' : 'loading')); // 'loading' | 'fadeout' | 'done'
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const seen = sessionStorage.getItem('intro_seen');
-    if (seen) {
-      setPhase('done');
-      return;
-    }
+    if (alreadySeen()) return;
 
     // Lock scroll during intro
     document.body.style.overflow = 'hidden';

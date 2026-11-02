@@ -9,12 +9,20 @@ const PasswordModal = ({ isOpen, onClose, onSuccess, title = 'Acceso Restringido
   const inputRef = useRef(null);
   const CORRECT_PASSWORD = '0228';
 
-  useEffect(() => {
+  // Al abrir el modal se limpia el formulario
+  const [wasOpen, setWasOpen] = useState(isOpen);
+  if (isOpen !== wasOpen) {
+    setWasOpen(isOpen);
     if (isOpen) {
       setPassword('');
       setError('');
-      setTimeout(() => inputRef.current?.focus(), 100);
     }
+  }
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const timer = setTimeout(() => inputRef.current?.focus(), 100);
+    return () => clearTimeout(timer);
   }, [isOpen]);
 
   const handleSubmit = (e) => {

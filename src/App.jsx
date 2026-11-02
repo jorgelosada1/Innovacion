@@ -12,6 +12,7 @@ import NoticiasPage from './pages/NoticiasPage';
 import UniversidadesPage from './pages/UniversidadesPage';
 import BlogPostPage from './pages/BlogPostPage';
 import EncuentroPage from './pages/EncuentroPage';
+import NotFoundPage from './pages/NotFoundPage';
 import './App.css';
 
 const AppContent = () => {
@@ -35,6 +36,7 @@ const AppContent = () => {
           <Route path="/noticias/:id" element={<NoticiasPage />} />
           <Route path="/universidades" element={<UniversidadesPage />} />
           <Route path="/universidades/:uni" element={<UniversidadesPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
       {!hideFooter && <Footer />}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './ProgramFinder.css';
 
 const programsData = [
@@ -67,7 +67,7 @@ const ProgramFinder = () => {
     const matchesSearch = program.title.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesUniversity = universityFilter === 'Todas' || program.university === universityFilter;
     
-    let levelMatch = false;
+    let levelMatch;
     if (levelFilter === 'Todos') {
       levelMatch = true;
     } else if (levelFilter === 'Especialización') {
