@@ -1,12 +1,9 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getSlider, getNoticias } from '../utils/dataManager';
+import { fetchSlider } from '../utils/dataManager';
+import { resolveImage } from '../utils/assets';
+import { useApiData } from '../hooks/useApiData';
 import './NewsSlider.css';
-import defaultImg1 from '../assets/images/encuentro-2026.jpg';
-import defaultImg2 from '../assets/images/2.png';
-import andinaBanner from '../assets/images/andina-virtual.jpg';
-import iberoBanner from '../assets/images/ibero.png';
-import aniversarioBanner from '../assets/images/aniversario-8.jpg';
 
 // Toma la primera y la última fila de píxeles del banner para prolongar sus
 // colores arriba y abajo cuando el banner ocupa toda la pantalla
@@ -28,7 +25,18 @@ const extractEdges = (img) => {
 };
 
 const NewsSlider = () => {
-  const [slides, setSlides] = useState([]);
+  const { data: rawSlides, loading } = useApiData('slider', fetchSlider);
+  const slides = useMemo(
+    () =>
+      (rawSlides || [])
+        .map((item) => ({
+          ...item,
+          image: resolveImage(item.imagen),
+          title: item.title || 'Innovación E-learning',
+        }))
+        .filter((item) => item.image),
+    [rawSlides]
+  );
   const [current, setCurrent] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
@@ -41,72 +49,6 @@ const NewsSlider = () => {
     const result = extractEdges(e.currentTarget);
     if (result) setEdges((prev) => ({ ...prev, [key]: result }));
   };
-
-  useEffect(() => {
-    let rawSlider = getSlider();
-    const noticias = getNoticias();
-
-    // Asegurar que los banners de aniversario, Andina e Ibero estén presentes en el slider
-    const hasAniversario = rawSlider.some(s => s.imagen && s.imagen.includes('aniversario-8'));
-    const hasAndina = rawSlider.some(s => s.imagen && s.imagen.includes('andina'));
-    const hasIbero = rawSlider.some(s => s.imagen && s.imagen.includes('ibero.png'));
-
-    let sliderItems = [...rawSlider];
-    if (!hasAniversario) {
-      sliderItems.unshift({
-        id: 's0',
-        imagen: '/src/assets/images/aniversario-8.jpg',
-        link: '/noticias/blog/educacion-que-conecta',
-        title: 'Celebrando juntos 8 años: conectando sueños con oportunidades'
-      });
-    }
-    if (!hasAndina) {
-      sliderItems.push({
-        id: 's3',
-        imagen: '/src/assets/images/andina-virtual.jpg',
-        link: '/universidades/areandina',
-        title: 'Fundación Universitaria del Área Andina'
-      });
-    }
-    if (!hasIbero) {
-      sliderItems.push({
-        id: 's4',
-        imagen: '/src/assets/images/ibero.png',
-        link: '/universidades/iberoamericana',
-        title: 'Corporación Universitaria Iberoamericana'
-      });
-    }
-
-    const formatted = sliderItems.map((item) => {
-      let image = item.imagen;
-      let link = item.link;
-
-      if (image && image.includes('aniversario-8')) {
-        image = aniversarioBanner;
-      } else if (image && (image.includes('1.png') || image.includes('encuentro-2026'))) {
-        image = defaultImg1;
-        link = '/noticias/encuentro-nacional-2026';
-      } else if (image && image.includes('2.png')) {
-        image = defaultImg2;
-      } else if (image && (image.includes('andina.png') || image.includes('andina-virtual'))) {
-        image = andinaBanner;
-        link = '/universidades/areandina';
-      } else if (image && image.includes('ibero.png')) {
-        image = iberoBanner;
-        link = '/universidades/iberoamericana';
-      }
-
-      const noticia = noticias.find((n) => n.id === item.noticiaId);
-      return {
-        ...item,
-        image,
-        link,
-        title: item.title || (noticia ? noticia.titulo : 'Innovación e-Learning'),
-      };
-    });
-
-    setSlides(formatted);
-  }, []);
 
   const goToSlide = useCallback((index) => {
     if (isTransitioning || slides.length === 0) return;
@@ -150,13 +92,17 @@ const NewsSlider = () => {
   };
 
   const handleSlideClick = (slide) => {
-    if (slide.link) {
+    if (/^https?:\/\//.test(slide.link || '')) {
+      window.open(slide.link, '_blank', 'noopener');
+    } else if (slide.link) {
       navigate(slide.link);
     } else if (slide.noticiaId) {
       navigate(`/noticias/${slide.noticiaId}`);
     }
   };
 
+  // Mientras llegan los banners se reserva el espacio para que la página no salte
+  if (loading) return <section className="news-slider news-slider--loading" aria-hidden="true" />;
   if (slides.length === 0) return null;
 
   const isAutoPlaying = !isPaused;

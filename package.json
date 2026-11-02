@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:hosting": "vite build && node scripts/build-hosting.mjs",
+    "dev:api": "php -S localhost:8000 backend/dev-router.php"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",

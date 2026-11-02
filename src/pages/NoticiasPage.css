@@ -651,3 +651,18 @@
   color: inherit;
   text-shadow: none;
 }
+
+/* Estados de carga */
+.news-card--skeleton {
+  min-height: 420px;
+  background: linear-gradient(100deg, #fff 30%, #f1f5f9 50%, #fff 70%) 0 0 / 200% 100%;
+  animation: newsShimmer 1.4s linear infinite;
+}
+
+.blog-hero--loading {
+  background: linear-gradient(160deg, #0d1f33, #1e5a8a);
+}
+
+@keyframes newsShimmer {
+  to { background-position: -200% 0; }
+}

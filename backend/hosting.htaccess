@@ -1,0 +1,36 @@
+# ===== Innovación E-learning · raíz del sitio (LiteSpeed / Apache) =====
+Options -Indexes
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Forzar HTTPS: quite el "#" de las 3 líneas siguientes cuando el certificado SSL esté activo
+  # RewriteCond %{HTTPS} !=on
+  # RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # La API y las imágenes subidas tienen sus propias reglas
+  RewriteRule ^(api|uploads)(/|$) - [L]
+
+  # Aplicación React (SPA): cualquier ruta que no sea un archivo real carga index.html
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+  # Archivos con hash en el nombre: caché larga. index.html: siempre la versión más reciente.
+  <FilesMatch "\.(js|css|png|jpe?g|webp|gif|svg|woff2?|mp4)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "index\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>

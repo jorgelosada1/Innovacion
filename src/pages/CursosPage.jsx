@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { getCursos } from '../utils/dataManager';
+import { fetchCursos } from '../utils/dataManager';
+import { useApiData } from '../hooks/useApiData';
 import PasswordModal from '../components/PasswordModal';
 import BookShowcase from '../components/BookShowcase';
 import campusLogo from '../assets/images/campus-innovacion-blanco.png';
@@ -106,7 +107,8 @@ const CourseCard = ({ curso, index, onStart }) => (
 );
 
 const CursosPage = () => {
-  const [cursosData] = useState(() => getCursos());
+  const { data, loading } = useApiData('cursos', fetchCursos);
+  const cursosData = data || [];
   const [activeTab, setActiveTab] = useState('cursos');
   const [showPwModal, setShowPwModal] = useState(false);
   const [pendingVideoUrl, setPendingVideoUrl] = useState('');
@@ -197,7 +199,9 @@ const CursosPage = () => {
 
           {activeTab === 'cursos' && (
             <div className="learn__panel" key="cursos" role="tabpanel">
-              {cursosData.length > 0 ? (
+              {loading ? (
+                <div className="course-card course-card--skeleton" aria-hidden="true" />
+              ) : cursosData.length > 0 ? (
                 <div className="learn__courses">
                   {cursosData.map((curso, i) => (
                     <CourseCard key={curso.id} curso={curso} index={i} onStart={handleCursoClick} />

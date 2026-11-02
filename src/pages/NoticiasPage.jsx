@@ -1,5 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
-import { getNoticias, getNoticiaById } from '../utils/dataManager';
+import { fetchNoticia, fetchNoticias } from '../utils/dataManager';
+import { resolveImage } from '../utils/assets';
+import { useApiData } from '../hooks/useApiData';
 import { blogPosts, formatDate, readingTime } from '../data/blog';
 import { encuentro } from '../data/encuentro2026';
 import Scene3D from '../components/three/Scene3D';
@@ -14,7 +16,7 @@ import './BlogPostPage.css';
 // Imagen por defecto para las noticias que no tienen una propia
 const FALLBACK_IMAGES = [imgGrado, imgVirtual, imgEstudiantes];
 const noticiaImage = (noticia, index) =>
-  noticia.imagen || FALLBACK_IMAGES[Math.max(index, 0) % FALLBACK_IMAGES.length];
+  resolveImage(noticia.imagen) || FALLBACK_IMAGES[Math.max(index, 0) % FALLBACK_IMAGES.length];
 
 const fechaNoticia = (fecha) => (/^\d{4}-\d{2}-\d{2}$/.test(fecha || '') ? formatDate(fecha) : fecha);
 
@@ -54,68 +56,79 @@ const NoticiaCard = ({ noticia, index }) => (
   </Link>
 );
 
-const NoticiasPage = () => {
-  const { id } = useParams();
+/* Detalle de una noticia */
+const NoticiaDetalle = ({ id }) => {
+  const { data: noticia, loading } = useApiData(`noticia:${id}`, () => fetchNoticia(id));
 
-  if (id) {
-    const noticia = getNoticiaById(id);
-    if (!noticia) {
-      return (
-        <div className="noticias-page">
-          <div className="noticias-hero">
-            <span className="noticias-badge">Error</span>
-            <h1>Noticia no encontrada</h1>
-          </div>
-          <div className="noticias-container detail-view">
-            <Link to="/noticias" className="btn-back">
-              <span>&larr;</span> Volver a noticias
-            </Link>
-          </div>
-        </div>
-      );
-    }
-
-    const index = getNoticias().findIndex((n) => n.id === noticia.id);
-    const parrafos = (noticia.contenido || '').split(/\n\s*\n/).filter((t) => t.trim());
-
+  if (loading) {
     return (
-      <article className="blog-post blog-post--simple">
-        <header className="blog-hero">
-          <img src={noticiaImage(noticia, index)} alt="" className="blog-hero__cover" aria-hidden="true" />
-          <div className="blog-hero__overlay" />
-          <div className="blog-hero__content">
-            <Link to="/noticias" className="blog-back blog-back--light">← Noticias & Blog</Link>
-            <span className="blog-hero__category">Noticia</span>
-            <h1 className="blog-hero__title">{noticia.titulo}</h1>
-            <div className="blog-hero__meta">
-              <img src={logoSolo} alt="" className="blog-hero__author-img" />
-              <span>Innovación E-learning</span>
-              <span className="blog-hero__sep">•</span>
-              <time dateTime={noticia.fecha}>{fechaNoticia(noticia.fecha)}</time>
-              <span className="blog-hero__sep">•</span>
-              <span>{minutosLectura(noticia.contenido)} min de lectura</span>
-            </div>
-          </div>
-          <div className="blog-hero__curve" aria-hidden="true">
-            <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0 80V40C360 0 1080 0 1440 40V80Z" /></svg>
-          </div>
-        </header>
-
-        <div className="blog-layout">
-          <div className="blog-article">
-            {noticia.resumen && <p className="blog-article__lead">{noticia.resumen}</p>}
-            {parrafos.map((t, i) => (
-              <p key={i} className="blog-article__p">{t}</p>
-            ))}
-            <ShareButtons title={noticia.titulo} />
-            <Link to="/noticias" className="blog-back news-detail__back">← Volver a noticias</Link>
-          </div>
-        </div>
+      <article className="blog-post blog-post--simple" aria-busy="true">
+        <header className="blog-hero blog-hero--loading" />
       </article>
     );
   }
 
-  const noticias = getNoticias();
+  if (!noticia) {
+    return (
+      <div className="noticias-page">
+        <div className="noticias-hero">
+          <span className="noticias-badge">Error</span>
+          <h1>Noticia no encontrada</h1>
+        </div>
+        <div className="noticias-container detail-view">
+          <Link to="/noticias" className="btn-back">
+            <span>&larr;</span> Volver a noticias
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  // Sin imagen propia, usa una de las imágenes por defecto según su id
+  const index = Number.parseInt(noticia.id, 10) - 1 || 0;
+  const parrafos = (noticia.contenido || '').split(/\n\s*\n/).filter((t) => t.trim());
+
+  return (
+    <article className="blog-post blog-post--simple">
+      <header className="blog-hero">
+        <img src={noticiaImage(noticia, index)} alt="" className="blog-hero__cover" aria-hidden="true" />
+        <div className="blog-hero__overlay" />
+        <div className="blog-hero__content">
+          <Link to="/noticias" className="blog-back blog-back--light">← Noticias & Blog</Link>
+          <span className="blog-hero__category">Noticia</span>
+          <h1 className="blog-hero__title">{noticia.titulo}</h1>
+          <div className="blog-hero__meta">
+            <img src={logoSolo} alt="" className="blog-hero__author-img" />
+            <span>Innovación E-learning</span>
+            <span className="blog-hero__sep">•</span>
+            <time dateTime={noticia.fecha}>{fechaNoticia(noticia.fecha)}</time>
+            <span className="blog-hero__sep">•</span>
+            <span>{minutosLectura(noticia.contenido)} min de lectura</span>
+          </div>
+        </div>
+        <div className="blog-hero__curve" aria-hidden="true">
+          <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0 80V40C360 0 1080 0 1440 40V80Z" /></svg>
+        </div>
+      </header>
+
+      <div className="blog-layout">
+        <div className="blog-article">
+          {noticia.resumen && <p className="blog-article__lead">{noticia.resumen}</p>}
+          {parrafos.map((t, i) => (
+            <p key={i} className="blog-article__p">{t}</p>
+          ))}
+          <ShareButtons title={noticia.titulo} />
+          <Link to="/noticias" className="blog-back news-detail__back">← Volver a noticias</Link>
+        </div>
+      </div>
+    </article>
+  );
+};
+
+/* Listado de noticias + blog */
+const NoticiasLista = () => {
+  const { data, loading } = useApiData('noticias', fetchNoticias);
+  const noticias = data || [];
   const [featured, ...restPosts] = blogPosts;
 
   return (
@@ -197,7 +210,8 @@ const NoticiasPage = () => {
         )}
 
         <h2 className="noticias-section-title" data-reveal>Últimas noticias</h2>
-        <div className="news-grid">
+        <div className="news-grid" aria-busy={loading}>
+          {loading && [0, 1].map((i) => <div key={i} className="news-card news-card--skeleton" aria-hidden="true" />)}
           {noticias.map((noticia, index) => (
             <NoticiaCard key={noticia.id} noticia={noticia} index={index} />
           ))}
@@ -205,6 +219,11 @@ const NoticiasPage = () => {
       </div>
     </div>
   );
+};
+
+const NoticiasPage = () => {
+  const { id } = useParams();
+  return id ? <NoticiaDetalle key={id} id={id} /> : <NoticiasLista />;
 };
 
 export default NoticiasPage;

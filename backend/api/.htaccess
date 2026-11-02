@@ -1,0 +1,28 @@
+# ===== API de Innovación E-learning (LiteSpeed / Apache) =====
+
+Options -Indexes
+
+# Archivos internos: nunca accesibles desde el navegador
+<FilesMatch "^(config\.php|config\.example\.php|install\.lock)$|\.(sql|md|log)$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Carpetas internas (lib, routes, database): prohibidas
+  RewriteRule ^(lib|routes|database)(/|$) - [F,L]
+
+  # El instalador se ejecuta directamente
+  RewriteRule ^install\.php$ - [L]
+
+  # Todo lo demás pasa por index.php
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^(.*)$ index.php?route=$1 [QSA,L]
+</IfModule>

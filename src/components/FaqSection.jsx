@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { getFaqs } from '../utils/dataManager';
+import { fetchFaqs } from '../utils/dataManager';
+import { useApiData } from '../hooks/useApiData';
 import './FaqSection.css';
 
 const FaqSection = () => {
   const [openIdx, setOpenIdx] = useState(null);
-  const faqs = getFaqs();
+  const { data: faqs } = useApiData('faqs', fetchFaqs);
 
   const toggleOpen = (index) => {
     setOpenIdx(openIdx === index ? null : index);

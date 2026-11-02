@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { addIdea } from '../utils/dataManager';
+import { sendIdea } from '../utils/dataManager';
 import './IdeaBox.css';
 
 // ===== BUZÓN DE IDEAS =====
-// Los colaboradores proponen mejoras para cualquier área. La idea se guarda con
-// addIdea (dataManager); al conectar el backend basta con que esa función llame a la API.
+// Los colaboradores proponen mejoras para cualquier área. La idea se guarda en la
+// base de datos (POST /api/ideas) y Talento Humano la revisa desde el panel.
 
 const AREAS = ['Cualquier área / General', 'Área Comercial', 'Talento Humano', 'Mercadeo', 'Contabilidad', 'Gerencia', 'Nuevos Proyectos'];
 
@@ -17,7 +17,8 @@ const TIPOS = [
   { id: 'otro', label: 'Otro', icon: <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z" /> },
 ];
 
-const EMPTY = { nombre: '', area: AREAS[0], tipo: 'procesos', titulo: '', idea: '', beneficio: '' };
+// website: campo trampa invisible para frenar robots (la API descarta lo que lo llene)
+const EMPTY = { nombre: '', area: AREAS[0], tipo: 'procesos', titulo: '', idea: '', beneficio: '', website: '' };
 const MAX_IDEA = 600;
 
 const Icon = ({ children, size = 18 }) => (
@@ -46,11 +47,10 @@ const IdeaBox = () => {
     setSaving(true);
     setError(false);
     try {
-      // Promise.resolve permite que addIdea pase a ser asíncrona (API) sin tocar este componente
-      await Promise.resolve(addIdea(data));
+      await sendIdea(data);
       setSent(data);
-    } catch {
-      setError(true);
+    } catch (err) {
+      setError(err.message || true);
     } finally {
       setSaving(false);
     }
@@ -152,8 +152,20 @@ const IdeaBox = () => {
             </label>
 
             {error && (
-              <p className="ideas__error" role="alert">No pudimos guardar tu idea. Inténtalo de nuevo en un momento.</p>
+              <p className="ideas__error" role="alert">
+                {typeof error === 'string' ? error : 'No pudimos guardar tu idea. Inténtalo de nuevo en un momento.'}
+              </p>
             )}
+            <input
+              className="ideas__trap"
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              value={form.website}
+              onChange={set('website')}
+            />
             <button type="submit" className="ideas__btn ideas__btn--submit" disabled={saving}>
               {saving ? 'Enviando…' : 'Enviar mi idea'}
               <Icon><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z" /></Icon>

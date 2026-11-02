@@ -699,3 +699,14 @@
     justify-content: center;
   }
 }
+
+/* Tarjeta de carga mientras llegan los cursos */
+.course-card--skeleton {
+  min-height: 340px;
+  background: linear-gradient(100deg, #fff 30%, #f1f5f9 50%, #fff 70%) 0 0 / 200% 100%;
+  animation: courseShimmer 1.4s linear infinite;
+}
+
+@keyframes courseShimmer {
+  to { background-position: -200% 0; }
+}
