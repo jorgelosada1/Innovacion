@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import './NotFoundPage.css';
+import Seo from '../components/Seo';
 
 const NotFoundPage = () => (
   <section className="not-found">
+    <Seo notFound />
     <div className="not-found__card">
       <span className="not-found__code">404</span>
       <h1>Esta página no existe</h1>

@@ -6,6 +6,7 @@ import BookShowcase from '../components/BookShowcase';
 import campusLogo from '../assets/images/campus-innovacion-blanco.png';
 import campusEmblema from '../assets/images/campus-emblema.png';
 import './CursosPage.css';
+import Seo from '../components/Seo';
 
 const Icon = ({ children, size = 18, strokeWidth = 2 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -125,6 +126,7 @@ const CursosPage = () => {
 
   return (
     <section className="cursos-page">
+      <Seo path="/cursos" />
       {/* === PORTADA CAMPUS INNOVACIÓN === */}
       <header className="campus-hero">
         <div className="campus-hero__grid" aria-hidden="true" />
@@ -164,7 +166,7 @@ const CursosPage = () => {
         {/* === RUTA DE APRENDIZAJE === */}
         <section className="learn" aria-labelledby="learn-title">
           <div className="learn__head" data-reveal>
-            <img src={campusEmblema} alt="" className="learn__emblem" />
+            <img loading="lazy" decoding="async" src={campusEmblema} alt="" className="learn__emblem" />
             <div>
               <span className="learn__chip">Campus Innovación</span>
               <h2 id="learn-title" className="learn__title">
@@ -218,7 +220,7 @@ const CursosPage = () => {
               <div className="soon">
                 <div className="soon__emblem">
                   <span className="soon__ring" />
-                  <img src={campusEmblema} alt="" />
+                  <img loading="lazy" decoding="async" src={campusEmblema} alt="" />
                 </div>
                 <span className="soon__chip">En construcción</span>
                 <h3>Capacitaciones internas</h3>

@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
 import './ColaboradoresPage.css';
-import fernanImg from '../assets/images/Fernan.png';
-import wilsonImg from '../assets/images/wilson.png';
+import fernanImg from '../assets/images/fernan.jpg';
+import wilsonImg from '../assets/images/wilson.jpg';
 import johannaImg from '../assets/images/Johanna.JPG';
-import mariaImg from '../assets/images/Maria.png';
+import mariaImg from '../assets/images/maria.jpg';
 import erikaImg from '../assets/images/erika.JPG';
 import paulaImg from '../assets/images/paula.JPG';
 import johanImg from '../assets/images/johan.JPG';
 import PasswordModal from '../components/PasswordModal';
 import IdeaBox from '../components/IdeaBox';
 import Scene3D from '../components/three/Scene3D';
+import Seo from '../components/Seo';
 
 // Voces del equipo: lo que significa Innovación E-learning para cada colaborador
 const comments = [
@@ -83,7 +84,7 @@ const LONG_TEXT = 260;
 const VoiceAvatar = ({ comment, index, className }) => (
   <div className={className} style={comment.photo ? undefined : { background: AVATAR_GRADIENTS[index % AVATAR_GRADIENTS.length] }}>
     {comment.photo ? (
-      <img src={comment.photo} alt={comment.name} className={`${className}-img`} />
+      <img loading="lazy" decoding="async" src={comment.photo} alt={comment.name} className={`${className}-img`} />
     ) : (
       <span className={`${className}-initial`}>{comment.name.charAt(0)}</span>
     )}
@@ -166,6 +167,7 @@ const ColaboradoresPage = () => {
 
   return (
     <section className="colaboradores">
+      <Seo path="/colaboradores" />
       <div className="colaboradores__hero">
         <Scene3D type="shapes" variant="light" count={10} seed={23} />
         <div className="colaboradores__hero-content" data-reveal>
@@ -186,7 +188,7 @@ const ColaboradoresPage = () => {
             <div className="org__card org__card--ceo">
               <span className="org__badge org__badge--blue">Gerente General</span>
               <div className="org__avatar org__avatar--ceo">
-                <img src={fernanImg} alt="Fernan" className="org__avatar-img" />
+                <img loading="lazy" decoding="async" src={fernanImg} alt="Fernan" className="org__avatar-img" />
               </div>
               <h3 className="org__name">Fernan</h3>
               <p className="org__role">Gerente General</p>
@@ -203,7 +205,7 @@ const ColaboradoresPage = () => {
               <div className="org__card org__card--coo">
                 <span className="org__badge org__badge--blue">Gestión Humana</span>
                 <div className="org__avatar org__avatar--exec-1">
-                  <img src={wilsonImg} alt="Wilson" className="org__avatar-img" />
+                  <img loading="lazy" decoding="async" src={wilsonImg} alt="Wilson" className="org__avatar-img" />
                 </div>
                 <h3 className="org__name">Wilson</h3>
                 <p className="org__role">Gestión Humana</p>
@@ -216,7 +218,7 @@ const ColaboradoresPage = () => {
               <div className="org__card org__card--coo">
                 <span className="org__badge org__badge--blue">Gerente Comercial</span>
                 <div className="org__avatar org__avatar--exec-2">
-                  <img src={johannaImg} alt="Johanna" className="org__avatar-img" />
+                  <img loading="lazy" decoding="async" src={johannaImg} alt="Johanna" className="org__avatar-img" />
                 </div>
                 <h3 className="org__name">Johanna</h3>
                 <p className="org__role">Gerente Comercial</p>
@@ -229,7 +231,7 @@ const ColaboradoresPage = () => {
               <div className="org__card org__card--coo">
                 <span className="org__badge org__badge--blue">Nuevos Proyectos</span>
                 <div className="org__avatar org__avatar--exec-3">
-                  <img src={mariaImg} alt="María del Socorro" className="org__avatar-img" />
+                  <img loading="lazy" decoding="async" src={mariaImg} alt="María del Socorro" className="org__avatar-img" />
                 </div>
                 <h3 className="org__name">María del Socorro</h3>
                 <p className="org__role">Nuevos Proyectos</p>

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { agenda, amigoSecreto, encuentro, normas, recomendaciones } from '../data/encuentro2026';
 import './EncuentroPage.css';
+import Seo from '../components/Seo';
 
 const CHECKLIST_KEY = 'inne_encuentro2026_maleta';
 
@@ -153,6 +154,7 @@ const EncuentroPage = () => {
 
   return (
     <article className="ev">
+      <Seo path="/noticias/encuentro-nacional-2026" />
       {/* === HERO === */}
       <header className="ev-hero">
         <div className="ev-hero__dots" aria-hidden="true" />

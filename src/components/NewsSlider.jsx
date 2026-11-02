@@ -134,6 +134,7 @@ const NewsSlider = () => {
             <img
               src={slide.image}
               alt={slide.title}
+              fetchPriority={index === 0 ? 'high' : 'low'}
               className="news-slider__image"
               onLoad={(e) => handleImageLoad(slide.image, e)}
             />

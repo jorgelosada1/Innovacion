@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './UniversidadesPage.css';
 import andinaBanner from '../assets/images/andina-virtual.jpg';
-import iberoBanner from '../assets/images/ibero.png';
+import iberoBanner from '../assets/images/ibero.jpg';
 import AsesoriaModal from '../components/AsesoriaModal';
+import Seo from '../components/Seo';
 
 /* ─── Icons ─── */
 const Shield = () => (
@@ -67,7 +68,7 @@ const AreandinaContent = ({ onOpenModal }) => {
 
       {/* BANNER IMAGE */}
       <div className="upage__banner">
-        <img src={andinaBanner} alt="Areandina" />
+        <img loading="lazy" decoding="async" src={andinaBanner} alt="Areandina" />
       </div>
 
       {/* INTRO — Split layout */}
@@ -264,7 +265,7 @@ const IberoContent = ({ onOpenModal }) => {
 
       {/* BANNER */}
       <div className="upage__banner">
-        <img src={iberoBanner} alt="Corporación Universitaria Iberoamericana" />
+        <img loading="lazy" decoding="async" src={iberoBanner} alt="Corporación Universitaria Iberoamericana" />
       </div>
 
       {/* PILARES — Horizontal strip */}
@@ -419,6 +420,9 @@ const IberoContent = ({ onOpenModal }) => {
 /* ─── Main Page ─── */
 const UniversidadesPage = () => {
   const { uni } = useParams();
+  const navigate = useNavigate();
+  // Cada universidad tiene su propia dirección (mejor para Google y para compartir)
+  const selectTab = (id) => navigate(`/universidades/${id}`, { replace: true });
   const [activeTab, setActiveTab] = useState(uni === 'iberoamericana' ? 'iberoamericana' : 'areandina');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -437,6 +441,7 @@ const UniversidadesPage = () => {
 
   return (
     <div className="upage">
+      <Seo path={uni ? `/universidades/${uni}` : '/universidades'} />
       {/* ─── HERO ─── */}
       <section className="upage__hero">
         <div className="upage__hero-deco">
@@ -451,6 +456,9 @@ const UniversidadesPage = () => {
           <h1 className="upage__hero-title">
             Encuentra tu{' '}
             <span className="upage__hero-accent">universidad ideal</span>
+            <span className="sr-only">
+              {isAreandina ? ': estudia en la Fundación Universitaria del Área Andina' : ': estudia en la Corporación Universitaria Iberoamericana'}
+            </span>
           </h1>
           <p className="upage__hero-subtitle">
             Acreditación en alta calidad, formación flexible y acompañamiento real para que alcances tus metas.
@@ -458,14 +466,14 @@ const UniversidadesPage = () => {
           <div className="upage__tabs">
             <button
               className={`upage__tab ${isAreandina ? 'upage__tab--active' : ''}`}
-              onClick={() => setActiveTab('areandina')}
+              onClick={() => selectTab('areandina')}
             >
               <span className="upage__tab-dot upage__tab-dot--green"></span>
               Areandina
             </button>
             <button
               className={`upage__tab ${!isAreandina ? 'upage__tab--active' : ''}`}
-              onClick={() => setActiveTab('iberoamericana')}
+              onClick={() => selectTab('iberoamericana')}
             >
               <span className="upage__tab-dot upage__tab-dot--blue"></span>
               IBERO

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ApiUnavailableError, getSession, login } from '../utils/dataManager';
 import './LoginPage.css';
 import logoImg from '../assets/images/Logo.png';
+import Seo from '../components/Seo';
 
 const LoginPage = () => {
   const [user, setUser] = useState('');
@@ -39,6 +40,7 @@ const LoginPage = () => {
 
   return (
     <section className="login-page">
+      <Seo path="/login" />
       <div className="login-page__card">
         <img src={logoImg} alt="Logo" className="login-page__logo" />
         <h1 className="login-page__title">Iniciar Sesión</h1>

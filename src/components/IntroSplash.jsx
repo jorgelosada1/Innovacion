@@ -87,9 +87,9 @@ const IntroSplash = () => {
         </div>
 
         {/* Title */}
-        <h1 className="intro-splash__title">
+        <p className="intro-splash__title">
           INNOVACIÓN <span className="intro-splash__title--accent">E-LEARNING</span> S.A.S.
-        </h1>
+        </p>
 
         {/* Subtitle */}
         <p className="intro-splash__subtitle">Educación Superior de Calidad</p>

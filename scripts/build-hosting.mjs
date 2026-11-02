@@ -3,6 +3,7 @@
 //   dist/.htaccess   → rutas de la SPA y cabeceras
 //   dist/api/        → API PHP (sin config.php: se crea en el servidor)
 //   dist/uploads/    → imágenes subidas desde el panel
+//   dist/api/seo.json → títulos y descripciones de cada página (SEO)
 import { cpSync, copyFileSync, existsSync, mkdirSync } from 'node:fs';
 import { basename, join } from 'node:path';
 
@@ -11,7 +12,7 @@ const dist = join(root, 'dist');
 const backend = join(root, 'backend');
 
 if (!existsSync(join(dist, 'index.html'))) {
-  console.error('Primero ejecute "vite build" (o use "npm run build:hosting").');
+  console.error('Primero ejecute "npm run build" (o use "npm run build:hosting").');
   process.exit(1);
 }
 
@@ -20,6 +21,9 @@ cpSync(join(backend, 'api'), join(dist, 'api'), {
   recursive: true,
   filter: (src) => !PRIVATE.has(basename(src)),
 });
+
+// Textos SEO de cada página, para que api/seo.php y api/sitemap.php los usen
+copyFileSync(join(root, 'src', 'seo', 'seo.json'), join(dist, 'api', 'seo.json'));
 
 mkdirSync(join(dist, 'uploads'), { recursive: true });
 copyFileSync(join(backend, 'uploads', '.htaccess'), join(dist, 'uploads', '.htaccess'));

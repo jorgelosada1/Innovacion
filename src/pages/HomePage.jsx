@@ -6,10 +6,12 @@ import Ventajas from '../components/Ventajas';
 import MisionVision from '../components/MisionVision';
 import Testimonios from '../components/Testimonios';
 import FaqSection from '../components/FaqSection';
+import Seo from '../components/Seo';
 
 const HomePage = () => {
   return (
     <>
+      <Seo path="/" />
       <IntroSplash />
       <NewsSlider />
       <HeroBanner />

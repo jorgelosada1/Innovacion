@@ -81,7 +81,7 @@ const Footer = () => {
         {/* Logo overlapping section */}
         <div className="footer__logo-overlap">
           <div className="footer__logo-circle">
-            <img src={logoSolo} alt="Innovación e-Learning S.A.S" className="footer__logo-img" />
+            <img loading="lazy" decoding="async" src={logoSolo} alt="Innovación e-Learning S.A.S" className="footer__logo-img" />
           </div>
           <div className="footer__logo-info">
             <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer" className="footer__contact-link">

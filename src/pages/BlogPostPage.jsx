@@ -4,6 +4,7 @@ import { blogPosts, formatDate, getBlogPost, readingTime } from '../data/blog';
 import logoSolo from '../assets/images/LogoSolo.png';
 import ShareButtons from '../components/ShareButtons';
 import './BlogPostPage.css';
+import Seo from '../components/Seo';
 
 const WHATSAPP = 'https://wa.link/rgw8yn';
 
@@ -145,6 +146,7 @@ const BlogPostPage = () => {
   if (!post) {
     return (
       <div className="blog-missing">
+        <Seo notFound />
         <h1>Artículo no encontrado</h1>
         <Link to="/noticias" className="blog-back">← Volver a noticias</Link>
       </div>
@@ -156,6 +158,15 @@ const BlogPostPage = () => {
 
   return (
     <article className="blog-post">
+      <Seo
+        path={`/noticias/blog/${post.slug}`}
+        title={post.title}
+        description={post.excerpt}
+        type="article"
+        published={post.date}
+        breadcrumb={post.title}
+        parent="/noticias"
+      />
       <header className="blog-hero">
         <img ref={coverRef} src={post.cover} alt="" className="blog-hero__cover" aria-hidden="true" />
         <div className="blog-hero__overlay" />
@@ -213,7 +224,7 @@ const BlogPostPage = () => {
           </div>
 
           <section className="blog-cta" data-reveal>
-            <img src={post.closingImage} alt="" className="blog-cta__img" aria-hidden="true" />
+            <img loading="lazy" decoding="async" src={post.closingImage} alt="" className="blog-cta__img" aria-hidden="true" />
             <div className="blog-cta__content">
               <span className="blog-cta__eyebrow">¿Y si estudias?</span>
               <h3>Tu historia también puede comenzar hoy</h3>

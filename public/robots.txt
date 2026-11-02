@@ -1,0 +1,6 @@
+# Innovación E-learning
+# El panel (/admin) y el ingreso (/login) usan la etiqueta "noindex" para no aparecer en buscadores.
+User-agent: *
+Allow: /
+
+Sitemap: https://innovacionelearning.com/sitemap.xml

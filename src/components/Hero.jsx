@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import './Hero.css';
-import heroImage from '../assets/images/hero-student.png';
+import heroImage from '../assets/images/hero-student.jpg';
 
 const Hero = () => {
   return (
@@ -39,7 +39,7 @@ const Hero = () => {
         {/* Right Image */}
         <div className="hero__image-wrapper" data-reveal>
           <div className="hero__image-container">
-            <img
+            <img loading="lazy" decoding="async"
               src={heroImage}
               alt="Estudiante universitaria aprendiendo en línea"
               className="hero__image"

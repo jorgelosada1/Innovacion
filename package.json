@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/seo-build.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
-    "build:hosting": "vite build && node scripts/build-hosting.mjs",
+    "build:hosting": "npm run build && node scripts/build-hosting.mjs",
     "dev:api": "php -S localhost:8000 backend/dev-router.php"
   },
   "dependencies": {

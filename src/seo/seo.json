@@ -1,0 +1,113 @@
+{
+  "siteUrl": "https://innovacionelearning.com",
+  "siteName": "Innovación E-learning",
+  "locale": "es_CO",
+  "language": "es-CO",
+  "themeColor": "#1B3A5C",
+  "defaultImage": "/og/inicio.jpg",
+  "googleSiteVerification": "",
+  "organization": {
+    "name": "Innovación E-learning S.A.S",
+    "alternateName": "INNE",
+    "logo": "/icon-512.png",
+    "description": "Aliado comercial autorizado de la Fundación Universitaria del Área Andina y la Corporación Universitaria Iberoamericana. Asesoría gratuita para estudiar programas virtuales en Colombia.",
+    "city": "Bogotá",
+    "region": "Bogotá D.C.",
+    "country": "CO",
+    "sameAs": [
+      "https://www.instagram.com/innovacionelearning/",
+      "https://www.facebook.com/profile.php?id=61579726022138",
+      "https://www.linkedin.com/in/innovaci%C3%B3n-e-learning-a93521357/"
+    ]
+  },
+  "pages": {
+    "/": {
+      "title": "Estudia tu carrera virtual en Colombia | Innovación E-learning",
+      "description": "Aliados oficiales de Areandina e Iberoamericana. Te asesoramos gratis para inscribirte en pregrados, especializaciones y posgrados virtuales en Colombia.",
+      "image": "/og/inicio.jpg",
+      "priority": "1.0",
+      "changefreq": "weekly"
+    },
+    "/noticias": {
+      "title": "Noticias y blog | Innovación E-learning",
+      "description": "Novedades, inscripciones, eventos e historias de Innovación E-learning, aliado de Areandina e Iberoamericana en educación virtual en Colombia.",
+      "image": "/og/inicio.jpg",
+      "breadcrumb": "Noticias",
+      "priority": "0.8",
+      "changefreq": "weekly"
+    },
+    "/noticias/blog/educacion-que-conecta": {
+      "title": "Educación que conecta: el propósito detrás de INNE",
+      "description": "Hay decisiones que comienzan con una pregunta sencilla: ¿y si estudio? Así entendemos nuestro trabajo: conectar personas con oportunidades educativas.",
+      "image": "/og/blog-educacion-que-conecta.jpg",
+      "type": "article",
+      "published": "2026-10-20",
+      "breadcrumb": "Educación que conecta",
+      "parent": "/noticias",
+      "priority": "0.7",
+      "changefreq": "monthly"
+    },
+    "/noticias/encuentro-nacional-2026": {
+      "title": "Encuentro Nacional INNE 2026 | Agenda y recomendaciones",
+      "description": "Agenda, recomendaciones y normas de comportamiento del Encuentro Nacional INNE 2026, del 26 al 30 de octubre en Bogotá y Chinauta.",
+      "image": "/og/encuentro-2026.jpg",
+      "breadcrumb": "Encuentro Nacional 2026",
+      "parent": "/noticias",
+      "noindex": true
+    },
+    "/colaboradores": {
+      "title": "Nuestro equipo | Innovación E-learning",
+      "description": "Conoce el equipo de Innovación E-learning: estructura, cultura, voces de nuestros colaboradores y el buzón de ideas para seguir mejorando.",
+      "image": "/og/inicio.jpg",
+      "breadcrumb": "Colaboradores",
+      "priority": "0.5",
+      "changefreq": "monthly"
+    },
+    "/cursos": {
+      "title": "Aprende Aquí · Campus Innovación | Innovación E-learning",
+      "description": "Campus Innovación, Escuela de Formación Comercial: cursos en video, libro digital interactivo y capacitaciones para fortalecer tus habilidades.",
+      "image": "/og/cursos.jpg",
+      "breadcrumb": "Aprende Aquí",
+      "priority": "0.7",
+      "changefreq": "monthly"
+    },
+    "/universidades": {
+      "title": "Universidades aliadas: Areandina e Ibero | Innovación E-learning",
+      "description": "Estudia virtual en la Fundación Universitaria del Área Andina o en la Corporación Universitaria Iberoamericana con asesoría gratuita de principio a fin.",
+      "image": "/og/areandina.jpg",
+      "breadcrumb": "Universidades",
+      "canonical": "/universidades/areandina"
+    },
+    "/universidades/areandina": {
+      "title": "Estudia virtual en Areandina | Innovación E-learning",
+      "description": "Programas virtuales de la Fundación Universitaria del Área Andina con acreditación de alta calidad. Recibe asesoría gratuita para tu inscripción.",
+      "image": "/og/areandina.jpg",
+      "breadcrumb": "Areandina",
+      "priority": "0.9",
+      "changefreq": "monthly"
+    },
+    "/universidades/iberoamericana": {
+      "title": "Estudia virtual en la Iberoamericana | Innovación E-learning",
+      "description": "Carreras y posgrados virtuales de la Corporación Universitaria Iberoamericana. Te acompañamos gratis en todo el proceso de inscripción y matrícula.",
+      "image": "/og/iberoamericana.jpg",
+      "breadcrumb": "Iberoamericana",
+      "priority": "0.9",
+      "changefreq": "monthly"
+    },
+    "/login": {
+      "title": "Ingresar | Innovación E-learning",
+      "description": "Acceso al panel administrativo de Innovación E-learning.",
+      "noindex": true
+    },
+    "/admin": {
+      "title": "Panel administrativo | Innovación E-learning",
+      "description": "Panel administrativo de Innovación E-learning.",
+      "noindex": true
+    }
+  },
+  "notFound": {
+    "title": "Página no encontrada | Innovación E-learning",
+    "description": "La página que buscas no existe o cambió de dirección.",
+    "noindex": true
+  }
+}

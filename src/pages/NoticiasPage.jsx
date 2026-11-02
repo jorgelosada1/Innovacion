@@ -12,6 +12,7 @@ import imgVirtual from '../assets/images/blog-conecta-virtual.jpg';
 import imgEstudiantes from '../assets/images/blog-conecta-tarjeta.jpg';
 import './NoticiasPage.css';
 import './BlogPostPage.css';
+import Seo from '../components/Seo';
 
 // Imagen por defecto para las noticias que no tienen una propia
 const FALLBACK_IMAGES = [imgGrado, imgVirtual, imgEstudiantes];
@@ -71,6 +72,7 @@ const NoticiaDetalle = ({ id }) => {
   if (!noticia) {
     return (
       <div className="noticias-page">
+        <Seo notFound />
         <div className="noticias-hero">
           <span className="noticias-badge">Error</span>
           <h1>Noticia no encontrada</h1>
@@ -90,6 +92,17 @@ const NoticiaDetalle = ({ id }) => {
 
   return (
     <article className="blog-post blog-post--simple">
+      <Seo
+        path={`/noticias/${noticia.id}`}
+        title={`${noticia.titulo} | Innovación E-learning`}
+        description={noticia.resumen}
+        image={noticiaImage(noticia, index)}
+        type="article"
+        articleType="NewsArticle"
+        published={noticia.fecha}
+        breadcrumb={noticia.titulo}
+        parent="/noticias"
+      />
       <header className="blog-hero">
         <img src={noticiaImage(noticia, index)} alt="" className="blog-hero__cover" aria-hidden="true" />
         <div className="blog-hero__overlay" />
@@ -133,6 +146,7 @@ const NoticiasLista = () => {
 
   return (
     <div className="noticias-page">
+      <Seo path="/noticias" />
       <div className="noticias-hero">
         <Scene3D type="shapes" variant="light" count={10} seed={5} />
         <div className="noticias-hero__inner" data-reveal>

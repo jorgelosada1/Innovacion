@@ -1,7 +1,7 @@
 import './Testimonios.css';
-import img10 from '../assets/images/10.png';
-import img20 from '../assets/images/20.png';
-import img30 from '../assets/images/30.png';
+import img10 from '../assets/images/testimonio-1.jpg';
+import img20 from '../assets/images/testimonio-2.jpg';
+import img30 from '../assets/images/testimonio-3.jpg';
 
 const testimoniosData = [
   {
@@ -61,7 +61,7 @@ const Testimonios = () => {
               <div className="testimonio-author">
                 <div className="testimonio-avatar" style={{ backgroundColor: t.color }}>
                   {t.image ? (
-                    <img src={t.image} alt={t.name} className="testimonio-avatar-img" />
+                    <img loading="lazy" decoding="async" src={t.image} alt={t.name} className="testimonio-avatar-img" />
                   ) : (
                     t.initials
                   )}

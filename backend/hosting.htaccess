@@ -1,24 +1,33 @@
 # ===== Innovación E-learning · raíz del sitio (LiteSpeed / Apache) =====
 Options -Indexes
 DirectoryIndex index.html
+AddType application/manifest+json .webmanifest
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
 
-  # Forzar HTTPS: quite el "#" de las 3 líneas siguientes cuando el certificado SSL esté activo
-  # RewriteCond %{HTTPS} !=on
-  # RewriteCond %{HTTP:X-Forwarded-Proto} !https
-  # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  # Cuando el certificado SSL esté activo, quite el "#" de las líneas de este bloque:
+  # todo pasa a https://innovacionelearning.com (sin "www"), como prefiere Google.
+  # RewriteCond %{HTTPS} !=on [OR]
+  # RewriteCond %{HTTP_HOST} !^innovacionelearning\.com$ [NC]
+  # RewriteRule ^ https://innovacionelearning.com%{REQUEST_URI} [L,R=301]
+
+  # Mapa del sitio con las noticias de la base de datos
+  RewriteRule ^sitemap\.xml$ api/sitemap.php [L]
 
   # La API y las imágenes subidas tienen sus propias reglas
   RewriteRule ^(api|uploads)(/|$) - [L]
 
-  # Aplicación React (SPA): cualquier ruta que no sea un archivo real carga index.html
-  RewriteRule ^index\.html$ - [L]
+  # /index.html es la misma página de inicio
+  RewriteCond %{THE_REQUEST} \s/index\.html[\s?] [NC]
+  RewriteRule ^index\.html$ / [R=301,L]
+
+  # Páginas de la web (SPA): se entregan con sus etiquetas SEO desde api/seo.php
+  RewriteRule ^$ api/seo.php [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /index.html [L]
+  RewriteRule . api/seo.php [L]
 </IfModule>
 
 <IfModule mod_headers.c>
@@ -26,11 +35,16 @@ DirectoryIndex index.html
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
 
-  # Archivos con hash en el nombre: caché larga. index.html: siempre la versión más reciente.
+  # Archivos con hash en el nombre: caché larga
   <FilesMatch "\.(js|css|png|jpe?g|webp|gif|svg|woff2?|mp4)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
-  <FilesMatch "index\.html$">
+  <FilesMatch "^(index\.html|robots\.txt|manifest\.webmanifest)$">
     Header set Cache-Control "no-cache"
   </FilesMatch>
+</IfModule>
+
+# Compresión de textos (velocidad de carga)
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript application/javascript application/json application/xml image/svg+xml application/manifest+json
 </IfModule>

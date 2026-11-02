@@ -4,6 +4,7 @@ import { adminApi, ApiUnavailableError, changePassword, getSession, logout } fro
 import { BUILT_IN_IMAGES, resolveImage } from '../utils/assets';
 import { clearApiCache } from '../hooks/useApiData';
 import './AdminPanel.css';
+import Seo from '../components/Seo';
 
 // ===== PANEL ADMINISTRATIVO =====
 // Administra el contenido guardado en la base de datos a través de la API.
@@ -582,6 +583,7 @@ const AdminPanel = () => {
   if (status !== 'ready') {
     return (
       <div className="adm adm--center">
+        <Seo path="/admin" />
         <div className="adm-card adm-state">
           {status === 'checking' ? (
             <p>Verificando sesión…</p>
@@ -599,6 +601,7 @@ const AdminPanel = () => {
 
   return (
     <div className="adm">
+      <Seo path="/admin" />
       <header className="adm-header">
         <div>
           <span className="adm-header__eyebrow">Panel administrativo</span>
