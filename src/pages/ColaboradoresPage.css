@@ -1065,6 +1065,40 @@
   color: #94a3b8;
 }
 
+.docs-section__repos {
+  margin-top: var(--spacing-2xl);
+  text-align: center;
+}
+
+.docs-section__subtitle {
+  font-family: var(--font-primary);
+  font-size: clamp(1.15rem, 2.2vw, 1.4rem);
+  font-weight: 700;
+  color: var(--color-blue-dark);
+}
+
+.docs-section__grid--repos {
+  max-width: 600px;
+  margin-top: var(--spacing-lg);
+}
+
+.docs-section__card--repo {
+  text-decoration: none;
+}
+
+.docs-section__card-icon--repo {
+  background: rgba(245, 166, 35, 0.12);
+  color: #b45309;
+}
+
+.docs-section__card-hint {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-gray);
+}
+
 .colaboradores__section-title {
   font-family: var(--font-primary);
   font-size: clamp(1.5rem, 3vw, 2rem);
