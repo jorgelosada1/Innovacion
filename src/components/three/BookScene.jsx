@@ -6,21 +6,36 @@ import { prefersReducedMotion, useInView } from './support';
 import logoSolo from '../../assets/images/LogoSolo.png';
 
 // ===== LIBRO 3D =====
-// Libro de tapa dura con portada generada en canvas. Flota, sigue el puntero y
-// al abrirse gira la tapa y abanica las páginas.
+// Libro de tapa dura con la portada real del libro (o una portada generada en canvas
+// si no se indica imagen). Flota, sigue el puntero y al abrirse gira la tapa y abanica las páginas.
 
-const W = 3;
-const H = 4.2;
+// Proporción de la portada del libro (1302 × 1476 px)
+const W = 3.4;
+const H = 3.85;
 const T = 0.5;
-const BLUE = '#1f5f9e';
+const BLUE = '#353c8d';
 const GOLD = '#f5a623';
 
 /* Portada dibujada en un canvas (marca, título y detalles dorados) */
-const useCoverTexture = (title, subtitle) => {
+const useCoverTexture = (title, subtitle, coverImage) => {
   const [texture, setTexture] = useState(null);
 
   useEffect(() => {
     let cancelled = false;
+
+    // Portada real del libro
+    if (coverImage) {
+      new THREE.TextureLoader().load(coverImage, (tex) => {
+        if (cancelled) return;
+        tex.colorSpace = THREE.SRGBColorSpace;
+        tex.anisotropy = 8;
+        setTexture(tex);
+      });
+      return () => {
+        cancelled = true;
+      };
+    }
+
     const canvas = document.createElement('canvas');
     canvas.width = 768;
     canvas.height = 1075;
@@ -121,16 +136,16 @@ const useCoverTexture = (title, subtitle) => {
     return () => {
       cancelled = true;
     };
-  }, [title, subtitle]);
+  }, [title, subtitle, coverImage]);
 
   return texture;
 };
 
-const Book = ({ open, title, subtitle, still }) => {
+const Book = ({ open, title, subtitle, coverImage, still }) => {
   const group = useRef();
   const cover = useRef();
   const pages = useRef([]);
-  const coverTex = useCoverTexture(title, subtitle);
+  const coverTex = useCoverTexture(title, subtitle, coverImage);
 
   const blue = useMemo(
     () => new THREE.MeshPhysicalMaterial({ color: BLUE, roughness: 0.35, clearcoat: 0.8, clearcoatRoughness: 0.2 }),
@@ -198,7 +213,7 @@ const Book = ({ open, title, subtitle, still }) => {
         <boxGeometry args={[W - 0.08, H - 0.08, T - 0.1]} />
       </mesh>
       {/* Líneas doradas del lomo */}
-      {[-1.5, 1.5].map((y) => (
+      {[-H / 2 + 0.4, H / 2 - 0.4].map((y) => (
         <mesh key={y} material={gold} position={[-W / 2 - 0.065, y, 0]}>
           <boxGeometry args={[0.01, 0.06, T]} />
         </mesh>
@@ -228,7 +243,7 @@ const Book = ({ open, title, subtitle, still }) => {
   );
 };
 
-const BookScene = ({ open = false, title = 'Libro digital', subtitle = 'Biblioteca INNE', onSelect }) => {
+const BookScene = ({ open = false, title = 'Libro digital', subtitle = 'Biblioteca INNE', coverImage, onSelect }) => {
   const wrap = useRef();
   const inView = useInView(wrap);
   const still = prefersReducedMotion();
@@ -265,7 +280,7 @@ const BookScene = ({ open = false, title = 'Libro digital', subtitle = 'Bibliote
             onPointerOut={() => setHover(false)}
             scale={hover && !open ? 1.04 : 1}
           >
-            <Book open={open} title={title} subtitle={subtitle} still={still} />
+            <Book open={open} title={title} subtitle={subtitle} coverImage={coverImage} still={still} />
           </group>
         </Float>
 
