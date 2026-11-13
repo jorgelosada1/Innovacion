@@ -15,7 +15,7 @@ INSERT INTO noticias (id, titulo, resumen, contenido, imagen, fecha, publicado) 
 
 INSERT INTO slider (imagen, titulo, enlace, noticia_id, orden, activo) VALUES
 ('asset:aniversario-8', 'Celebrando juntos 8 años: conectando sueños con oportunidades', '/noticias/blog/educacion-que-conecta', NULL, 1, 1),
-('asset:encuentro-2026', 'Encuentro Nacional 2026', '/noticias/encuentro-nacional-2026', NULL, 2, 1),
+('asset:boton-whatsapp', 'Descarga tu botón de WhatsApp', '/noticias/blog/encuentro-nacional-inne-2026', NULL, 2, 1),
 ('asset:historia', 'Esta es la historia de Innovación E-learning', '', 2, 3, 1),
 ('asset:andina', 'Fundación Universitaria del Área Andina', '/universidades/areandina', NULL, 4, 1),
 ('asset:ibero', 'Corporación Universitaria Iberoamericana', '/universidades/iberoamericana', NULL, 5, 1);

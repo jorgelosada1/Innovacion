@@ -34,7 +34,7 @@ export const DEFAULT_NOTICIAS = [
 
 export const DEFAULT_SLIDER = [
   { id: '1', imagen: 'asset:aniversario-8', title: 'Celebrando juntos 8 años: conectando sueños con oportunidades', link: '/noticias/blog/educacion-que-conecta', noticiaId: null },
-  { id: '2', imagen: 'asset:encuentro-2026', title: 'Encuentro Nacional 2026', link: '/noticias/encuentro-nacional-2026', noticiaId: null },
+  { id: '2', imagen: 'asset:boton-whatsapp', title: 'Descarga tu botón de WhatsApp', link: '/noticias/blog/encuentro-nacional-inne-2026', noticiaId: null },
   { id: '3', imagen: 'asset:historia', title: 'Esta es la historia de Innovación E-learning', link: '', noticiaId: '2' },
   { id: '4', imagen: 'asset:andina', title: 'Fundación Universitaria del Área Andina', link: '/universidades/areandina', noticiaId: null },
   { id: '5', imagen: 'asset:ibero', title: 'Corporación Universitaria Iberoamericana', link: '/universidades/iberoamericana', noticiaId: null },

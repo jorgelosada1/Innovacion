@@ -5,6 +5,7 @@ import encuentro from '../assets/images/encuentro-2026.jpg';
 import historia from '../assets/images/historia.jpg';
 import andina from '../assets/images/andina-virtual.jpg';
 import ibero from '../assets/images/ibero.jpg';
+import botonWhatsapp from '../assets/images/banner-boton-whatsapp.jpg';
 
 const ASSETS = {
   'aniversario-8': aniversario,
@@ -12,6 +13,7 @@ const ASSETS = {
   historia,
   andina,
   ibero,
+  'boton-whatsapp': botonWhatsapp,
 };
 
 /** Convierte la ruta guardada en la base de datos en una URL que el navegador pueda cargar. */

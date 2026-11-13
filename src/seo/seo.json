@@ -36,6 +36,17 @@
       "priority": "0.8",
       "changefreq": "weekly"
     },
+    "/noticias/blog/encuentro-nacional-inne-2026": {
+      "title": "Así vivimos el Encuentro Nacional INNE 2026 | Innovación E-learning",
+      "description": "De diferentes ciudades, una misma historia: el equipo de Innovación E-learning se reunió en Bogotá para escucharse, celebrar 8 años y planear 2027.",
+      "image": "/og/encuentro-nacional-inne-2026.jpg",
+      "type": "article",
+      "published": "2026-11-13",
+      "breadcrumb": "Encuentro Nacional INNE 2026",
+      "parent": "/noticias",
+      "priority": "0.7",
+      "changefreq": "monthly"
+    },
     "/noticias/blog/educacion-que-conecta": {
       "title": "Educación que conecta: el propósito detrás de INNE",
       "description": "Hay decisiones que comienzan con una pregunta sencilla: ¿y si estudio? Así entendemos nuestro trabajo: conectar personas con oportunidades educativas.",
