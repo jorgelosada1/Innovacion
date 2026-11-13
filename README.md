@@ -49,6 +49,24 @@ npm run build:hosting   # web + API + .htaccess + uploads, lista para el hosting
 
 Los pasos para publicar en el hosting y configurar la base de datos están en [`backend/README.md`](backend/README.md).
 
+### Publicar desde GitHub (sin compilar nada)
+
+Cada cambio en `main` genera automáticamente el paquete del hosting con GitHub Actions
+(`.github/workflows/hosting.yml`):
+
+1. Abrir **Releases → "Última versión para el hosting"** y descargar `innovacion-hosting.zip`
+   (siempre corresponde al último cambio de `main`).
+2. Subir su contenido por SFTP a la carpeta pública del sitio, incluidos los archivos ocultos `.htaccess`.
+3. No reemplazar `api/config.php` ni las imágenes de `uploads/` del servidor.
+4. Eliminar `api/install.php` del servidor después de subirlo.
+
+**Publicación automática (opcional):** si se crean en *Settings → Secrets and variables → Actions*
+los secretos `SFTP_HOST`, `SFTP_USER`, `SFTP_PASSWORD` y `SFTP_DIR` (ruta de la carpeta pública,
+por ejemplo `/home/usuario/public_html`) y `SFTP_PORT` si no es 22, cada cambio en `main` también
+se sube solo al servidor. En ese caso nunca se tocan `api/config.php`, `api/install.lock` ni
+`uploads/`, y no se sube `install.php`. Las credenciales quedan cifradas en GitHub; no se escriben
+en el repositorio.
+
 ## Estructura
 
 ```

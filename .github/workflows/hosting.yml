@@ -1,0 +1,82 @@
+# Publicación en el hosting (LiteSpeed + PHP + MariaDB)
+#
+# Cada cambio en "main" genera el paquete listo para subir al hosting
+# (web + API + .htaccess) y lo deja en la sección "Releases" de GitHub como
+# "innovacion-hosting.zip", en la versión "Última versión para el hosting".
+#
+# Opcional: si se configuran los secretos SFTP_HOST, SFTP_USER, SFTP_PASSWORD y
+# SFTP_DIR (y SFTP_PORT si no es 22) en Settings → Secrets and variables → Actions,
+# además se sube automáticamente al servidor por SFTP. Nunca se tocan en el servidor
+# api/config.php, api/install.lock ni las imágenes de uploads/, y no se sube install.php.
+name: Hosting
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: hosting
+  cancel-in-progress: false
+
+jobs:
+  paquete:
+    name: Generar paquete para el hosting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Revisar el código
+        run: npx eslint .
+
+      - name: Compilar web + API
+        run: npm run build:hosting
+
+      - name: Crear innovacion-hosting.zip
+        run: cd dist && zip -qr ../innovacion-hosting.zip . -x 'api/config.php' 'api/install.lock'
+
+      - name: Publicar en Releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete hosting --yes --cleanup-tag || true
+          gh release create hosting innovacion-hosting.zip \
+            --target "$GITHUB_SHA" \
+            --title "Última versión para el hosting" \
+            --notes "Paquete generado automáticamente desde el commit ${GITHUB_SHA::7} ($(date -u +%Y-%m-%d)). Descargar innovacion-hosting.zip y subir su contenido a la carpeta pública del sitio. No reemplazar api/config.php ni la carpeta uploads/ del servidor; después de subirlo, eliminar api/install.php."
+
+      - name: Subir al servidor por SFTP (solo si está configurado)
+        env:
+          SFTP_HOST: ${{ secrets.SFTP_HOST }}
+          SFTP_PORT: ${{ secrets.SFTP_PORT }}
+          SFTP_USER: ${{ secrets.SFTP_USER }}
+          SFTP_PASSWORD: ${{ secrets.SFTP_PASSWORD }}
+          SFTP_DIR: ${{ secrets.SFTP_DIR }}
+        run: |
+          if [ -z "$SFTP_HOST" ] || [ -z "$SFTP_USER" ] || [ -z "$SFTP_PASSWORD" ] || [ -z "$SFTP_DIR" ]; then
+            echo "SFTP no configurado: el paquete quedó en Releases para subirlo manualmente."
+            exit 0
+          fi
+          sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+          lftp -u "$SFTP_USER","$SFTP_PASSWORD" -p "${SFTP_PORT:-22}" "sftp://$SFTP_HOST" -e "
+            set sftp:auto-confirm yes;
+            set net:max-retries 2;
+            mirror --reverse --verbose --parallel=4 \
+              --exclude-glob api/config.php \
+              --exclude-glob api/install.lock \
+              --exclude-glob api/install.php \
+              --exclude-glob uploads/* \
+              --include-glob uploads/.htaccess \
+              dist/ \"$SFTP_DIR\";
+            bye"
