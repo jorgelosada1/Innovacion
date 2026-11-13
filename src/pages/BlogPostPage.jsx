@@ -226,18 +226,30 @@ const Block = ({ block }) => {
     case 'download':
       return (
         <section id={block.id} className="blog-download" data-reveal>
-          <span className="blog-download__icon" aria-hidden="true">
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>
-          </span>
-          <div className="blog-download__body">
+          <span className="blog-download__glow" aria-hidden="true"></span>
+          <span className="blog-download__dot blog-download__dot--1" aria-hidden="true"></span>
+          <span className="blog-download__dot blog-download__dot--2" aria-hidden="true"></span>
+          <span className="blog-download__dot blog-download__dot--3" aria-hidden="true"></span>
+
+          <div className="blog-download__head">
             <span className="blog-download__eyebrow">{block.eyebrow}</span>
             <h3>{block.title}</h3>
             <p>{block.text}</p>
           </div>
+
+          {block.image && (
+            <a href={block.url} target="_blank" rel="noopener noreferrer" className="blog-download__preview" tabIndex={-1} aria-hidden="true">
+              <img src={block.image} alt={block.imageAlt || ''} loading="lazy" decoding="async" />
+            </a>
+          )}
+
           <a href={block.url} target="_blank" rel="noopener noreferrer" className="blog-download__btn">
+            <span className="blog-download__btn-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>
+            </span>
             {block.cta}
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>
           </a>
+          <small className="blog-download__note">Se abre la carpeta en Google Drive</small>
         </section>
       );
     case 'closing':
@@ -274,7 +286,7 @@ const BlogPostPage = () => {
   // Índice: resalta la sección visible
   useEffect(() => {
     if (!post) return;
-    const headings = post.blocks.filter((b) => b.type === 'h2' || b.type === 'download').map((b) => document.getElementById(b.id)).filter(Boolean);
+    const headings = post.blocks.filter((b) => b.type === 'h2').map((b) => document.getElementById(b.id)).filter(Boolean);
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -297,7 +309,7 @@ const BlogPostPage = () => {
     );
   }
 
-  const toc = post.blocks.filter((b) => b.type === 'h2' || b.type === 'download').map((b) => ({ id: b.id, text: b.type === 'download' ? 'Descarga tu imagen corporativa' : b.text }));
+  const toc = post.blocks.filter((b) => b.type === 'h2');
   const others = blogPosts.filter((p) => p.slug !== post.slug);
 
   return (

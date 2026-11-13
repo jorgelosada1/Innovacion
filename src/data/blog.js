@@ -7,6 +7,7 @@ import virtual from '../assets/images/blog-conecta-virtual.jpg';
 import grado from '../assets/images/blog-conecta-grado.jpg';
 import tarjeta from '../assets/images/blog-conecta-tarjeta.jpg';
 import encuentroBanner from '../assets/images/encuentro-2026.jpg';
+import bannerBotonWhatsapp from '../assets/images/banner-boton-whatsapp.jpg';
 
 // Fotos de la galería del Encuentro Nacional: basta con poner los archivos .jpg en
 // src/assets/galeria-encuentro-2026/ (se muestran en orden por nombre de archivo).
@@ -50,7 +51,6 @@ export const blogPosts = [
         type: 'lead',
         text: 'Hay encuentros que nos recuerdan que detrás de cada mensaje, cada llamada y cada meta alcanzada hay personas que hacen posible nuestra historia.',
       },
-      { type: 'notice', target: 'descarga', text: '¿Vienes por tu botón de WhatsApp?', link: 'Descárgalo aquí' },
       {
         type: 'p',
         text: 'Durante el año compartimos reuniones, mensajes, retos y muchas horas de trabajo. Nos acompañamos desde diferentes ciudades, resolvemos situaciones a la distancia y celebramos los logros de nuestros compañeros, aunque muchas veces sea a través de una pantalla.',
@@ -130,10 +130,12 @@ export const blogPosts = [
       {
         type: 'download',
         id: 'descarga',
-        eyebrow: 'Imagen corporativa',
+        eyebrow: '¡Llegaste al final!',
         title: 'Descarga tu imagen corporativa aquí',
-        text: 'Encuentra tu botón de WhatsApp y las piezas de marca de INNE para usarlas en tus canales.',
-        cta: 'Descargar en Google Drive',
+        text: 'Tu botón de WhatsApp y las piezas de marca de INNE te esperan. Descárgalas y úsalas en tus canales.',
+        cta: 'Descargar ahora',
+        image: bannerBotonWhatsapp,
+        imageAlt: 'Descarga tu botón de WhatsApp',
         url: IMAGEN_CORPORATIVA_URL,
       },
     ],

@@ -255,6 +255,7 @@
 
 /* Artículo */
 .blog-article {
+  min-width: 0;
   max-width: 720px;
   background: #fff;
   border-radius: 28px;
@@ -597,7 +598,7 @@
 /* ===== RESPONSIVE ===== */
 @media (max-width: 960px) {
   .blog-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 0;
   }
 
@@ -611,6 +612,7 @@
   }
 
   .blog-article {
+    width: 100%;
     margin: -60px auto 0;
   }
 
@@ -912,76 +914,176 @@
 
 /* ===== BLOQUE DE DESCARGA ===== */
 .blog-download {
+  position: relative;
+  overflow: hidden;
   scroll-margin-top: 110px;
-  display: flex;
-  align-items: center;
-  gap: 22px;
-  margin: 10px 0 34px;
-  padding: 26px 28px;
-  border-radius: 24px;
-  background:
-    radial-gradient(420px 220px at 100% 0%, rgba(46, 134, 193, 0.35), transparent 70%),
-    linear-gradient(135deg, #1B3A5C, #12294a);
+  margin: 14px -24px 40px;
+  padding: 40px 36px 34px;
+  border-radius: 28px;
+  text-align: center;
   color: #fff;
-  box-shadow: 0 30px 60px -30px rgba(13, 31, 51, 0.7);
+  background:
+    radial-gradient(520px 260px at 0% 0%, rgba(245, 166, 35, 0.28), transparent 70%),
+    radial-gradient(520px 300px at 100% 100%, rgba(46, 134, 193, 0.55), transparent 70%),
+    linear-gradient(150deg, #1B3A5C 0%, #12294a 60%, #0d1f38 100%);
+  box-shadow: 0 40px 80px -36px rgba(13, 31, 51, 0.85), 0 0 0 3px rgba(245, 166, 35, 0.55);
 }
 
-.blog-download__icon {
-  flex: none;
-  width: 64px;
-  height: 64px;
-  border-radius: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--gradient-gold);
-  color: var(--color-blue-dark);
-  box-shadow: var(--shadow-glow-gold);
+.blog-download__glow {
+  position: absolute;
+  top: -40%;
+  left: -30%;
+  width: 40%;
+  height: 180%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+  transform: rotate(18deg);
+  animation: blog-download-shine 4.5s ease-in-out infinite;
+  pointer-events: none;
 }
 
-.blog-download__body {
-  flex: 1;
-  min-width: 0;
+.blog-download__dot {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--color-yellow);
+  pointer-events: none;
+  animation: blog-download-float 4s ease-in-out infinite;
+}
+
+.blog-download__dot--1 { width: 16px; height: 16px; top: 26px; left: 30px; }
+.blog-download__dot--2 { width: 10px; height: 10px; top: 60px; right: 44px; animation-delay: -1.3s; }
+.blog-download__dot--3 { width: 12px; height: 12px; bottom: 36px; left: 46px; background: #5fb0e6; animation-delay: -2.4s; }
+
+.blog-download__head {
+  position: relative;
 }
 
 .blog-download__eyebrow {
-  font-size: 0.75rem;
-  font-weight: 700;
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(245, 166, 35, 0.16);
+  border: 1px solid rgba(245, 166, 35, 0.5);
+  color: var(--color-yellow);
+  font-size: 0.78rem;
+  font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--color-yellow);
 }
 
 .blog-download h3 {
-  margin: 4px 0 6px;
+  margin: 14px auto 8px;
+  max-width: 560px;
   font-family: var(--font-primary);
-  font-size: 1.35rem;
-  line-height: 1.2;
+  font-size: clamp(1.6rem, 3.6vw, 2.2rem);
+  font-weight: 800;
+  line-height: 1.15;
 }
 
 .blog-download p {
-  margin: 0;
-  font-size: 0.92rem;
+  margin: 0 auto;
+  max-width: 520px;
+  font-size: 1rem;
   color: #cbd9e8;
 }
 
+.blog-download__preview {
+  position: relative;
+  display: block;
+  margin: 24px auto 0;
+  max-width: 560px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 24px 50px -24px rgba(0, 0, 0, 0.7);
+  transform: rotate(-1.5deg);
+  transition: transform 0.4s var(--ease-spring);
+}
+
+.blog-download__preview:hover {
+  transform: rotate(0deg) scale(1.02);
+}
+
+.blog-download__preview img {
+  display: block;
+  width: 100%;
+}
+
 .blog-download__btn {
-  flex: none;
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 13px 22px;
+  gap: 12px;
+  margin-top: 28px;
+  padding: 18px 34px 18px 20px;
   border-radius: 999px;
   background: var(--gradient-gold);
   color: var(--color-blue-dark);
+  font-family: var(--font-primary);
   font-weight: 800;
-  font-size: 0.92rem;
-  box-shadow: var(--shadow-glow-gold);
+  font-size: 1.2rem;
+  letter-spacing: 0.01em;
+  box-shadow: 0 0 0 0 rgba(245, 166, 35, 0.6), 0 18px 36px -12px rgba(245, 166, 35, 0.75);
+  animation: blog-download-pulse 2.2s ease-in-out infinite;
   transition: transform 0.3s var(--ease-spring);
 }
 
 .blog-download__btn:hover {
-  transform: translateY(-3px);
+  transform: translateY(-3px) scale(1.03);
+}
+
+.blog-download__btn:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 4px;
+}
+
+.blog-download__btn-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-blue-dark);
+  color: var(--color-yellow);
+}
+
+.blog-download__btn-icon svg {
+  animation: blog-download-bounce 1.6s ease-in-out infinite;
+}
+
+.blog-download__note {
+  display: block;
+  margin-top: 12px;
+  font-size: 0.8rem;
+  color: #9fb6cc;
+}
+
+@keyframes blog-download-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(245, 166, 35, 0.55), 0 18px 36px -12px rgba(245, 166, 35, 0.75); }
+  50% { box-shadow: 0 0 0 14px rgba(245, 166, 35, 0), 0 18px 36px -12px rgba(245, 166, 35, 0.75); }
+}
+
+@keyframes blog-download-bounce {
+  0%, 100% { transform: translateY(-2px); }
+  50% { transform: translateY(3px); }
+}
+
+@keyframes blog-download-shine {
+  0%, 60% { left: -40%; }
+  100% { left: 120%; }
+}
+
+@keyframes blog-download-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blog-download__glow,
+  .blog-download__dot,
+  .blog-download__btn,
+  .blog-download__btn-icon svg {
+    animation: none;
+  }
 }
 
 @media (max-width: 640px) {
@@ -1002,12 +1104,14 @@
     height: 52px;
   }
   .blog-download {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 22px;
+    margin: 10px -12px 32px;
+    padding: 32px 20px 26px;
+    border-radius: 22px;
   }
   .blog-download__btn {
     width: 100%;
     justify-content: center;
+    padding: 16px 22px 16px 16px;
+    font-size: 1.08rem;
   }
 }
