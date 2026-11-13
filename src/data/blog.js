@@ -11,13 +11,20 @@ import encuentroBanner from '../assets/images/encuentro-2026.jpg';
 // Fotos de la galería del Encuentro Nacional: basta con poner los archivos .jpg en
 // src/assets/galeria-encuentro-2026/ (se muestran en orden por nombre de archivo).
 // La foto grupal de todo el equipo (archivo con "450" en el nombre) va primero y es la portada.
-const esFotoGrupal = (path) => /450/.test(path.split('/').pop());
+// Las miniaturas (src/assets/galeria-encuentro-2026/mini/) tienen el mismo nombre de archivo.
+const nombreArchivo = (path) => path.split('/').pop();
+const esFotoGrupal = (path) => /450/.test(nombreArchivo(path));
+const miniaturas = Object.fromEntries(
+  Object.entries(import.meta.glob('../assets/galeria-encuentro-2026/mini/*.jpg', { eager: true, import: 'default' }))
+    .map(([path, src]) => [nombreArchivo(path), src])
+);
 const fotosEncuentro = Object.entries(
   import.meta.glob('../assets/galeria-encuentro-2026/*.jpg', { eager: true, import: 'default' })
 )
   .sort(([a], [b]) => (esFotoGrupal(b) - esFotoGrupal(a)) || a.localeCompare(b, 'es', { numeric: true }))
   .map(([path, src], i) => ({
     src,
+    thumb: miniaturas[nombreArchivo(path)] || src,
     alt: esFotoGrupal(path)
       ? 'Foto grupal del equipo de Innovación E-learning en el Encuentro Nacional INNE 2026'
       : `Encuentro Nacional INNE 2026 en Bogotá, foto ${i + 1}`,

@@ -145,6 +145,8 @@ const Gallery = ({ images }) => {
             decoding="async"
             className={`gallery__slide${i === index ? ' is-active' : ''}`}
             aria-hidden={i !== index}
+            // Las fotos verticales se muestran completas en lugar de recortarlas
+            onLoad={(e) => e.currentTarget.classList.toggle('is-portrait', e.currentTarget.naturalHeight > e.currentTarget.naturalWidth)}
           />
         ))}
         <button type="button" className="gallery__zoom" onClick={() => setOpen(true)} aria-label="Ver foto en pantalla completa">
@@ -164,7 +166,7 @@ const Gallery = ({ images }) => {
             aria-label={`Ver foto ${i + 1}`}
             aria-current={i === index}
           >
-            <img src={img.src} alt="" loading="lazy" decoding="async" />
+            <img src={img.thumb || img.src} alt="" loading="lazy" decoding="async" />
           </button>
         ))}
       </div>

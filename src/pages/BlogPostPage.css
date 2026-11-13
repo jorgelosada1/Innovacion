@@ -756,6 +756,10 @@
   transform: none;
 }
 
+.gallery__slide.is-portrait {
+  object-fit: contain;
+}
+
 .gallery__nav {
   position: absolute;
   top: 50%;
