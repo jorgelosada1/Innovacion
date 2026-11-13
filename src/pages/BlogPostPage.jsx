@@ -286,7 +286,7 @@ const BlogPostPage = () => {
   // Índice: resalta la sección visible
   useEffect(() => {
     if (!post) return;
-    const headings = post.blocks.filter((b) => b.type === 'h2').map((b) => document.getElementById(b.id)).filter(Boolean);
+    const headings = post.blocks.filter((b) => b.type === 'h2' && b.toc !== false).map((b) => document.getElementById(b.id)).filter(Boolean);
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -309,7 +309,8 @@ const BlogPostPage = () => {
     );
   }
 
-  const toc = post.blocks.filter((b) => b.type === 'h2');
+  // El índice no lleva al final: la descarga se encuentra después de leer toda la noticia
+  const toc = post.blocks.filter((b) => b.type === 'h2' && b.toc !== false);
   const others = blogPosts.filter((p) => p.slug !== post.slug);
 
   return (

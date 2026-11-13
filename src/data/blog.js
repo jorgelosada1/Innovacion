@@ -126,7 +126,7 @@ export const blogPosts = [
         text: 'Porque al final, lo más valioso de INNE no es solamente lo que hemos construido durante estos ocho años, sino las personas con quienes hemos tenido la oportunidad de hacerlo.',
       },
       { type: 'signature', text: 'Encuentro Nacional INNE 2026 · Bogotá, Colombia.' },
-      ...(fotosEncuentro.length ? [{ type: 'h2', id: 'galeria', text: 'Así lo vivimos' }, { type: 'gallery', images: fotosEncuentro }] : []),
+      ...(fotosEncuentro.length ? [{ type: 'h2', id: 'galeria', text: 'Así lo vivimos', toc: false }, { type: 'gallery', images: fotosEncuentro }] : []),
       {
         type: 'download',
         id: 'descarga',
