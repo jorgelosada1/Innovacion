@@ -10,11 +10,18 @@ import encuentroBanner from '../assets/images/encuentro-2026.jpg';
 
 // Fotos de la galería del Encuentro Nacional: basta con poner los archivos .jpg en
 // src/assets/galeria-encuentro-2026/ (se muestran en orden por nombre de archivo).
+// La foto grupal de todo el equipo (archivo con "450" en el nombre) va primero y es la portada.
+const esFotoGrupal = (path) => /450/.test(path.split('/').pop());
 const fotosEncuentro = Object.entries(
   import.meta.glob('../assets/galeria-encuentro-2026/*.jpg', { eager: true, import: 'default' })
 )
-  .sort(([a], [b]) => a.localeCompare(b, 'es', { numeric: true }))
-  .map(([, src], i) => ({ src, alt: `Encuentro Nacional INNE 2026 en Bogotá, foto ${i + 1}` }));
+  .sort(([a], [b]) => (esFotoGrupal(b) - esFotoGrupal(a)) || a.localeCompare(b, 'es', { numeric: true }))
+  .map(([path, src], i) => ({
+    src,
+    alt: esFotoGrupal(path)
+      ? 'Foto grupal del equipo de Innovación E-learning en el Encuentro Nacional INNE 2026'
+      : `Encuentro Nacional INNE 2026 en Bogotá, foto ${i + 1}`,
+  }));
 
 export const IMAGEN_CORPORATIVA_URL = 'https://drive.google.com/drive/folders/18OySj_0zF_qk0F5S-ShduAeIVPOm6NXj?usp=drive_link';
 
